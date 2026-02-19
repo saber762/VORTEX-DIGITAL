@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VORTEX DIGITAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#0f0f0f;
+color:white;
+overflow-x:hidden;
+}
+
+header{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+position:relative;
+overflow:hidden;
+}
+
+header::before{
+content:"";
+position:absolute;
+top:0;left:0;width:100%;height:100%;
+background:radial-gradient(circle at 20% 30%, #ff00ff, transparent 30%),
+          radial-gradient(circle at 80% 70%, #00f5ff, transparent 30%);
+animation: moveBG 20s linear infinite;
+z-index:0;
+opacity:0.3;
+}
+
+@keyframes moveBG{
+0%{background-position:0 0, 100% 100%;}
+50%{background-position:100% 0, 0 100%;}
+100%{background-position:0 0, 100% 100%;}
+}
+
+header h1{
+font-size:4rem;
+background:linear-gradient(45deg,#00f5ff,#ff00ff,#ffdd00);
+background-clip:text;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+position:relative;
+z-index:1;
+animation: fadeInDown 1.5s ease forwards;
+}
+
+header p{
+margin-top:20px;
+font-size:1.2rem;
+color:#aaa;
+max-width:600px;
+position:relative;
+z-index:1;
+animation: fadeInUp 1.5s ease 0.5s forwards;
+opacity:0;
+}
+
+button{
+margin-top:30px;
+padding:15px 40px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#00f5ff,#ff00ff);
+color:white;
+font-size:1rem;
+cursor:pointer;
+transition:0.4s;
+position:relative;
+z-index:1;
+animation: fadeInUp 1.5s ease 1s forwards;
+opacity:0;
+}
+
+button:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px #ff00ff,0 0 40px #00f5ff;
+}
+
+section{
+padding:100px 10%;
+text-align:center;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+margin-top:50px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+padding:30px;
+border-radius:20px;
+transition:0.5s;
+opacity:0;
+transform:translateY(50px);
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.05);
+box-shadow:0 0 20px rgba(255,0,255,0.5),0 0 40px rgba(0,255,255,0.5);
+}
+
+footer{
+padding:40px;
+text-align:center;
+background:#111;
+color:#777;
+font-family:'Montserrat',sans-serif;
+}
+/* Animations */
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-50px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(50px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>VORTEX DIGITAL</h1>
+<p>نصنع لك مواقع ومتاجر إلكترونية احترافية بتقنيات الذكاء الاصطناعي لجذب المزيد من العملاء وتحقيق نمو حقيقي لمشروعك.</p>
+<button>ابدأ مشروعك الآن</button>
+</header>
+
+<section>
+<h2 style="font-family:'Montserrat',sans-serif;">خدماتنا</h2>
+
+<div class="services">
+<div class="card">
+<h3>تصميم مواقع احترافية</h3>
+<p>مواقع سريعة، عصرية، ومتوافقة مع جميع الأجهزة.</p>
+</div>
+<div class="card">
+<h3>متاجر إلكترونية</h3>
+<p>متجر كامل مع بوابات دفع وربط واتساب.</p>
+</div>
+<div class="card">
+<h3>تصميم إعلانات احترافية</h3>
+<p>إعلانات جذابة لزيادة المبيعات وانتشار العلامة التجارية.</p>
+</div>
+</div>
+</section>
+
+<footer>
+© 2026 VORTEX DIGITAL - All Rights Reserved
+</footer>
+
+<script>
+// Fade-in عند النزول
+const cards = document.querySelectorAll('.card');
+window.addEventListener('scroll', () => {
+cards.forEach(card=>{
+let rect = card.getBoundingClientRect();
+if(rect.top < window.innerHeight - 100){
+card.style.opacity='1';
+card.style.transform='translateY(0)';
+}
+});
+});
+</script>
+
+</body>
+</html>
