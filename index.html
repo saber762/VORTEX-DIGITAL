@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VORTEX DIGITAL</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* Reset */
 *{
@@ -116,6 +115,7 @@ header button{
   position:relative;
   overflow:hidden;
   cursor:pointer;
+  border:2px solid transparent;
 }
 .package-card::before{
   content:"";
@@ -143,20 +143,17 @@ header button{
   margin-bottom:15px;
   position:relative; z-index:1;
 }
-.package-card .social-icons{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-top:10px;
+.package-card button{
   position:relative; z-index:1;
-}
-.package-card .social-icons a{
-  color:white;
-  font-size:1.2rem;
   transition:0.3s;
 }
-.package-card .social-icons a:hover{
-  color:#ff00ff;
+.package-card button:hover{
+  transform:scale(1.05);
+  background:linear-gradient(45deg,#ff00ff,#00f5ff,#ffdd00);
+  box-shadow:0 0 15px #ff00ff,0 0 25px #00f5ff;
+}
+.package-card.selected{
+  border:3px solid #00f5ff;
 }
 
 /* باقي الصفحات */
@@ -167,7 +164,7 @@ header button{
   text-align:center;
 }
 
-/* الأزرار */
+/* الأزرار العامة */
 button{
   margin:20px;
   padding:15px 30px;
@@ -262,38 +259,23 @@ footer{
 <section id="packages">
 <h2>عروضنا وباقاتنا</h2>
 <div class="package-cards">
-  <div class="package-card">
+  <div class="package-card" id="package1">
     <h3>موقع تعريفي صفحة واحدة</h3>
     <p>صفحة تعريفية مع QR وأيقونات التواصل</p>
     <p class="price">السعر: 300 درهم</p>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-whatsapp"></i></a>
-    </div>
-    <button onclick="choosePackage('موقع تعريفي صفحة واحدة')">اختر هذه الباقة</button>
+    <button onclick="choosePackage(this, 'موقع تعريفي صفحة واحدة')">اختر هذه الباقة</button>
   </div>
-  <div class="package-card">
+  <div class="package-card" id="package2">
     <h3>صور إعلانية احترافية</h3>
     <p>3 صور إعلانية عالية الجودة لترويج مشروعك</p>
     <p class="price">السعر: 150 درهم</p>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-whatsapp"></i></a>
-    </div>
-    <button onclick="choosePackage('صور إعلانية احترافية')">اختر هذه الباقة</button>
+    <button onclick="choosePackage(this, 'صور إعلانية احترافية')">اختر هذه الباقة</button>
   </div>
-  <div class="package-card">
+  <div class="package-card" id="package3">
     <h3>موقع إلكتروني كامل</h3>
     <p>موقع كامل بمميزات متعددة وروابط تواصل ودفع</p>
     <p class="price">السعر: حسب الطلب</p>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-whatsapp"></i></a>
-    </div>
-    <button onclick="choosePackage('موقع إلكتروني كامل')">اختر هذه الباقة</button>
+    <button onclick="choosePackage(this, 'موقع إلكتروني كامل')">اختر هذه الباقة</button>
   </div>
 </div>
 </section>
@@ -345,7 +327,12 @@ function goToForm(service){
   goTo('formPage');
 }
 
-function choosePackage(packageName){
+function choosePackage(btn, packageName){
+  // إزالة تحديد أي بطاقة مسبقاً
+  document.querySelectorAll('.package-card').forEach(c=>c.classList.remove('selected'));
+  // تحديد البطاقة المختارة
+  btn.parentElement.classList.add('selected');
+  // تحديث النموذج
   document.getElementById('formTitle').innerText = 'نموذج مشروعك - ' + packageName;
   document.getElementById('projectType').value = packageName;
   goTo('formPage');
