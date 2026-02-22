@@ -133,9 +133,38 @@ footer{padding:30px; text-align:center; background:#0b1120; color:#777; font-fam
 <!-- صفحة الخدمات -->
 <div class="page" id="services">
 <h2>اختر الخدمة التي تريدها</h2>
+
 <button onclick="goToForm('تصميم إعلانات')">تصميم إعلانات</button>
 <button onclick="goToForm('متجر إلكتروني')">متجر إلكتروني</button>
 <button onclick="goToForm('موقع تعريفي احترافي')">موقع تعريفي</button>
+
+<!-- 🔥 معرض أعمال الخدمات -->
+<div class="service-gallery">
+  <h3>نماذج من أعمالنا</h3>
+
+  <div class="media-grid">
+
+    <!-- صورة -->
+    <div class="media-item">
+      <img src="images/work1.jpg" alt="تصميم إعلان">
+    </div>
+
+    <!-- صورة -->
+    <div class="media-item">
+      <img src="images/work2.jpg" alt="موقع إلكتروني">
+    </div>
+
+    <!-- فيديو -->
+    <div class="media-item">
+      <video controls>
+        <source src="videos/demo.mp4" type="video/mp4">
+        المتصفح لا يدعم عرض الفيديو
+      </video>
+    </div>
+
+  </div>
+</div>
+
 </div>
 
 <!-- صفحة النموذج -->
@@ -202,3 +231,4 @@ document.getElementById('projectForm').addEventListener('submit', function(e){
 
 </body>
 </html>
+
