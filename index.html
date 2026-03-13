@@ -25,15 +25,14 @@
             overflow-x: hidden;
         }
 
-        /* حاوية الخلفية الديناميكية (الجزيئات) */
+        /* تأثير الخلفية المستمرة (الجزيئات) */
         #particles-js {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1; /* تبقى خلف كل شيء */
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
         }
 
-        /* الهيدر مع خلفية فيديو سينمائية */
+        /* الهيدر الاحترافي مع الفيديو */
         header {
             height: 100vh;
             display: flex;
@@ -47,7 +46,6 @@
             background: #000;
         }
 
-        /* إضافة فيديو كخلفية للهيدر */
         .header-video {
             position: absolute;
             top: 50%; left: 50%;
@@ -55,7 +53,7 @@
             width: auto; height: auto;
             transform: translate(-50%, -50%);
             z-index: 0;
-            opacity: 0.6; /* تقليل السطوع لبروز النص */
+            opacity: 0.5;
             pointer-events: none;
             object-fit: cover;
         }
@@ -64,7 +62,7 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), var(--bg-dark));
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.6), var(--bg-dark));
             z-index: 1;
         }
 
@@ -78,14 +76,13 @@
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 700;
-            line-height: 1.2;
             margin-bottom: 20px;
             background: linear-gradient(to right, #fff, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* الأزرار الاحترافية */
+        /* الأزرار */
         .btn-main {
             padding: 15px 40px;
             border-radius: 50px;
@@ -95,73 +92,87 @@
             font-weight: bold;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s;
             box-shadow: 0 10px 20px rgba(0, 245, 255, 0.2);
-            z-index: 10;
         }
 
         .btn-main:hover {
-            transform: scale(1.05) translateY(-5px);
+            transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 245, 255, 0.4);
         }
 
-        section { padding: 100px 10%; position: relative; z-index: 2; }
+        section { padding: 80px 10%; position: relative; z-index: 2; }
 
-        /* شبكة الخدمات والباقات */
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.5rem; color: var(--primary); }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 25px;
         }
 
-        .glass-card, .price-card {
+        /* تصميم البطاقات الزجاجية (الصفحة الثانية) */
+        .glass-card {
             background: var(--card-bg);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             padding: 40px 30px;
             border-radius: 24px;
             text-align: center;
-            transition: 0.5s;
+            transition: 0.4s ease;
         }
 
-        .glass-card:hover, .price-card:hover {
+        .glass-card:hover {
             border-color: var(--primary);
             background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-15px);
+            transform: translateY(-10px);
         }
 
-        .price-card.featured {
-            border: 2px solid var(--primary);
-            box-shadow: 0 0 30px rgba(0, 245, 255, 0.2);
+        .glass-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .price-tag { font-size: 2.5rem; font-weight: bold; color: var(--primary); margin: 20px 0; display: block; }
+        /* الباقات */
+        .price-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(2, 6, 23, 1) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            text-align: center;
+        }
 
-        /* فورم التواصل */
+        .price-card.featured { border: 2px solid var(--primary); transform: scale(1.05); }
+        .price-tag { font-size: 2.5rem; font-weight: bold; margin: 20px 0; display: block; color: var(--primary); }
+
+        /* الفورم */
         .form-container {
-            max-width: 650px;
+            max-width: 600px;
             margin: 0 auto;
             background: var(--card-bg);
-            padding: 50px;
+            padding: 40px;
             border-radius: 30px;
             border: 1px solid var(--glass-border);
         }
 
         input, textarea {
-            width: 100%; padding: 18px; margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.4);
+            width: 100%; padding: 15px; margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--glass-border);
-            border-radius: 12px; color: white; outline: none;
+            border-radius: 12px; color: white;
         }
 
-        input:focus { border-color: var(--primary); }
-
-        .page { display: none; animation: fadeIn 0.8s ease; }
+        .page { display: none; animation: fadeInUp 0.8s ease; }
         .page.active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        footer { text-align:center; padding:50px; color: #475569; border-top: 1px solid var(--glass-border); }
+        footer { text-align: center; padding: 40px; border-top: 1px solid var(--glass-border); color: #64748b; }
     </style>
 </head>
 <body>
@@ -173,35 +184,35 @@
         <video class="header-video" autoplay loop muted playsinline>
             <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-blue-data-points-moving-944-large.mp4" type="video/mp4">
         </video>
-        
         <div class="hero-content">
             <h1>VORTEX DIGITAL</h1>
-            <p>نحن نصمم لك مستقبلاً رقمياً نابضاً بالحياة. استمتع بواجهات متطورة تتفاعل مع عملاءك وتنمي أعمالك.</p>
-            <button class="btn-main" onclick="goTo('services')">اكتشف خدماتنا <i class="fas fa-bolt"></i></button>
+            <p>نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.</p>
+            <br>
+            <button class="btn-main" onclick="goTo('services')">اكتشف خدماتنا <i class="fas fa-arrow-left"></i></button>
         </div>
     </header>
 
     <section>
-        <div style="text-align:center; margin-bottom: 60px;">
-            <h2 style="font-size: 2.5rem;">باقاتنا الذكية</h2>
+        <div class="section-title">
+            <h2>باقاتنا المتميزة</h2>
         </div>
         <div class="grid-container">
             <div class="price-card">
                 <h3>باقة الانطلاق</h3>
                 <span class="price-tag">300 درهم</span>
-                <p>موقع Landing Page بتصميم نيوني عصري.</p>
+                <p>موقع صفحة واحدة عصري وجذاب.</p>
                 <button class="btn-main" style="width:100%; margin-top:20px;" onclick="choosePackage('موقع تعريفي', 300)">اطلب الآن</button>
             </div>
             <div class="price-card featured">
                 <h3>هوية متكاملة</h3>
                 <span class="price-tag">150 درهم</span>
-                <p>تصاميم إعلانية احترافية لبراند NIVORA الخاص بك.</p>
+                <p>تصاميم إعلانية احترافية لعلامتك التجارية.</p>
                 <button class="btn-main" style="width:100%; margin-top:20px;" onclick="choosePackage('صور إعلانية', 150)">اطلب الآن</button>
             </div>
             <div class="price-card">
                 <h3>باقة الشركات</h3>
                 <span class="price-tag">اتصل بنا</span>
-                <p>متجر إلكتروني متكامل للبيع الاحترافي.</p>
+                <p>متجر إلكتروني متكامل مع نظام إدارة ذكية.</p>
                 <button class="btn-main" style="width:100%; margin-top:20px;" onclick="choosePackage('موقع كامل', 'حسب الطلب')">استشارة</button>
             </div>
         </div>
@@ -210,17 +221,25 @@
 
 <div class="page" id="services">
     <section>
-        <center><button class="btn-main" onclick="goTo('home')" style="margin-bottom: 50px;">العودة</button></center>
+        <div class="section-title">
+            <h2>ماذا نقدم لك؟</h2>
+            <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 30px;">العودة للرئيسية</button>
+        </div>
         <div class="grid-container">
-            <div class="glass-card" onclick="goToForm('تصميم متجر')">
-                <i class="fas fa-store"></i>
-                <h3>متاجر ذكية</h3>
-                <img src="https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=400" alt="Store" style="width:100%; border-radius:15px; margin-top:15px;">
+            <div class="glass-card" onclick="goToForm('تصميم متجر ذكي')">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>متاجر إلكترونية</h3>
+                <p>متاجر سريعة، متجاوبة، ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
             </div>
             <div class="glass-card" onclick="goToForm('تصميم جرافيك')">
-                <i class="fas fa-palette"></i>
-                <h3>هوية بصرية</h3>
-                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400" alt="Design" style="width:100%; border-radius:15px; margin-top:15px;">
+                <i class="fas fa-paint-brush"></i>
+                <h3>تصميم إبداعي</h3>
+                <p>بوسترات، شعارات، وهويات بصرية تخطف الأنظار.</p>
+            </div>
+            <div class="glass-card" onclick="goToForm('تطوير ويب')">
+                <i class="fas fa-code"></i>
+                <h3>تطوير مخصص</h3>
+                <p>برمجة منصات خاصة تلبي احتياجات عملك المعقدة.</p>
             </div>
         </div>
     </section>
@@ -229,40 +248,37 @@
 <div class="page" id="formPage">
     <section>
         <div class="form-container">
-            <h2 id="formTitle" style="color:var(--primary); margin-bottom:30px;">ابدأ مشروعك</h2>
+            <h2 id="formTitle" style="text-align:center; margin-bottom:30px;">ابدأ مشروعك</h2>
             <form id="projectForm">
-                <input type="text" name="name" placeholder="الاسم" required>
+                <input type="text" name="name" placeholder="اسمك الكريم" required>
                 <input type="text" id="projectType" name="service" readonly>
                 <input type="text" id="packagePrice" name="price" readonly>
-                <textarea name="details" placeholder="تفاصيل فكرتك" rows="4" required></textarea>
+                <textarea name="details" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required></textarea>
                 <input type="tel" name="phone" placeholder="رقم الواتساب" required>
                 <button type="submit" class="btn-main" style="width: 100%;">إرسال الطلب</button>
             </form>
-            <div id="successMsg" style="display:none; text-align:center; margin-top:20px; color:var(--primary);">تم الإرسال! سنتصل بك قريباً.</div>
+            <div id="successMsg" style="display:none; text-align:center; margin-top:20px; color:var(--primary);">تم الإرسال بنجاح!</div>
         </div>
     </section>
 </div>
 
 <footer>
-    <p>© 2026 VORTEX DIGITAL | صنع في أكادير</p>
+    <p>© 2026 VORTEX DIGITAL | تم التصميم بكل حب</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
 <script>
-    // تهيئة الخلفية الديناميكية (الجزيئات المستمرة)
+    // تهيئة الجزيئات
     particlesJS("particles-js", {
         "particles": {
-            "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
             "color": { "value": "#00f5ff" },
-            "opacity": { "value": 0.5 },
+            "opacity": { "value": 0.3 },
             "size": { "value": 3 },
             "line_linked": { "enable": true, "distance": 150, "color": "#00f5ff", "opacity": 0.2, "width": 1 },
             "move": { "enable": true, "speed": 2 }
         },
-        "interactivity": {
-            "events": { "onhover": { "enable": true, "mode": "grab" } }
-        }
+        "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } }
     });
 
     function goTo(id) {
@@ -292,7 +308,7 @@
             headers: { 'Accept': 'application/json' }
         }).then(() => {
             document.getElementById('successMsg').style.display = 'block';
-            btn.innerText = "تم بنجاح";
+            btn.innerText = "تم الإرسال";
         });
     });
 </script>
