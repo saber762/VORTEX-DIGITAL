@@ -1,267 +1,336 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VORTEX DIGITAL</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-<style>
-/* Reset */
-*{margin:0; padding:0; box-sizing:border-box;}
-html, body{width:100%; height:100%; scroll-behavior:smooth;}
-body{
-  background:#0f172a;
-  color:white;
-  font-family:'Cairo',sans-serif;
-  overflow-x:hidden;
-  line-height:1.6;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEX DIGITAL | الحلول الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00f5ff;
+            --secondary: #ff00ff;
+            --bg-dark: #020617;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
 
-/* الصفحات */
-.page{display:none; width:100%; min-height:100vh; animation: fadePage 0.6s ease;}
-.page.active{display:block;}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-/* الهيدر */
-header{
-  min-height:100vh;
-  width:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-  padding:20px;
-  background:linear-gradient(135deg,#111827,#0f172a);
-  position:relative;
-  overflow:hidden;
-}
-header::before{
-  content:"";
-  position:absolute; top:0; left:0; width:100%; height:100%;
-  background:radial-gradient(circle at 20% 30%, #ff00ff, transparent 30%), radial-gradient(circle at 80% 70%, #00f5ff, transparent 30%);
-  animation: moveBG 20s linear infinite;
-  z-index:0; opacity:0.15;
-}
-header h1{
-  font-size:clamp(2.5rem,5vw,4rem);
-  background:linear-gradient(45deg,#00f5ff,#ff00ff,#ffdd00);
-  background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  position:relative; z-index:1; animation: fadeInDown 1.5s ease forwards;
-}
-header p{
-  margin-top:20px; font-size:1.2rem; color:#ccc; max-width:600px;
-  position:relative; z-index:1; animation: fadeInUp 1.5s ease 0.5s forwards; opacity:0;
-}
-header button{margin-top:30px; opacity:0; position:relative; z-index:1; animation: fadeInUp 1.5s ease 1s forwards;}
+        /* حلفية متحركة ناعمة */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 245, 255, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
 
-/* 🔥 إضافة معرض الخدمات */
-.service-gallery{
-  margin-top:50px;
-}
+        /* الهيدر الاحترافي */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072') center/cover;
+            position: relative;
+        }
 
-.service-gallery h3{
-  margin-bottom:20px;
-  font-size:1.5rem;
-}
+        header::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.8), var(--bg-dark));
+        }
 
-.media-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+        }
 
-.media-item{
-  background:#111827;
-  padding:10px;
-  border-radius:15px;
-  overflow:hidden;
-  transition:0.4s;
-}
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.media-item:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #00f5ff,0 0 30px #ff00ff;
-}
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 35px;
+        }
 
-.media-item img,
-.media-item video{
-  width:100%;
-  border-radius:10px;
-}
+        /* الأزرار */
+        .btn-main {
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0, 245, 255, 0.2);
+        }
 
-/* الباقات */
-#packages{margin-top:40px;}
-#packages h2{margin-bottom:20px;}
-.package-cards{display:flex; flex-wrap:wrap; justify-content:center; gap:20px;}
-.package-card{
-  background:linear-gradient(135deg,#111827,#0f172a); padding:20px; border-radius:20px; width:250px;
-  text-align:center; transition:0.5s; position:relative; overflow:hidden; cursor:default;
-}
-.package-card::before{
-  content:""; position:absolute; top:0; left:0; width:100%; height:100%;
-  background:linear-gradient(45deg,#ff00ff,#00f5ff,#ffdd00,#ff00ff); opacity:0; transition:0.5s; z-index:0;
-}
-.package-card:hover::before{opacity:0.15; transform:scale(1.2);}
-.package-card h3, .package-card p, .package-card .price{position:relative; z-index:1;}
-.package-card .price{font-weight:bold; margin-bottom:15px;}
-.package-card button{
-  margin-top:15px; padding:10px 20px; border:none; border-radius:20px;
-  background:linear-gradient(45deg,#00f5ff,#ff00ff); color:white; font-size:1rem; cursor:pointer; font-weight:bold; transition:0.3s; z-index:2; position:relative;
-}
-.package-card button:hover{transform:scale(1.1); box-shadow:0 0 15px #00f5ff,0 0 25px #ff00ff;}
+        .btn-main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 245, 255, 0.4);
+        }
 
-/* باقي الصفحات */
-#services, #formPage, #thankYou{padding:60px 10%; text-align:center;}
-button{margin:20px; padding:15px 30px; border:none; border-radius:30px; background:linear-gradient(45deg,#00f5ff,#ff00ff); color:white; font-size:1rem; cursor:pointer; transition:0.3s; font-weight:bold;}
-button:hover{transform:scale(1.05); box-shadow:0 0 20px #ff00ff,0 0 40px #00f5ff;}
-input, textarea{padding:12px; margin:10px 0; border-radius:10px; border:none; width:90%; max-width:400px; font-family:'Cairo',sans-serif;}
-input:focus, textarea:focus{outline:none; box-shadow:0 0 10px #00f5ff;}
-textarea{resize:none;}
-h1,h2,h3{margin-bottom:20px;}
-footer{padding:30px; text-align:center; background:#0b1120; color:#777; font-family:'Montserrat',sans-serif;}
-@keyframes fadeInDown{0%{opacity:0; transform:translateY(-50px);}100%{opacity:1; transform:translateY(0);}}
-@keyframes fadeInUp{0%{opacity:0; transform:translateY(50px);}100%{opacity:1; transform:translateY(0);}}
-@keyframes moveBG{0%{background-position:0 0,100% 100%;}50%{background-position:100% 0,0 100%;}100%{background-position:0 0,100% 100%;}}
-@keyframes fadePage{from{opacity:0;}to{opacity:1;}}
-@media(max-width:768px){
-  #services,#formPage,#thankYou{padding:40px 5%;}
-  .package-card{width:90%;}
-}
-.success-message{color:#00ff99;font-weight:bold;margin-top:20px;}
-</style>
+        /* أقسام المحتوى */
+        section { padding: 80px 10%; }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        /* شبكة الخدمات (مستوحاة من JumpBot) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 24px;
+            text-align: center;
+            transition: 0.4s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-10px);
+        }
+
+        .glass-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* الباقات (مستوحاة من الصورة الثالثة) */
+        .price-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(2, 6, 23, 1) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            display: block;
+        }
+
+        /* الفورم الاحترافي */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+        }
+
+        input:focus { border-color: var(--primary); outline: none; }
+
+        /* الانتقالات */
+        .page { display: none; animation: fadeInUp 0.8s ease; }
+        .page.active { display: block; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* الميديا كويري للهاتف */
+        @media (max-width: 768px) {
+            section { padding: 50px 5%; }
+            .price-card.featured { transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
 
-<!-- الصفحة الرئيسية -->
+<div class="bg-glow"></div>
+
 <div class="page active" id="home">
-<header>
-<h1>VORTEX DIGITAL</h1>
-<p>نصنع لك مواقع ومتاجر إلكترونية احترافية بتقنيات الذكاء الاصطناعي لجذب المزيد من العملاء.</p>
-<button onclick="goTo('services')">ابدأ مشروعك الآن</button>
-</header>
+    <header>
+        <div class="hero-content">
+            <h1>VORTEX DIGITAL</h1>
+            <p>نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات الذكاء الاصطناعي والبرمجة الحديثة.</p>
+            <button class="btn-main" onclick="goTo('services')">اكتشف خدماتنا <i class="fas fa-arrow-left"></i></button>
+        </div>
+    </header>
 
-<section id="packages">
-<h2>عروضنا وباقاتنا</h2>
-<div class="package-cards">
-  <div class="package-card">
-    <h3>موقع تعريفي صفحة واحدة</h3>
-    <p>صفحة تعريفية مع QR وأيقونات التواصل</p>
-    <p class="price">السعر: 300 درهم</p>
-    <button onclick="choosePackage('موقع تعريفي صفحة واحدة', 300)">اختر هذه الباقة</button>
-  </div>
-  <div class="package-card">
-    <h3>صور إعلانية احترافية</h3>
-    <p>3 صور إعلانية عالية الجودة لترويج مشروعك</p>
-    <p class="price">السعر: 150 درهم</p>
-    <button onclick="choosePackage('صور إعلانية احترافية', 150)">اختر هذه الباقة</button>
-  </div>
-  <div class="package-card">
-    <h3>موقع إلكتروني كامل</h3>
-    <p>موقع كامل بمميزات متعددة وروابط تواصل ودفع</p>
-    <p class="price">السعر: حسب الطلب</p>
-    <button onclick="choosePackage('موقع إلكتروني كامل', 'حسب الطلب')">اختر هذه الباقة</button>
-  </div>
-</div>
-</section>
+    <section>
+        <div class="section-title">
+            <h2>باقاتنا المتميزة</h2>
+            <p>اختر الخطة التي تناسب حجم طموحك</p>
+        </div>
+        <div class="grid-container">
+            <div class="price-card">
+                <h3>باقة الانطلاق</h3>
+                <span class="price-tag">300 درهم</span>
+                <p>موقع صفحة واحدة (Landing Page) بتصميم عصري وجذاب.</p>
+                <button class="btn-main" style="width:100%; margin-top:20px;" onclick="choosePackage('موقع تعريفي', 300)">اطلب الآن</button>
+            </div>
+            <div class="price-card featured">
+                <div style="position:absolute; top:10px; left:-30px; background:var(--secondary); padding:5px 40px; transform:rotate(-45deg); font-size:0.8rem;">الأكثر طلباً</div>
+                <h3>هوية متكاملة</h3>
+                <span class="price-tag">150 درهم</span>
+                <p>تصاميم إعلانية احترافية لترويج علامتك التجارية بقوة.</p>
+                <button class="btn-main" style="width:100%; margin-top:20px;" onclick="choosePackage('صور إعلانية', 150)">اطلب الآن</button>
+            </div>
+            <div class="price-card">
+                <h3>باقة الشركات</h3>
+                <span class="price-tag">اتصل بنا</span>
+                <p>متجر إلكتروني متكامل مع نظام دفع وإدارة مخزون ذكية.</p>
+                <button class="btn-main" style="width:100%; margin-top:20px;" onclick="choosePackage('موقع كامل', 'حسب الطلب')">استشارة مجانية</button>
+            </div>
+        </div>
+    </section>
 </div>
 
-<!-- صفحة الخدمات -->
 <div class="page" id="services">
-<h2>اختر الخدمة التي تريدها</h2>
-
-<button onclick="goToForm('تصميم إعلانات')">تصميم إعلانات</button>
-<button onclick="goToForm('متجر إلكتروني')">متجر إلكتروني</button>
-<button onclick="goToForm('موقع تعريفي احترافي')">موقع تعريفي</button>
-
-<!-- 🔥 معرض أعمال الخدمات -->
-<div class="service-gallery">
-  <h3>نماذج من أعمالنا</h3>
-
-  <div class="media-grid">
-
-    <!-- صورة -->
-    <div class="media-item">
-      <img src="images/work1.jpg" alt="تصميم إعلان">
-    </div>
-
-    <!-- صورة -->
-    <div class="media-item">
-      <img src="images/work2.jpg" alt="موقع إلكتروني">
-    </div>
-
-    <!-- فيديو -->
-    <div class="media-item">
-      <video controls>
-        <source src="videos/demo.mp4" type="video/mp4">
-        المتصفح لا يدعم عرض الفيديو
-      </video>
-    </div>
-
-  </div>
+    <section>
+        <div class="section-title">
+            <h2>ماذا نقدم لك؟</h2>
+            <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 20px;">العودة للرئيسية</button>
+        </div>
+        <div class="grid-container">
+            <div class="glass-card" onclick="goToForm('تصميم متجر ذكي')">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>متاجر إلكترونية</h3>
+                <p>متاجر سريعة، متجاوبة، ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
+            </div>
+            <div class="glass-card" onclick="goToForm('تصميم جرافيك')">
+                <i class="fas fa-paint-brush"></i>
+                <h3>تصميم إبداعي</h3>
+                <p>بوسترات، شعارات، وهويات بصرية تخطف الأنظار.</p>
+            </div>
+            <div class="glass-card" onclick="goToForm('تطوير ويب')">
+                <i class="fas fa-code"></i>
+                <h3>تطوير مخصص</h3>
+                <p>برمجة منصات خاصة تلبي احتياجات عملك المعقدة.</p>
+            </div>
+        </div>
+    </section>
 </div>
 
-</div>
-
-<!-- صفحة النموذج -->
 <div class="page" id="formPage">
-<h2 id="formTitle">نموذج مشروعك</h2>
-<form id="projectForm">
-<input type="text" name="name" id="name" placeholder="الاسم الكامل" required>
-<input type="text" name="company" id="company" placeholder="اسم الشركة أو المشروع" required>
-<input type="text" name="projectType" id="projectType" readonly>
-<input type="text" name="price" id="packagePrice" readonly>
-<textarea name="details" id="details" placeholder="ماذا تريد أن نعمل لك؟" rows="4" required></textarea>
-<input type="tel" name="phone" id="phone" placeholder="رقم الهاتف" required>
-<input type="email" name="email" id="email" placeholder="البريد الإلكتروني" required>
-<button type="submit">إرسال المشروع</button>
-<div class="success-message" id="successMessage" style="display:none;">تم إرسال مشروعك بنجاح!</div>
-</form>
+    <section>
+        <div class="section-title">
+            <h2 id="formTitle">ابدأ مشروعك</h2>
+            <p>املأ البيانات وسنتواصل معك في أقل من 24 ساعة</p>
+        </div>
+        <div class="form-container">
+            <form id="projectForm">
+                <input type="text" name="name" placeholder="اسمك الكريم" required>
+                <input type="text" name="company" placeholder="اسم النشاط التجاري" required>
+                <input type="text" id="projectType" name="service" readonly>
+                <input type="text" id="packagePrice" name="price" readonly>
+                <textarea name="details" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required></textarea>
+                <input type="tel" name="phone" placeholder="رقم الواتساب" required>
+                <button type="submit" class="btn-main" style="width: 100%;">إرسال الطلب الآن</button>
+            </form>
+            <div id="successMsg" style="display:none; text-align:center; margin-top:20px; color:var(--primary);">
+                <i class="fas fa-check-circle"></i> تم الإرسال بنجاح!
+            </div>
+        </div>
+    </section>
 </div>
 
-<footer>
-© 2026 VORTEX DIGITAL - All Rights Reserved
+<footer style="text-align:center; padding:40px; border-top: 1px solid var(--glass-border); color: #64748b;">
+    <p>© 2026 VORTEX DIGITAL | تم التصميم بكل حب بواسطة فريقنا التقني</p>
 </footer>
 
 <script>
-function goTo(pageId){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(pageId).classList.add('active');
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function goToForm(service){
-  document.getElementById('formTitle').innerText = 'نموذج مشروعك - ' + service;
-  document.getElementById('projectType').value = service;
-  goTo('formPage');
-}
-
-function choosePackage(packageName, price){
-  document.getElementById('formTitle').innerText = 'نموذج مشروعك - ' + packageName;
-  document.getElementById('projectType').value = packageName;
-  document.getElementById('packagePrice').value = price;
-  goTo('formPage');
-}
-
-// AJAX Formspree submit
-document.getElementById('projectForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const form = e.target;
-  const data = new FormData(form);
-  fetch("https://formspree.io/f/mwvnnoez", {
-    method: "POST",
-    body: data,
-    headers: { 'Accept': 'application/json' }
-  }).then(response=>{
-    if(response.ok){
-      document.getElementById('successMessage').style.display = 'block';
-      form.reset();
-    } else {
-      alert("حدث خطأ أثناء الإرسال، حاول مرة أخرى.");
+    function goTo(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
-  }).catch(error=>{
-    alert("حدث خطأ في الاتصال، حاول مرة أخرى.");
-  });
-});
+
+    function choosePackage(name, price) {
+        document.getElementById('projectType').value = "باقة: " + name;
+        document.getElementById('packagePrice').value = "السعر المتوقع: " + price;
+        goTo('formPage');
+    }
+
+    function goToForm(service) {
+        document.getElementById('projectType').value = service;
+        document.getElementById('packagePrice').value = "سيتم التحديد بعد النقاش";
+        goTo('formPage');
+    }
+
+    document.getElementById('projectForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.innerText = "جاري الإرسال...";
+        
+        fetch("https://formspree.io/f/mwvnnoez", {
+            method: "POST",
+            body: new FormData(this),
+            headers: { 'Accept': 'application/json' }
+        }).then(res => {
+            if(res.ok) {
+                document.getElementById('successMsg').style.display = 'block';
+                e.target.reset();
+                btn.innerText = "تم الإرسال";
+            }
+        });
+    });
 </script>
 
 </body>
