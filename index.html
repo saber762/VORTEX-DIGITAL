@@ -18,7 +18,7 @@
             <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-blue-data-points-moving-944-large.mp4" type="video/mp4">
         </video>
         <div class="hero-content">
-            <h1 class="vortex-v-text">VORTEX DIGITAL</h1>
+            <h1>VORTEX DIGITAL</h1>
             <p>نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.</p>
             <br>
             <button class="btn-main" onclick="goTo('services')">اكتشف خدماتنا <i class="fas fa-arrow-left"></i></button>
@@ -30,17 +30,17 @@
             <h2>باقاتنا المتميزة</h2>
         </div>
         <div class="grid-container">
-            <div class="glass-card vortex-card">
+            <div class="price-card">
                 <h3>باقة الانطلاق</h3>
                 <span class="price-tag">300 درهم</span>
                 <button class="btn-main" style="width:100%;" onclick="choosePackage('موقع تعريفي', 300)">اطلب الآن</button>
             </div>
-            <div class="glass-card vortex-card featured-card">
+            <div class="price-card featured">
                 <h3>هوية متكاملة</h3>
-                <span class="price-tag featured-price">150 درهم</span>
-                <button class="btn-main featured-btn" style="width:100%;" onclick="choosePackage('صور إعلانية', 150)">اطلب الآن</button>
+                <span class="price-tag">150 درهم</span>
+                <button class="btn-main" style="width:100%;" onclick="choosePackage('صور إعلانية', 150)">اطلب الآن</button>
             </div>
-            <div class="glass-card vortex-card">
+            <div class="price-card">
                 <h3>باقة الشركات</h3>
                 <span class="price-tag">اتصل بنا</span>
                 <button class="btn-main" style="width:100%;" onclick="choosePackage('موقع كامل', 'حسب الطلب')">استشارة</button>
@@ -48,35 +48,38 @@
         </div>
     </section>
 
-    <section style="background: rgba(0, 0, 0, 0.2);">
-        <div class="section-title">
-            <h2>مشاريعنا الاحترافية</h2>
-            <p>دقة في التصميم، قوة في الأداء</p>
-        </div>
-        <div class="grid-container">
-            <div class="showcase-card">
-                <img src="https://images.unsplash.com/photo-1551288049-bbbda5366392?auto=format&fit=crop&q=80&w=800" alt="Dashboard" class="showcase-img">
-                <div class="showcase-info">
-                    <h4>واجهات لوحة التحكم</h4>
-                    <p>تصميم أنظمة إدارة البيانات بواجهات زجاجية عصرية متفاعلة.</p>
-                </div>
-            </div>
-            <div class="showcase-card showcase-featured-v">
-                <img src="https://i.ibb.co/6P01K0s/0129497e174b01e7498305c21f7c13a6.jpg" alt="Smart Web App" class="showcase-img">
-                <div class="showcase-info">
-                    <h4>تطبيقات الويب الذكية</h4>
-                    <p>برمجيات قوية مخصصة لتلبية احتياجات عملك المعقدة.</p>
-                </div>
-            </div>
-            <div class="showcase-card">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="E-commerce" class="showcase-img">
-                <div class="showcase-info">
-                    <h4>متاجر الجيل القادم</h4>
-                    <p>تجربة تسوق فريدة تجمع بين السرعة والجمالية.</p>
-                </div>
+<section style="background: rgba(0, 0, 0, 0.2);">
+    <div class="section-title">
+        <h2>مشاريعنا الاحترافية</h2>
+        <p>دقة في التصميم، قوة في الأداء</p>
+    </div>
+    <div class="grid-container">
+        <div class="showcase-card">
+            <img src="https://images.unsplash.com/photo-1551288049-bbbda5366392?auto=format&fit=crop&q=80&w=800" alt="Dashboard" class="showcase-img">
+            <div class="showcase-info">
+                <i class="fas fa-laptop-code"></i>
+                <h4>واجهات لوحة التحكم</h4>
+                <p>تصميم أنظمة إدارة البيانات بواجهات زجاجية عصرية متفاعلة.</p>
             </div>
         </div>
-    </section>
+        <div class="showcase-card">
+            <img src="https://i.ibb.co/6P01K0s/0129497e174b01e7498305c21f7c13a6.jpg" alt="Smart Web App" class="showcase-img">
+            <div class="showcase-info">
+                <i class="fas fa-shield-halved"></i>
+                <h4>تطبيقات الويب الذكية</h4>
+                <p>برمجيات قوية مخصصة لتلبية احتياجات عملك المعقدة بدقة عالية.</p>
+            </div>
+        </div>
+        <div class="showcase-card">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="E-commerce" class="showcase-img">
+            <div class="showcase-info">
+                <i class="fas fa-shopping-cart"></i>
+                <h4>متاجر الجيل القادم</h4>
+                <p>تجربة تسوق فريدة تجمع بين السرعة والجمالية في التصميم.</p>
+            </div>
+        </div>
+    </div>
+</section>
 </div>
 
 <div class="page" id="services">
@@ -86,20 +89,20 @@
             <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 30px;">العودة للرئيسية</button>
         </div>
         <div class="grid-container">
-            <div class="glass-card vortex-service-featured-v" onclick="goToForm('تصميم متجر ذكي')">
-                <i class="fas fa-shopping-cart"></i>
+            <div class="price-card" onclick="goToForm('تصميم متجر ذكي')">
+                <i class="fas fa-shopping-cart" style="font-size: 2rem; color: var(--primary);"></i>
                 <h3>متاجر إلكترونية</h3>
-                <p>متاجر سريعة ومجهزة للتحويل المباشر.</p>
+                <p>متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
             </div>
-            <div class="glass-card vortex-service-featured-v" onclick="goToForm('تصميم جرافيك')">
-                <i class="fas fa-paint-brush"></i>
+            <div class="price-card" onclick="goToForm('تصميم جرافيك')">
+                <i class="fas fa-paint-brush" style="font-size: 2rem; color: var(--primary);"></i>
                 <h3>تصميم إبداعي</h3>
                 <p>بوسترات وشعارات تخطف الأنظار.</p>
             </div>
-            <div class="glass-card vortex-service-featured-v" onclick="goToForm('تطوير ويب')">
-                <i class="fas fa-code"></i>
+            <div class="price-card" onclick="goToForm('تطوير ويب')">
+                <i class="fas fa-code" style="font-size: 2rem; color: var(--primary);"></i>
                 <h3>تطوير ويب</h3>
-                <p>برمجة منصات خاصة تلبي احتياجاتك.</p>
+                <p>برمجة منصات خاصة تلبي احتياجات عملك.</p>
             </div>
         </div>
     </section>
@@ -107,14 +110,14 @@
 
 <div class="page" id="formPage">
     <section>
-        <div class="glass-card" style="max-width: 600px; margin: auto;">
+        <div style="max-width: 600px; margin: auto; background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border);">
             <h2 id="formTitle" style="text-align:center; margin-bottom:30px;">ابدأ مشروعك</h2>
             <form id="projectForm">
-                <input type="text" name="name" placeholder="اسمك الكريم" required style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid var(--v-cyan); background:rgba(0,0,0,0.3); color:white;">
-                <input type="text" id="projectType" name="service" readonly style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid var(--v-cyan); background:rgba(0,0,0,0.3); color:white;">
-                <input type="text" id="packagePrice" name="price" readonly style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid var(--v-cyan); background:rgba(0,0,0,0.3); color:white;">
-                <textarea name="details" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid var(--v-cyan); background:rgba(0,0,0,0.3); color:white;"></textarea>
-                <input type="tel" name="phone" placeholder="رقم الواتساب" required style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid var(--v-cyan); background:rgba(0,0,0,0.3); color:white;">
+                <input type="text" name="name" placeholder="اسمك الكريم" required style="width:100%; padding:12px; margin-bottom:15px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); color:white; border-radius:8px;">
+                <input type="text" id="projectType" name="service" readonly style="width:100%; padding:12px; margin-bottom:15px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); color:white; border-radius:8px;">
+                <input type="text" id="packagePrice" name="price" readonly style="width:100%; padding:12px; margin-bottom:15px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); color:white; border-radius:8px;">
+                <textarea name="details" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required style="width:100%; padding:12px; margin-bottom:15px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); color:white; border-radius:8px;"></textarea>
+                <input type="tel" name="phone" placeholder="رقم الواتساب" required style="width:100%; padding:12px; margin-bottom:15px; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); color:white; border-radius:8px;">
                 <button type="submit" class="btn-main" style="width: 100%;">إرسال الطلب</button>
             </form>
         </div>
@@ -127,6 +130,5 @@
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
