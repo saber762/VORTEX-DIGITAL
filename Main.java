@@ -24,5 +24,6 @@ function choosePackage(name, price) {
 
 function goToForm(service) {
     document.getElementById('projectType').value = service;
+    document.getElementById('packagePrice').value = "حسب الطلب";
     goTo('formPage');
 }
