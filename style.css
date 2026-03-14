@@ -1,0 +1,123 @@
+:root {
+    --v-cyan: #00f5ff;
+    --v-magenta: #ff00ff;
+    --v-orange: #ff914d;
+    --v-bg-dark: #0e0024;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --neon-border-v: 1px solid rgba(255, 0, 255, 0.3);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--v-bg-dark);
+    color: #fff;
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+#particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+header {
+    height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; text-align: center; padding: 20px; position: relative; overflow: hidden; background: #000;
+}
+
+.header-video {
+    position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+    width: auto; height: auto; transform: translate(-50%, -50%); z-index: 0; opacity: 0.5; object-fit: cover;
+}
+
+header::after {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(14, 0, 36, 0.7), var(--v-bg-dark)); z-index: 1;
+}
+
+.hero-content { position: relative; z-index: 10; max-width: 900px; }
+
+.vortex-v-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    background: linear-gradient(to right, var(--v-cyan), var(--v-magenta), var(--v-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+}
+
+.btn-main {
+    padding: 15px 40px; border-radius: 50px; border: none;
+    background: linear-gradient(45deg, var(--v-magenta), var(--v-orange));
+    color: white; font-weight: bold; cursor: pointer; transition: 0.4s;
+    box-shadow: 0 10px 20px rgba(255, 0, 255, 0.2);
+}
+
+.btn-main:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 0, 255, 0.4);
+}
+
+section { padding: 80px 10%; position: relative; z-index: 2; }
+.section-title { text-align: center; margin-bottom: 50px; }
+.section-title h2 {
+    font-size: 2.5rem; color: #fff; font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 10px var(--v-cyan);
+}
+
+.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: var(--neon-border-v);
+    border-radius: 20px;
+    padding: 30px;
+    transition: 0.5s ease;
+}
+
+.vortex-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--v-magenta);
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
+}
+
+.featured-card {
+    background: linear-gradient(180deg, rgba(255, 0, 255, 0.1) 0%, rgba(255, 145, 77, 0.05) 100%);
+    border: 2px solid var(--v-magenta);
+    transform: scale(1.05);
+}
+
+.featured-btn { background: linear-gradient(45deg, var(--v-orange), var(--v-magenta)); }
+
+.price-tag { font-size: 2.5rem; font-weight: bold; margin: 20px 0; display: block; color: var(--v-cyan); }
+.featured-price { color: var(--v-orange); }
+
+.showcase-card {
+    background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
+    border: var(--glass-border); border-radius: 20px; padding: 15px; transition: 0.5s; overflow: hidden;
+}
+
+.showcase-card:hover { border-color: var(--v-magenta); box-shadow: 0 0 30px rgba(255, 0, 255, 0.15); }
+
+.showcase-img { width: 100%; height: 200px; border-radius: 15px; object-fit: cover; margin-bottom: 20px; }
+
+.vortex-service-featured-v {
+    text-align: center; cursor: pointer; border: 1px solid var(--v-cyan);
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.03), rgba(255, 0, 255, 0.03));
+}
+
+.vortex-service-featured-v i { font-size: 2rem; margin-bottom: 15px; display: block; text-shadow: 0 0 10px var(--v-cyan); }
+
+.page { display: none; animation: fadeInUp 0.8s ease; }
+.page.active { display: block; }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* التصحيح هنا: استخدام المتغير مباشرة للبوردر */
+footer { 
+    text-align: center; 
+    padding: 40px; 
+    border-top: var(--neon-border-v); 
+    color: rgba(255, 255, 255, 0.5); 
+}
