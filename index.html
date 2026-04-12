@@ -112,49 +112,37 @@
         .form-container input[readonly] { background: rgba(0,0,0,0.2); color: var(--primary); font-weight:bold; }
         .form-container button { margin-top:10px; }
 
-        /* =========================================
-           التعديلات الخاصة بالهاتف (Responsive)
-           ========================================= */
-        @media (max-width: 768px) {
+        /* تعديلات الهاتف لضمان التنظيم والمساحات (مثل الصورة اليمنى) */
+        @media screen and (max-width: 768px) {
             section {
-                padding: 40px 20px; /* تقليل البادينق الجانبي لزيادة المساحة */
+                padding: 60px 20px !important; /* مساحات عمودية كبيرة */
             }
 
             .grid-container {
-                display: flex;
-                flex-direction: column; /* ترتيب العناصر واحد فوق واحد */
-                align-items: center;
-                gap: 30px; /* مسافة بين الكروت */
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 30px !important;
             }
 
-            /* ضبط عرض الكروت لتكون متناسقة وغير ملتصقة بالحواف */
             .price-card, .showcase-card, .glass-card {
-                width: 95%; 
-                max-width: 340px; /* منع العرض المفرط */
-                margin: 0 auto;
-                padding: 25px 20px; /* مساحة داخلية للنص */
+                width: 100% !important;
+                max-width: 330px !important; /* ليكون ملموماً في المنتصف */
+                margin: 0 auto !important;
+                padding: 30px 20px !important;
+                border-radius: 25px !important;
             }
 
             .price-card.featured {
-                transform: scale(1); /* إلغاء التكبير في الهاتف للحفاظ على التناسق */
+                transform: scale(1) !important; /* إلغاء التكبير للهاتف */
             }
 
             .hero-content h1 {
-                font-size: 2.5rem; /* تصغير العنوان الرئيسي ليناسب الشاشة */
+                font-size: 2.2rem !important;
             }
 
             .section-title h2 {
-                font-size: 1.8rem;
-                margin-bottom: 10px;
-            }
-
-            .showcase-img {
-                height: 180px; /* تصغير ارتفاع الصور قليلاً */
-            }
-
-            /* إضافة مساحة أسفل العناوين لراحة العين */
-            .section-title {
-                margin-bottom: 35px;
+                font-size: 1.8rem !important;
             }
         }
     </style>
