@@ -111,6 +111,52 @@
         }
         .form-container input[readonly] { background: rgba(0,0,0,0.2); color: var(--primary); font-weight:bold; }
         .form-container button { margin-top:10px; }
+
+        /* =========================================
+           التعديلات الخاصة بالهاتف (Responsive)
+           ========================================= */
+        @media (max-width: 768px) {
+            section {
+                padding: 40px 20px; /* تقليل البادينق الجانبي لزيادة المساحة */
+            }
+
+            .grid-container {
+                display: flex;
+                flex-direction: column; /* ترتيب العناصر واحد فوق واحد */
+                align-items: center;
+                gap: 30px; /* مسافة بين الكروت */
+            }
+
+            /* ضبط عرض الكروت لتكون متناسقة وغير ملتصقة بالحواف */
+            .price-card, .showcase-card, .glass-card {
+                width: 95%; 
+                max-width: 340px; /* منع العرض المفرط */
+                margin: 0 auto;
+                padding: 25px 20px; /* مساحة داخلية للنص */
+            }
+
+            .price-card.featured {
+                transform: scale(1); /* إلغاء التكبير في الهاتف للحفاظ على التناسق */
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem; /* تصغير العنوان الرئيسي ليناسب الشاشة */
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+
+            .showcase-img {
+                height: 180px; /* تصغير ارتفاع الصور قليلاً */
+            }
+
+            /* إضافة مساحة أسفل العناوين لراحة العين */
+            .section-title {
+                margin-bottom: 35px;
+            }
+        }
     </style>
 </head>
 <body>
