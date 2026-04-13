@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
     <style>
         :root {
-            --primary: #00f5ff;
-            --secondary: #ff00ff;
-            --bg-dark: #0a0a0a;
-            --card-bg: rgba(255, 255, 255, 0.07);
-            --glass-border: rgba(0, 245, 255, 0.3);
-            --text-light: #e0e0e0;
+            --primary: #00f5ff; /* أزرق فاتح */
+            --secondary: #ff00ff; /* أرجواني / وردي */
+            --bg-dark: #0a0a0a; /* خلفية داكنة مريحة للعين */
+            --card-bg: rgba(255, 255, 255, 0.07); /* خلفية البطاقات */
+            --glass-border: rgba(0, 245, 255, 0.3); /* إطار شفاف للبطاقات */
+            --text-light: #e0e0e0; /* نصوص فاتحة للوضوح */
         }
 
         * { margin:0; padding:0; box-sizing: border-box; }
@@ -67,111 +67,202 @@
 
         .grid-container { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:25px; }
 
+        /* البطاقات الزجاجية */
         .showcase-card, .glass-card {
             background: var(--card-bg);
             backdrop-filter: blur(18px);
             border: 1px solid var(--glass-border);
             border-radius:20px; padding:20px;
-            transition:0.5s;
+            transition:0.5s cubic-bezier(0.4,0,0.2,1);
+            position:relative; overflow:hidden;
             color: var(--text-light);
         }
 
-        .showcase-img { width:100%; height:200px; border-radius:15px; object-fit:cover; margin-bottom:15px; }
+        .showcase-card:hover, .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(0,245,255,0.2);
+        }
 
-        .price-card { border:1px solid var(--glass-border); border-radius:30px; padding:40px; text-align:center; }
-        .price-card.featured { transform: scale(1.05); }
-        .price-tag { font-size:2.5rem; margin:20px 0; color: var(--primary); }
+        .showcase-img { width:100%; height:200px; border-radius:15px; object-fit:cover; margin-bottom:15px; border:1px solid rgba(255,255,255,0.1); }
 
-        .page { display:none; }
+        .showcase-info i, .glass-card i { color: var(--primary); font-size:1.5rem; margin-bottom:10px; display:block; }
+        .showcase-info h4, .glass-card h3 { color:#fff; margin-bottom:8px; }
+        .showcase-info p, .glass-card p { color: #cbd5e1; font-size:0.95rem; }
+
+        /* بطاقات الأسعار */
+        .price-card { background: linear-gradient(180deg, rgba(30,41,59,0.6) 0%, rgba(10,10,10,1) 100%); border:1px solid var(--glass-border); border-radius:30px; padding:40px; text-align:center; }
+        .price-card.featured { border:2px solid var(--primary); transform: scale(1.05); }
+        .price-tag { font-size:2.5rem; font-weight:bold; margin:20px 0; display:block; color: var(--primary); }
+
+        /* الصفحات */
+        .page { display:none; animation: fadeInUp 0.8s ease; }
         .page.active { display:block; }
 
-        footer { text-align:center; padding:40px; }
+        @keyframes fadeInUp { from { opacity:0; transform: translateY(30px);} to { opacity:1; transform:translateY(0); } }
 
-        /* ✅ التعديل الوحيد (الفورم) */
-        .form-container {
-            max-width:600px;
-            margin:auto;
-            padding:0 15px;
-        }
+        footer { text-align:center; padding:40px; border-top:1px solid var(--glass-border); color:#64748b; }
 
+        /* الفورم */
+        .form-container { max-width:600px; margin:auto; }
         .form-container input, .form-container textarea {
-            width:100%; padding:12px 15px; margin-bottom:15px;
-            border-radius:10px; border:none;
-            background: rgba(255,255,255,0.1);
-            color: var(--text-light);
+            width:100%; padding:12px 15px; margin-bottom:15px; border-radius:10px; border:none; outline:none;
+            background: rgba(255,255,255,0.1); color: var(--text-light); font-size:1rem;
         }
-
-        @media (max-width:768px){
-            .form-container {
-                padding:0 10px;
-            }
-
-            .form-container button {
-                width:100%;
-            }
-        }
+        .form-container input[readonly] { background: rgba(0,0,0,0.2); color: var(--primary); font-weight:bold; }
+        .form-container button { margin-top:10px; }
     </style>
 </head>
-
 <body>
 
 <div id="particles-js"></div>
 
 <div class="page active" id="home">
-<header>
-<video class="header-video" autoplay loop muted playsinline>
-<source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-blue-data-points-moving-944-large.mp4">
-</video>
+    <header>
+        <video class="header-video" autoplay loop muted playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-blue-data-points-moving-944-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>VORTEX DIGITAL</h1>
+            <p>نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.</p>
+            <br>
+            <button class="btn-main" onclick="goTo('services')">اكتشف خدماتنا <i class="fas fa-arrow-left"></i></button>
+        </div>
+    </header>
 
-<div class="hero-content">
-<h1>VORTEX DIGITAL</h1>
-<p>نحن نبني المستقبل الرقمي</p>
-<button class="btn-main" onclick="goTo('services')">خدماتنا</button>
-</div>
-</header>
+    <section>
+        <div class="section-title">
+            <h2>باقاتنا المتميزة</h2>
+        </div>
+        <div class="grid-container">
+            <div class="price-card">
+                <h3>باقة الانطلاق</h3>
+                <span class="price-tag">300 درهم</span>
+                <button class="btn-main" style="width:100%;" onclick="choosePackage('موقع تعريفي', 300)">اطلب الآن</button>
+            </div>
+            <div class="price-card featured">
+                <h3>هوية متكاملة</h3>
+                <span class="price-tag">150 درهم</span>
+                <button class="btn-main" style="width:100%;" onclick="choosePackage('صور إعلانية', 150)">اطلب الآن</button>
+            </div>
+            <div class="price-card">
+                <h3>باقة الشركات</h3>
+                <span class="price-tag">اتصل بنا</span>
+                <button class="btn-main" style="width:100%;" onclick="choosePackage('موقع كامل', 'حسب الطلب')">استشارة</button>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: rgba(0, 0, 0, 0.2);">
+        <div class="section-title">
+            <h2>مشاريعنا الاحترافية</h2>
+            <p>دقة في التصميم، قوة في الأداء</p>
+        </div>
+        <div class="grid-container">
+            <div class="showcase-card">
+                <img src="https://images.unsplash.com/photo-1551288049-bbbda5366392?auto=format&fit=crop&q=80&w=2070" alt="Dashboard Design" class="showcase-img">
+                <div class="showcase-info">
+                    <i class="fas fa-laptop-code"></i>
+                    <h4>واجهات لوحة التحكم</h4>
+                    <p>تصميم أنظمة إدارة البيانات بواجهات زجاجية عصرية متفاعلة.</p>
+                </div>
+            </div>
+            <div class="showcase-card">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2015" alt="E-commerce UI" class="showcase-img">
+                <div class="showcase-info">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h4>متاجر الجيل القادم</h4>
+                    <p>تجربة تسوق فريدة تجمع بين السرعة والجمالية في التصميم.</p>
+                </div>
+            </div>
+            <div class="showcase-card">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070" alt="Cyber Security UI" class="showcase-img">
+                <div class="showcase-info">
+                    <i class="fas fa-shield-halved"></i>
+                    <h4>تطبيقات الويب الذكية</h4>
+                    <p>برمجيات قوية مخصصة لتلبية احتياجاتك التقنية المعقدة بدقة عالية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <div class="page" id="services">
-<section>
-<h2>الخدمات</h2>
-<button class="btn-main" onclick="goTo('home')">رجوع</button>
-<div class="grid-container">
-<div class="glass-card" onclick="goToForm('متجر')">متجر</div>
-<div class="glass-card" onclick="goToForm('تصميم')">تصميم</div>
-</div>
-</section>
+    <section>
+        <div class="section-title">
+            <h2>ماذا نقدم لك؟</h2>
+            <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 30px;">العودة للرئيسية</button>
+        </div>
+        <div class="grid-container">
+            <div class="glass-card" onclick="goToForm('تصميم متجر ذكي')">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>متاجر إلكترونية</h3>
+                <p>متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
+            </div>
+            <div class="glass-card" onclick="goToForm('تصميم جرافيك')">
+                <i class="fas fa-paint-brush"></i>
+                <h3>تصميم إبداعي</h3>
+                <p>بوسترات وشعارات تخطف الأنظار.</p>
+            </div>
+            <div class="glass-card" onclick="goToForm('تطوير ويب')">
+                <i class="fas fa-code"></i>
+                <h3>تطوير ويب</h3>
+                <p>برمجة منصات خاصة تلبي احتياجات عملك.</p>
+            </div>
+        </div>
+    </section>
 </div>
 
 <div class="page" id="formPage">
-<section>
-<div class="form-container">
-<h2>طلب</h2>
-<form>
-<input type="text" placeholder="اسمك">
-<input type="text" id="projectType" readonly>
-<input type="text" id="packagePrice" readonly>
-<textarea placeholder="تفاصيل"></textarea>
-<input type="tel" placeholder="رقمك">
-<button class="btn-main">إرسال</button>
-</form>
-</div>
-</section>
+    <section>
+        <div class="form-container">
+            <h2 id="formTitle" style="text-align:center; margin-bottom:30px;">ابدأ مشروعك</h2>
+            <form id="projectForm">
+                <input type="text" name="name" placeholder="اسمك الكريم" required>
+                <input type="text" id="projectType" name="service" readonly>
+                <input type="text" id="packagePrice" name="price" readonly>
+                <textarea name="details" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required></textarea>
+                <input type="tel" name="phone" placeholder="رقم الواتساب" required>
+                <button type="submit" class="btn-main" style="width: 100%;">إرسال الطلب</button>
+            </form>
+        </div>
+    </section>
 </div>
 
-<footer>© 2026 VORTEX DIGITAL</footer>
+<footer>
+    <p>© 2026 VORTEX DIGITAL | تم التصميم بكل احترافية</p>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
 <script>
-function goTo(id){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-}
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#00f5ff" },
+            "opacity": { "value": 0.3 },
+            "size": { "value": 3 },
+            "line_linked": { "enable": true, "distance": 150, "color": "#00f5ff", "opacity": 0.2, "width": 1 },
+            "move": { "enable": true, "speed": 2 }
+        },
+        "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } }
+    });
 
-function goToForm(service){
-document.getElementById('projectType').value=service;
-goTo('formPage');
-}
+    function goTo(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function choosePackage(name, price) {
+        document.getElementById('projectType').value = "باقة: " + name;
+        document.getElementById('packagePrice').value = "السعر: " + price;
+        goTo('formPage');
+    }
+
+    function goToForm(service) {
+        document.getElementById('projectType').value = service;
+        goTo('formPage');
+    }
 </script>
 
 </body>
