@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VORTEX DIGITAL | الحلول الذكية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Cairo:wght@300;400;700&family=Orbitron:wght@500;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -79,7 +79,6 @@
             transition: 0.3s;
         }
 
-        /* Responsive Navbar */
         @media (max-width: 768px) {
             .nav-links {
                 position: absolute;
@@ -94,9 +93,7 @@
                 display: none;
                 border-bottom: 1px solid var(--glass-border);
             }
-
             .nav-links.active { display: flex; }
-
             .hamburger { display: flex; }
         }
 
@@ -205,11 +202,118 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 18px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .showcase-card, .glass-card {
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: 0.5s cubic-bezier(0.4,0,0.2,1);
+            position: relative;
+            overflow: hidden;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0,245,255,0.2);
+        }
+
+        .glass-card i {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .glass-card h3 {
+            color: #fff;
+            margin-bottom: 14px;
+            font-size: 1.1rem;
+        }
+
+        .service-text {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+
+        /* Flip Animation */
+        .flip-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            height: 32px;
+            position: relative;
+            vertical-align: middle;
+            perspective: 600px;
+            margin: 0 4px;
+        }
+
+        .flip-word {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden;
+            animation: flipCycle 6s infinite;
+            opacity: 0;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .flip-word:nth-child(1) { animation-delay: 0s; }
+        .flip-word:nth-child(2) { animation-delay: 2s; }
+        .flip-word:nth-child(3) { animation-delay: 4s; }
+
+        /* Word 1 - Blue */
+        .flip-blue {
+            color: #00f5ff;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(0, 245, 255, 0.5);
+        }
+
+        /* Word 2 - Purple */
+        .flip-purple {
+            color: #ff00ff;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 800;
+            text-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Word 3 - Green */
+        .flip-green {
+            color: #39ff14;
+            font-family: 'Almarai', sans-serif;
+            font-weight: 800;
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+        }
+
+        @keyframes flipCycle {
+            0% { opacity: 0; transform: rotateX(90deg); }
+            4% { opacity: 1; transform: rotateX(0deg); }
+            29% { opacity: 1; transform: rotateX(0deg); }
+            33% { opacity: 0; transform: rotateX(-90deg); }
+            100% { opacity: 0; transform: rotateX(-90deg); }
+        }
+
+        .showcase-card {
             background: var(--card-bg);
             backdrop-filter: blur(18px);
             border: 1px solid var(--glass-border);
@@ -221,7 +325,7 @@
             color: var(--text-light);
         }
 
-        .showcase-card:hover, .glass-card:hover {
+        .showcase-card:hover {
             transform: translateY(-6px) scale(1.01);
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(0,245,255,0.2);
@@ -236,43 +340,22 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .showcase-info i, .glass-card i {
+        .showcase-info i {
             color: var(--primary);
             font-size: 1.2rem;
             margin-bottom: 8px;
             display: block;
         }
 
-        .showcase-info h4, .glass-card h3 {
+        .showcase-info h4 {
             color: #fff;
             margin-bottom: 6px;
             font-size: 1rem;
         }
 
-        .showcase-info p, .glass-card p {
+        .showcase-info p {
             color: #cbd5e1;
             font-size: 0.85rem;
-        }
-
-        .price-card {
-            background: linear-gradient(180deg, rgba(30,41,59,0.6) 0%, rgba(10,10,10,1) 100%);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 28px;
-            text-align: center;
-        }
-
-        .price-card.featured {
-            border: 2px solid var(--primary);
-            transform: scale(1.03);
-        }
-
-        .price-tag {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin: 14px 0;
-            display: block;
-            color: var(--primary);
         }
 
         .page {
@@ -334,7 +417,6 @@
 
         .form-container button { margin-top: 8px; }
 
-        /* WhatsApp Floating Button */
         .whatsapp-float {
             position: fixed;
             bottom: 16px;
@@ -356,20 +438,18 @@
 
         .whatsapp-float:hover { transform: scale(1.1); }
 
-        /* Responsive Mobile */
         @media (max-width: 768px) {
             .grid-container { grid-template-columns: 1fr; gap: 14px; }
-            .price-card.featured { transform: scale(1); }
             .showcase-img { height: 140px; }
             section { padding: 40px 4%; }
             .btn-main { padding: 8px 22px; font-size: 0.8rem; }
-            .price-tag { font-size: 1.5rem; }
+            .flip-wrapper { width: 80px; height: 28px; }
+            .flip-word { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">VORTEX DIGITAL</div>
         <div class="hamburger" onclick="toggleMenu()">
@@ -386,7 +466,6 @@
 
     <div id="particles-js"></div>
 
-    <!-- WhatsApp -->
     <a href="https://wa.me/212707538787" target="_blank" class="whatsapp-float">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -406,24 +485,37 @@
 
         <section>
             <div class="section-title">
-                <h2>باقاتنا المتميزة</h2>
+                <h2>خدماتنا المتميزة</h2>
+                <p>حلول رقمية متكاملة لتطوير مشروعك</p>
             </div>
             <div class="grid-container">
-                <div class="price-card">
-                    <h3>تصميم الإعلانات
-                    </h3>
-                    <span class="price-tag">300 درهم</span>
-                    <button class="btn-main" style="width:100%;" onclick="choosePackage('موقع تعريفي', 300)">اطلب الآن</button>
+                <div class="glass-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>تصميم المحتوى البصري</h3>
+                    <div class="service-text">
+                        نصنع لك محتوى بصرياً
+                        <span class="flip-wrapper">
+                            <span class="flip-word flip-blue">جذاباً</span>
+                            <span class="flip-word flip-purple">قوياً</span>
+                            <span class="flip-word flip-green">مبتكراً</span>
+                        </span>
+                        لتطوير مشروعك الخاص
+                    </div>
+                    <button class="btn-main" style="width:100%;" onclick="goToForm('تصميم محتوى بصري')">اطلب الخدمة الآن</button>
                 </div>
-                <div class="price-card featured">
-                    <h3>المواقع التعريفية</h3>
-                    <span class="price-tag">150 درهم</span>
-                    <button class="btn-main" style="width:100%;" onclick="choosePackage('صور إعلانية', 150)">اطلب الآن</button>
-                </div>
-                <div class="price-card">
-                    <h3>باقة الشركات</h3>
-                    <span class="price-tag">اتصل بنا</span>
-                    <button class="btn-main" style="width:100%;" onclick="choosePackage('موقع كامل', 'حسب الطلب')">استشارة</button>
+                <div class="glass-card">
+                    <i class="fas fa-code"></i>
+                    <h3>تصميم المواقع التعريفية</h3>
+                    <div class="service-text">
+                        تصميم موقع لمشروعك بشكل
+                        <span class="flip-wrapper">
+                            <span class="flip-word flip-blue">احترافي</span>
+                            <span class="flip-word flip-purple">متناسق</span>
+                            <span class="flip-word flip-green">عصري</span>
+                        </span>
+                        لتعزيز حضورك الرقمي
+                    </div>
+                    <button class="btn-main" style="width:100%;" onclick="goToForm('تصميم موقع تعريفي')">اطلب الخدمة الآن</button>
                 </div>
             </div>
         </section>
@@ -433,7 +525,7 @@
                 <h2>مشاريعنا الاحترافية</h2>
                 <p>دقة في التصميم، قوة في الأداء</p>
             </div>
-            <div class="grid-container">
+            <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
                 <div class="showcase-card">
                     <img src="images/dashboard.jpg" alt="Dashboard Design" class="showcase-img">
                     <div class="showcase-info">
@@ -534,12 +626,6 @@
             document.getElementById(id).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             document.getElementById('navLinks').classList.remove('active');
-        }
-
-        function choosePackage(name, price) {
-            document.getElementById('projectType').value = name;
-            document.getElementById('packagePrice').value = price;
-            goTo('formPage');
         }
 
         function goToForm(service) {
