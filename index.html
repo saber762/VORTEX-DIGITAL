@@ -690,26 +690,25 @@
 
         async function sendToTelegram(e) {
             e.preventDefault();
-            let name = document.querySelector('[name="name"]').value;
-            let service = document.querySelector('[name="service"]').value;
-            let details = document.querySelector('[name="details"]').value;
-            let phone = document.querySelector('[name="phone"]').value;
-            let price = document.querySelector('[name="price"]').value;
 
-            let tgMsg = "طلب جديد 🚀\n\n" +
-                        "👤 الاسم: " + name + "\n" +
-                        "🛠 الخدمة: " + service + "\n" +
-                        (price ? "💰 السعر: " + price + "\n" : "") +
-                        "📝 الملاحظات: " + details + "\n" +
-                        "📞 الهاتف: " + phone + "\n\n" +
-                        "☎️ <a href='tel:" + phone + "'>نقر للاتصال</a>";
+            const name = document.querySelector('input[name="name"]').value.trim();
+            const service = document.querySelector('input[name="service"]').value.trim();
+            const details = document.querySelector('textarea[name="details"]').value.trim();
+            const phone = document.querySelector('input[name="phone"]').value.trim();
 
-            let token = "8797699298:AAFo07vGJ_s03Er2AZQrro6S_R0a1Lq8KUs";
-            let chatId = "8097636020";
-            let url = "https://api.telegram.org/bot" + token + "/sendMessage";
+            const tgMsg =
+                "🚀 <b>طلب جديد من موقع VORTEX</b>\n\n" +
+                "👤 <b>العميل:</b> " + name + "\n" +
+                "🛠 <b>نوع الخدمة:</b> " + service + "\n" +
+                "📝 <b>التفاصيل:</b> " + details + "\n" +
+                "📞 <b>رقم الواتساب:</b> " + phone;
+
+            const token = "8797699298:AAFoO7vGJ_s03Er2AZQrro6S_R0a1Lq8KUs";
+            const chatId = "8097636020";
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
             try {
-                let response = await fetch(url, {
+                const response = await fetch(url, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -719,13 +718,14 @@
                     })
                 });
 
-                if (response.ok) {
-                    document.getElementById('successModal').classList.add('active');
-                    document.getElementById('projectForm').reset();
-                } else {
-                    alert('حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
+                document.getElementById('successModal').classList.add('active');
+                document.getElementById('projectForm').reset();
             } catch (error) {
+                console.error("Telegram send error:", error);
                 alert('فشل الاتصال، تأكد من اتصالك بالإنترنت.');
             }
         }
