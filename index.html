@@ -81,6 +81,53 @@
             z-index: 1002;
         }
 
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .auth-btn {
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .auth-btn-login {
+            color: var(--text-light);
+            border: 1px solid rgba(0, 245, 255, 0.45);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .auth-btn-login:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .auth-btn-signup {
+            color: #fff;
+            border: 1px solid transparent;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            box-shadow: 0 8px 18px rgba(0, 245, 255, 0.25);
+        }
+
+        .auth-btn-signup:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(255, 0, 255, 0.28);
+        }
+
+        .user-menu {
+            align-items: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         .user-nav-btn {
             border: 1px solid rgba(0, 245, 255, 0.25);
             background: rgba(255, 255, 255, 0.06);
@@ -130,6 +177,7 @@
             .nav-links.active { display: flex; }
             .hamburger { display: flex; }
             .user-nav-btn span { display: none; }
+            .auth-btn { padding: 7px 10px; font-size: 0.75rem; }
         }
 
         #particles-js {
@@ -525,10 +573,16 @@
     <nav class="navbar">
         <div class="logo">VORTEX DIGITAL</div>
         <div class="nav-actions">
-            <a class="user-nav-btn" id="profileLink" href="profile.html" aria-label="حساب المستخدم">
-                <i class="fas fa-user"></i>
-                <span id="userNavName"></span>
-            </a>
+            <div id="auth-buttons" class="auth-buttons">
+                <a href="auth.html" class="auth-btn auth-btn-login">تسجيل الدخول</a>
+                <a href="signup.html" class="auth-btn auth-btn-signup">إنشاء حساب</a>
+            </div>
+            <div id="user-menu" class="user-menu">
+                <a class="user-nav-btn" id="profileLink" href="profile.html" aria-label="حساب المستخدم">
+                    <i class="fas fa-user"></i>
+                    <span id="userNavName"></span>
+                </a>
+            </div>
             <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
@@ -729,6 +783,8 @@
         const auth = getAuth(app);
         const database = getDatabase(app);
 
+        const authButtons = document.getElementById("auth-buttons");
+        const userMenu = document.getElementById("user-menu");
         const profileLink = document.getElementById("profileLink");
         const userNavNameEl = document.getElementById("userNavName");
 
@@ -770,8 +826,18 @@
         }
 
         function openOrderModal(serviceType) {
-            document.getElementById('modalServiceType').value = serviceType;
-            document.getElementById('orderModal').classList.add('active');
+            try {
+                const serviceInput = document.getElementById('modalServiceType');
+                const modal = document.getElementById('orderModal');
+                if (!serviceInput || !modal) return false;
+
+                serviceInput.value = serviceType;
+                modal.classList.add('active');
+                return modal.classList.contains('active');
+            } catch (error) {
+                console.error("Open order modal error:", error);
+                return false;
+            }
         }
 
         function getCurrentUser() {
@@ -854,8 +920,10 @@
         if (pendingServiceType) {
             getCurrentUser().then((user) => {
                 if (user) {
-                    openOrderModal(pendingServiceType);
-                    sessionStorage.removeItem("pendingServiceType");
+                    const opened = openOrderModal(pendingServiceType);
+                    if (opened) {
+                        sessionStorage.removeItem("pendingServiceType");
+                    }
                 }
             });
         }
@@ -865,12 +933,10 @@
 
         async function loadUserName(user) {
             try {
-                const snap = await get(ref(database, `profile/${user.uid}`));
+                const snap = await get(ref(database, `users/${user.uid}`));
                 const data = snap.exists() ? snap.val() : {};
                 const firstName = data.firstName || "";
-                const lastName = data.lastName || "";
-                const fullName = [firstName, lastName].filter(Boolean).join(" ").trim();
-                return fullName || user.email || "";
+                return firstName || user.email || "";
             } catch (e) {
                 console.error("Profile load failed:", e);
                 return user.email || "";
@@ -878,15 +944,34 @@
         }
 
         onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                userNavNameEl.textContent = "";
-                profileLink.href = "auth.html";
-                return;
-            }
+            const authButtons = document.getElementById("auth-buttons");
+            const userMenu = document.getElementById("user-menu");
+            const userNavNameEl = document.getElementById("userNavName");
 
-            const name = await loadUserName(user);
-            userNavNameEl.textContent = name;
-            profileLink.href = "profile.html";
+            if (user) {
+                // إخفاء أزرار الدخول وإظهار المنيو
+                authButtons.style.setProperty("display", "none", "important");
+                userMenu.style.setProperty("display", "flex", "important");
+                profileLink.href = "profile.html";
+
+                // جلب الاسم من القاعدة بشكل سريع
+                try {
+                    const snap = await get(ref(database, `users/${user.uid}`));
+                    if (snap.exists()) {
+                        userNavNameEl.textContent = snap.val().firstName || "حسابي";
+                    } else {
+                        userNavNameEl.textContent = user.email ? user.email.split("@")[0] : "حسابي";
+                    }
+                } catch (e) {
+                    userNavNameEl.textContent = "حسابي";
+                }
+            } else {
+                // حالة الزائر
+                profileLink.href = "auth.html";
+                userNavNameEl.textContent = "";
+                authButtons.style.setProperty("display", "flex", "important");
+                userMenu.style.setProperty("display", "none", "important");
+            }
         });
 
         window.toggleMenu = toggleMenu;
