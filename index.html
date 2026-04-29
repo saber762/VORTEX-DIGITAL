@@ -54,6 +54,7 @@
             display: flex;
             gap: 20px;
             list-style: none;
+            z-index: 1001;
         }
 
         .nav-links a {
@@ -70,6 +71,39 @@
             flex-direction: column;
             gap: 4px;
             cursor: pointer;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1002;
+        }
+
+        .user-nav-btn {
+            border: 1px solid rgba(0, 245, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-light);
+            border-radius: 14px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .user-nav-btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--primary);
+            box-shadow: 0 0 18px rgba(0,245,255,0.15);
+        }
+
+        .user-nav-btn i {
+            color: var(--primary);
         }
 
         .hamburger span {
@@ -95,6 +129,7 @@
             }
             .nav-links.active { display: flex; }
             .hamburger { display: flex; }
+            .user-nav-btn span { display: none; }
         }
 
         #particles-js {
@@ -489,10 +524,16 @@
 
     <nav class="navbar">
         <div class="logo">VORTEX DIGITAL</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-actions">
+            <a class="user-nav-btn" id="profileLink" href="profile.html" aria-label="حساب المستخدم">
+                <i class="fas fa-user"></i>
+                <span id="userNavName"></span>
+            </a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
         <ul class="nav-links" id="navLinks">
             <li><a href="#" onclick="goTo('home')">الرئيسية</a></li>
@@ -671,7 +712,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+        import { getDatabase, ref, push, serverTimestamp, get } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: 'AIzaSyDcjbHnDcYbM8CN5i2TqFSVFC2JMacCP2I',
@@ -687,6 +728,9 @@
         getAnalytics(app);
         const auth = getAuth(app);
         const database = getDatabase(app);
+
+        const profileLink = document.getElementById("profileLink");
+        const userNavNameEl = document.getElementById("userNavName");
 
         particlesJS("particles-js", {
             "particles": {
@@ -818,6 +862,32 @@
 
         document.getElementById("orderForm").addEventListener("submit", submitOrder);
         document.getElementById("projectForm").addEventListener("submit", submitOrder);
+
+        async function loadUserName(user) {
+            try {
+                const snap = await get(ref(database, `profile/${user.uid}`));
+                const data = snap.exists() ? snap.val() : {};
+                const firstName = data.firstName || "";
+                const lastName = data.lastName || "";
+                const fullName = [firstName, lastName].filter(Boolean).join(" ").trim();
+                return fullName || user.email || "";
+            } catch (e) {
+                console.error("Profile load failed:", e);
+                return user.email || "";
+            }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                userNavNameEl.textContent = "";
+                profileLink.href = "auth.html";
+                return;
+            }
+
+            const name = await loadUserName(user);
+            userNavNameEl.textContent = name;
+            profileLink.href = "profile.html";
+        });
 
         window.toggleMenu = toggleMenu;
         window.goTo = goTo;
