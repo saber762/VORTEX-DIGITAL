@@ -226,6 +226,7 @@
         import {
             getAuth,
             signInWithEmailAndPassword,
+            onAuthStateChanged,
             GoogleAuthProvider,
             signInWithPopup
         } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
@@ -248,6 +249,14 @@
         const passwordInput = document.getElementById("password");
         const loginBtn = document.getElementById("loginBtn");
         const googleBtn = document.getElementById("googleBtn");
+
+        // If user is already authenticated (e.g. after signup) and has pending order,
+        // redirect back to index to open the order modal.
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                redirectAfterAuth();
+            }
+        });
 
         function getCredentials() {
             return {
