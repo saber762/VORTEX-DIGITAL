@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEX DIGITAL | تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00f5ff;
+            --secondary: #ff00ff;
+            --bg-dark: #07090f;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(0, 245, 255, 0.25);
+            --text: #e6edf6;
+            --muted: #9fb0c8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: "Cairo", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 20%, rgba(0, 245, 255, 0.18), transparent 35%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.16), transparent 35%),
+                linear-gradient(140deg, #05070b 0%, #0a1220 50%, #07090f 100%);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 430px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 30px 24px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .brand h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 7px;
+            color: #d8e1ee;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .field input {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text);
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .field input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.15);
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 12px;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .divider {
+            text-align: center;
+            color: var(--muted);
+            margin: 10px 0 14px;
+            font-size: 0.85rem;
+        }
+
+        .btn-google {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #fff;
+            color: #1f2937;
+            padding: 13px;
+            font-size: 0.96rem;
+            font-weight: 700;
+        }
+
+        .btn-google .google-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #4285f4;
+            border: 2px solid #4285f4;
+            font-size: 0.82rem;
+        }
+
+        .hint {
+            margin-top: 16px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .auth-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <div class="brand">
+            <h1>VORTEX DIGITAL</h1>
+            <p>سجل دخولك للمتابعة وإرسال الطلبات</p>
+        </div>
+
+        <form id="authForm">
+            <div class="field">
+                <label for="email">البريد الإلكتروني</label>
+                <input id="email" type="email" placeholder="example@email.com" required>
+            </div>
+
+            <div class="field">
+                <label for="password">كلمة المرور</label>
+                <input id="password" type="password" placeholder="********" minlength="6" required>
+            </div>
+
+            <div class="actions">
+                <button type="button" id="loginBtn" class="btn-primary">تسجيل دخول</button>
+            </div>
+
+            <div class="divider">أو</div>
+
+            <button type="button" id="googleBtn" class="btn-google">
+                <span class="google-icon">G</span>
+                التسجيل بواسطة Google
+            </button>
+        </form>
+
+        <p class="hint">بعد تسجيل الدخول سيتم تحويلك تلقائياً إلى الصفحة الرئيسية.</p>
+        <p class="hint">
+            ليس لديك حساب؟
+            <a class="auth-link" href="signup.html">أنشئ حساباً جديداً من هنا</a>
+        </p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcjbHnDcYbM8CN5i2TqFSVFC2JMacCP2I",
+            authDomain: "vortex-digital-246c7.firebaseapp.com",
+            projectId: "vortex-digital-246c7",
+            storageBucket: "vortex-digital-246c7.firebasestorage.app",
+            messagingSenderId: "91276574885",
+            appId: "1:91276574885:web:46a4042ac788bc71910d4c",
+            measurementId: "G-N0LBGXSX0T"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const loginBtn = document.getElementById("loginBtn");
+        const googleBtn = document.getElementById("googleBtn");
+
+        function getCredentials() {
+            return {
+                email: emailInput.value.trim(),
+                password: passwordInput.value.trim()
+            };
+        }
+
+        function redirectAfterAuth() {
+            const pendingServiceType = sessionStorage.getItem("pendingServiceType");
+            if (pendingServiceType) {
+                window.location.href = "index.html";
+                return;
+            }
+
+            window.location.href = "index.html";
+        }
+
+        function handleAuthError(error) {
+            Swal.fire({
+                icon: "error",
+                title: "تعذر إتمام العملية",
+                text: error?.message || "حدث خطأ غير متوقع، حاول مرة أخرى."
+            });
+        }
+
+        async function loginWithEmail() {
+            const { email, password } = getCredentials();
+            if (!email || !password) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "حقول ناقصة",
+                    text: "المرجو إدخال البريد الإلكتروني وكلمة المرور."
+                });
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                await Swal.fire({
+                    icon: "success",
+                    title: "تم تسجيل الدخول بنجاح",
+                    timer: 1200,
+                    showConfirmButton: false
+                });
+                redirectAfterAuth();
+            } catch (error) {
+                handleAuthError(error);
+            }
+        }
+
+        async function loginWithGoogle() {
+            try {
+                await signInWithPopup(auth, googleProvider);
+                await Swal.fire({
+                    icon: "success",
+                    title: "تم تسجيل الدخول بواسطة Google",
+                    timer: 1200,
+                    showConfirmButton: false
+                });
+                redirectAfterAuth();
+            } catch (error) {
+                handleAuthError(error);
+            }
+        }
+
+        loginBtn.addEventListener("click", loginWithEmail);
+        googleBtn.addEventListener("click", loginWithGoogle);
+    </script>
+</body>
+</html>
+
