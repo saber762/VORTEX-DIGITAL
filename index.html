@@ -538,7 +538,7 @@
                         </span>
                         لتطوير مشروعك الخاص
                     </div>
-                    <button class="btn-main" style="width:100%;" onclick="goToForm('تصميم محتوى بصري')">اطلب الخدمة الآن</button>
+                    <button class="btn-main" style="width:100%;" onclick="checkAuthBeforeOrder('تصميم محتوى بصري')">اطلب الخدمة الآن</button>
                 </div>
                 <div class="glass-card">
                     <i class="fas fa-code"></i>
@@ -552,7 +552,7 @@
                         </span>
                         لتعزيز حضورك الرقمي
                     </div>
-                    <button class="btn-main" style="width:100%;" onclick="goToForm('تصميم موقع تعريفي')">اطلب الخدمة الآن</button>
+                    <button class="btn-main" style="width:100%;" onclick="checkAuthBeforeOrder('تصميم موقع تعريفي')">اطلب الخدمة الآن</button>
                 </div>
             </div>
         </section>
@@ -598,17 +598,17 @@
                 <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 20px;">العودة للرئيسية</button>
             </div>
             <div class="grid-container">
-                <div class="glass-card" onclick="goToForm('تصميم متجر ذكي')">
+                <div class="glass-card" onclick="checkAuthBeforeOrder('تصميم متجر ذكي')">
                     <i class="fas fa-shopping-cart"></i>
                     <h3>متاجر إلكترونية</h3>
                     <p>متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
                 </div>
-                <div class="glass-card" onclick="goToForm('تصميم جرافيك')">
+                <div class="glass-card" onclick="checkAuthBeforeOrder('تصميم جرافيك')">
                     <i class="fas fa-paint-brush"></i>
                     <h3>تصميم إبداعي</h3>
                     <p>بوسترات وشعارات تخطف الأنظار.</p>
                 </div>
-                <div class="glass-card" onclick="goToForm('تطوير ويب')">
+                <div class="glass-card" onclick="checkAuthBeforeOrder('تطوير ويب')">
                     <i class="fas fa-code"></i>
                     <h3>تطوير ويب</h3>
                     <p>برمجة منصات خاصة تلبي احتياجات عملك.</p>
@@ -621,7 +621,7 @@
         <section>
             <div class="form-container">
                 <h2 id="formTitle" style="text-align:center; margin-bottom:24px; font-size:1.4rem;">ابدأ مشروعك</h2>
-                <form id="projectForm" onsubmit="sendToTelegram(event)">
+                <form id="projectForm">
                     <input type="text" name="name" placeholder="اسمك الكريم" required>
                     <input type="text" id="projectType" name="service" readonly>
                     <input type="text" id="packagePrice" name="price" readonly>
@@ -646,6 +646,19 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-box">
+            <p>أدخل بياناتك لتأكيد الطلب وسيتم التواصل معك في أقرب وقت.</p>
+            <form id="orderForm" class="form-container">
+                <input type="text" name="name" placeholder="اسمك الكريم" required>
+                <input type="text" name="service" id="modalServiceType" readonly>
+                <input type="tel" name="phone" placeholder="رقم الواتساب" required>
+                <button type="submit" class="btn-main" style="width: 100%;">تأكيد وإرسال الطلب</button>
+            </form>
+            <button class="btn-main" onclick="closeOrderModal()" style="background: linear-gradient(45deg, var(--primary), var(--secondary)); margin-top:10px;">إغلاق</button>
+        </div>
+    </div>
+
     <footer>
         <p>© 2026 VORTEX DIGITAL | تم التصميم بكل احترافية</p>
         <div class="footer-social">
@@ -654,7 +667,27 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: 'AIzaSyDcjbHnDcYbM8CN5i2TqFSVFC2JMacCP2I',
+            authDomain: 'vortex-digital-246c7.firebaseapp.com',
+            projectId: 'vortex-digital-246c7',
+            storageBucket: 'vortex-digital-246c7.firebasestorage.app',
+            messagingSenderId: '91276574885',
+            appId: '1:91276574885:web:46a4042ac788bc71910d4c',
+            measurementId: 'G-N0LBGXSX0T'
+        };
+
+        const app = initializeApp(firebaseConfig);
+        getAnalytics(app);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
@@ -688,47 +721,110 @@
             document.getElementById('successModal').classList.remove('active');
         }
 
-        async function sendToTelegram(e) {
-            e.preventDefault();
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
 
-            const name = document.querySelector('input[name="name"]').value.trim();
-            const service = document.querySelector('input[name="service"]').value.trim();
-            const details = document.querySelector('textarea[name="details"]').value.trim();
-            const phone = document.querySelector('input[name="phone"]').value.trim();
+        function openOrderModal(serviceType) {
+            document.getElementById('modalServiceType').value = serviceType;
+            document.getElementById('orderModal').classList.add('active');
+        }
 
+        function getCurrentUser() {
+            return new Promise((resolve) => {
+                const unsubscribe = onAuthStateChanged(auth, (user) => {
+                    unsubscribe();
+                    resolve(user);
+                });
+            });
+        }
+
+        async function checkAuthBeforeOrder(serviceType) {
+            const user = await getCurrentUser();
+            if (user) {
+                openOrderModal(serviceType);
+                return;
+            }
+
+            sessionStorage.setItem("pendingServiceType", serviceType);
+            window.location.href = "auth.html";
+        }
+
+        async function sendToTelegram(orderData) {
+            const { name, service, phone } = orderData;
             const tgMsg =
                 "🚀 <b>طلب جديد من موقع VORTEX</b>\n\n" +
                 "👤 <b>العميل:</b> " + name + "\n" +
                 "🛠 <b>نوع الخدمة:</b> " + service + "\n" +
-                "📝 <b>التفاصيل:</b> " + details + "\n" +
                 "📞 <b>رقم الواتساب:</b> " + phone;
 
-            const token = "​8797699298:AAHsyFQ67W75dwVRRUUTo2s7ND6dmPO-S98";
+            const token = "8797699298:AAHsyFQ67W75dwVRRUUTo2s7ND6dmPO-S98";
             const chatId = "8097636020";
-           const url = `https://api.allorigins.win/raw?url=https://api.telegram.org/bot${token}/sendMessage`;
+            const url = `https://api.allorigins.win/raw?url=https://api.telegram.org/bot${token}/sendMessage`;
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: tgMsg,
+                    parse_mode: "HTML"
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        }
+
+        async function submitOrder(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const name = form.querySelector('input[name="name"]').value.trim();
+            const service = form.querySelector('input[name="service"]').value.trim();
+            const phone = form.querySelector('input[name="phone"]').value.trim();
+            const user = auth.currentUser;
 
             try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: tgMsg,
-                        parse_mode: "HTML"
-                    })
+                await push(ref(database, "orders"), {
+                    name,
+                    phone,
+                    serviceType: service,
+                    userId: user ? user.uid : null,
+                    createdAt: serverTimestamp()
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                await sendToTelegram({ name, service, phone });
 
+                closeOrderModal();
                 document.getElementById('successModal').classList.add('active');
-                document.getElementById('projectForm').reset();
+                document.getElementById('orderForm').reset();
             } catch (error) {
-                console.error("Telegram send error:", error);
+                console.error("Order submit error:", error);
                 alert('وقع خطأ في الإرسال، حاول مرة أخرى');
             }
         }
+
+        const pendingServiceType = sessionStorage.getItem("pendingServiceType");
+        if (pendingServiceType) {
+            getCurrentUser().then((user) => {
+                if (user) {
+                    openOrderModal(pendingServiceType);
+                    sessionStorage.removeItem("pendingServiceType");
+                }
+            });
+        }
+
+        document.getElementById("orderForm").addEventListener("submit", submitOrder);
+        document.getElementById("projectForm").addEventListener("submit", submitOrder);
+
+        window.toggleMenu = toggleMenu;
+        window.goTo = goTo;
+        window.goToForm = goToForm;
+        window.closeModal = closeModal;
+        window.closeOrderModal = closeOrderModal;
+        window.checkAuthBeforeOrder = checkAuthBeforeOrder;
     </script>
 
 </body>
