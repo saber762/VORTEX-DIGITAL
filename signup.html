@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEX DIGITAL | إنشاء حساب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --primary: #00f5ff;
+            --secondary: #ff00ff;
+            --bg-dark: #07090f;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(0, 245, 255, 0.25);
+            --text: #e6edf6;
+            --muted: #9fb0c8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: "Cairo", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 20%, rgba(0, 245, 255, 0.18), transparent 35%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.16), transparent 35%),
+                linear-gradient(140deg, #05070b 0%, #0a1220 50%, #07090f 100%);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 460px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 30px 24px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .brand h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 7px;
+            color: #d8e1ee;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .field input {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text);
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .field input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.15);
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 13px;
+        }
+
+        .hint {
+            margin-top: 14px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <div class="brand">
+            <h1>VORTEX DIGITAL</h1>
+            <p>أنشئ حسابك لإكمال طلب الخدمة</p>
+        </div>
+
+        <form id="signupForm">
+            <div class="field">
+                <label for="firstName">الاسم الأول</label>
+                <input id="firstName" type="text" placeholder="مثال: أحمد" required>
+            </div>
+
+            <div class="field">
+                <label for="lastName">النسب</label>
+                <input id="lastName" type="text" placeholder="مثال: بن يوسف" required>
+            </div>
+
+            <div class="field">
+                <label for="email">البريد الإلكتروني</label>
+                <input id="email" type="email" placeholder="example@email.com" required>
+            </div>
+
+            <div class="field">
+                <label for="password">كلمة المرور</label>
+                <input id="password" type="password" placeholder="********" minlength="6" required>
+            </div>
+
+            <div class="field">
+                <label for="confirmPassword">تأكيد كلمة المرور</label>
+                <input id="confirmPassword" type="password" placeholder="********" minlength="6" required>
+            </div>
+
+            <button type="submit" class="btn-primary">إنشاء حساب</button>
+        </form>
+
+        <p class="hint">
+            هل لديك حساب بالفعل؟
+            <a class="link" href="auth.html">سجّل دخولك من هنا</a>
+        </p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+        import {
+            getDatabase,
+            ref,
+            set,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcjbHnDcYbM8CN5i2TqFSVFC2JMacCP2I",
+            authDomain: "vortex-digital-246c7.firebaseapp.com",
+            projectId: "vortex-digital-246c7",
+            storageBucket: "vortex-digital-246c7.firebasestorage.app",
+            messagingSenderId: "91276574885",
+            appId: "1:91276574885:web:46a4042ac788bc71910d4c",
+            measurementId: "G-N0LBGXSX0T"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        const signupForm = document.getElementById("signupForm");
+        const firstNameInput = document.getElementById("firstName");
+        const lastNameInput = document.getElementById("lastName");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+
+        function getValues() {
+            return {
+                firstName: firstNameInput.value.trim(),
+                lastName: lastNameInput.value.trim(),
+                email: emailInput.value.trim(),
+                password: passwordInput.value,
+                confirmPassword: confirmPasswordInput.value
+            };
+        }
+
+        function redirectAfterSignup() {
+            const pendingServiceType = sessionStorage.getItem("pendingServiceType");
+            if (pendingServiceType) {
+                window.location.href = "index.html";
+                return;
+            }
+            // "الرئيسية" داخل المشروع هي index.html (بدون modal).
+            window.location.href = "index.html";
+        }
+
+        function handleFirebaseError(error) {
+            const code = error?.code || "";
+            let message = "حدث خطأ غير متوقع، حاول مرة أخرى.";
+
+            if (code.includes("email-already-in-use")) {
+                message = "البريد الإلكتروني مستخدم بالفعل. جرّب تسجيل الدخول بدلًا من إنشاء حساب جديد.";
+            } else if (code.includes("invalid-email")) {
+                message = "البريد الإلكتروني غير صحيح. تأكد من كتابته بشكل صحيح.";
+            } else if (code.includes("weak-password")) {
+                message = "كلمة المرور ضعيفة جدًا. استخدم كلمة أقوى (على الأقل 6 أحرف).";
+            }
+
+            Swal.fire({
+                icon: "error",
+                title: "تعذر إنشاء الحساب",
+                text: message
+            });
+        }
+
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const { firstName, lastName, email, password, confirmPassword } = getValues();
+
+            if (password !== confirmPassword) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "كلمات المرور غير متطابقة",
+                    text: "يرجى التأكد من كتابة كلمة المرور وتأكيدها بشكل صحيح."
+                });
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // حفظ الاسم والنسب في profile/{uid}
+                await set(ref(database, `profile/${user.uid}`), {
+                    firstName,
+                    lastName,
+                    createdAt: serverTimestamp()
+                });
+
+                await Swal.fire({
+                    icon: "success",
+                    title: "تم إنشاء الحساب بنجاح",
+                    timer: 1300,
+                    showConfirmButton: false
+                });
+
+                redirectAfterSignup();
+            } catch (error) {
+                console.error("Signup error:", error);
+                handleFirebaseError(error);
+            }
+        });
+    </script>
+</body>
+</html>
