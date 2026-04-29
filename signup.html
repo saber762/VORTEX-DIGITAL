@@ -162,12 +162,12 @@
 
             <div class="field">
                 <label for="password">كلمة المرور</label>
-                <input id="password" type="password" placeholder="********" minlength="6" required>
+                <input id="password" type="password" placeholder="****" minlength="6" required>
             </div>
 
             <div class="field">
                 <label for="confirmPassword">تأكيد كلمة المرور</label>
-                <input id="confirmPassword" type="password" placeholder="********" minlength="6" required>
+                <input id="confirmPassword" type="password" placeholder="****" minlength="6" required>
             </div>
 
             <button type="submit" class="btn-primary">إنشاء حساب</button>
@@ -224,30 +224,29 @@
         }
 
         function redirectAfterSignup() {
-            const pendingServiceType = sessionStorage.getItem("pendingServiceType");
-            if (pendingServiceType) {
-                window.location.href = "index.html";
-                return;
-            }
-            // "الرئيسية" داخل المشروع هي index.html (بدون modal).
-            window.location.href = "index.html";
+            // نبقي pendingServiceType في sessionStorage، وسيتم التعامل معه في auth.html بعد تسجيل الدخول.
+            window.location.href = "auth.html";
         }
 
         function handleFirebaseError(error) {
             const code = error?.code || "";
+            let title = "تعذر إنشاء الحساب";
             let message = "حدث خطأ غير متوقع، حاول مرة أخرى.";
 
             if (code.includes("email-already-in-use")) {
-                message = "البريد الإلكتروني مستخدم بالفعل. جرّب تسجيل الدخول بدلًا من إنشاء حساب جديد.";
+                title = "الحساب موجود";
+                message = "هذا البريد الإلكتروني مسجل لدينا بالفعل، يرجى تسجيل الدخول أو استخدام بريد آخر.";
             } else if (code.includes("invalid-email")) {
-                message = "البريد الإلكتروني غير صحيح. تأكد من كتابته بشكل صحيح.";
+                title = "البريد الإلكتروني غير صحيح";
+                message = "يرجى إدخال بريد إلكتروني صحيح (مثال: name@gmail.com).";
             } else if (code.includes("weak-password")) {
-                message = "كلمة المرور ضعيفة جدًا. استخدم كلمة أقوى (على الأقل 6 أحرف).";
+                title = "كلمة المرور ضعيفة";
+                message = "كلمة المرور ضعيفة جداً، يجب أن تتكون من 6 أحرف أو أرقام على الأقل.";
             }
 
             Swal.fire({
                 icon: "error",
-                title: "تعذر إنشاء الحساب",
+                title,
                 text: message
             });
         }
@@ -255,9 +254,19 @@
         signupForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
+            const submitButton = signupForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            let redirected = false;
+
+            // Disable Button immediately to prevent double submit.
+            submitButton.disabled = true;
+            submitButton.textContent = "جارٍ إنشاء الحساب...";
+
             const { firstName, lastName, email, password, confirmPassword } = getValues();
 
             if (password !== confirmPassword) {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
                 Swal.fire({
                     icon: "warning",
                     title: "كلمات المرور غير متطابقة",
@@ -271,7 +280,7 @@
                 const user = userCredential.user;
 
                 // حفظ الاسم والنسب في profile/{uid}
-                await set(ref(database, `profile/${user.uid}`), {
+                await set(ref(database, profile/${user.uid}), {
                     firstName,
                     lastName,
                     createdAt: serverTimestamp()
@@ -280,14 +289,20 @@
                 await Swal.fire({
                     icon: "success",
                     title: "تم إنشاء الحساب بنجاح",
-                    timer: 1300,
+                    timer: 2000,
                     showConfirmButton: false
                 });
 
+                redirected = true;
                 redirectAfterSignup();
             } catch (error) {
                 console.error("Signup error:", error);
                 handleFirebaseError(error);
+            } finally {
+                if (submitButton && !redirected) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                }
             }
         });
     </script>
