@@ -850,15 +850,10 @@
         }
 
         async function checkAuthBeforeOrder(serviceType) {
-            const user = await getCurrentUser();
-            if (user) {
-                openOrderModal(serviceType);
-                return;
-            }
-
-            sessionStorage.setItem("pendingServiceType", serviceType);
-            window.location.href = "auth.html";
+            // Allow anonymous users to order (no auth gate).
+            openOrderModal(serviceType);
         }
+
 
         async function sendToTelegram(orderData) {
             const { name, service, phone } = orderData;
@@ -901,7 +896,7 @@
                     name,
                     phone,
                     serviceType: service,
-                    userId: user ? user.uid : null,
+                    userId: user ? user.uid : "guest",
                     createdAt: serverTimestamp()
                 });
 
