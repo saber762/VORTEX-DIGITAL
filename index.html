@@ -31,10 +31,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 10px 5%;
+            padding: 12px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 16px;
             background: rgba(10, 10, 10, 0.9);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
@@ -73,84 +74,8 @@
             cursor: pointer;
         }
 
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
+        .hamburger {
             z-index: 1002;
-        }
-
-        .auth-buttons {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .auth-btn {
-            text-decoration: none;
-            border-radius: 12px;
-            padding: 8px 14px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
-
-        .auth-btn-login {
-            color: var(--text-light);
-            border: 1px solid rgba(0, 245, 255, 0.45);
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .auth-btn-login:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .auth-btn-signup {
-            color: #fff;
-            border: 1px solid transparent;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            box-shadow: 0 8px 18px rgba(0, 245, 255, 0.25);
-        }
-
-        .auth-btn-signup:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 22px rgba(255, 0, 255, 0.28);
-        }
-
-        .user-menu {
-            align-items: center;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .user-nav-btn {
-            border: 1px solid rgba(0, 245, 255, 0.25);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text-light);
-            border-radius: 14px;
-            padding: 8px 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .user-nav-btn:hover {
-            transform: translateY(-1px);
-            border-color: var(--primary);
-            box-shadow: 0 0 18px rgba(0,245,255,0.15);
-        }
-
-        .user-nav-btn i {
-            color: var(--primary);
         }
 
         .hamburger span {
@@ -176,8 +101,6 @@
             }
             .nav-links.active { display: flex; }
             .hamburger { display: flex; }
-            .user-nav-btn span { display: none; }
-            .auth-btn { padding: 7px 10px; font-size: 0.75rem; }
         }
 
         #particles-js {
@@ -308,6 +231,10 @@
             transform: translateY(-6px) scale(1.01);
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(0,245,255,0.2);
+        }
+
+        .glass-card.clickable {
+            cursor: pointer;
         }
 
         .glass-card i {
@@ -572,28 +499,16 @@
 
     <nav class="navbar">
         <div class="logo">VORTEX DIGITAL</div>
-        <div class="nav-actions">
-            <div id="auth-buttons" class="auth-buttons">
-                <a href="auth.html" class="auth-btn auth-btn-login">تسجيل الدخول</a>
-                <a href="signup.html" class="auth-btn auth-btn-signup">إنشاء حساب</a>
-            </div>
-            <div id="user-menu" class="user-menu">
-                <a class="user-nav-btn" id="profileLink" href="profile.html" aria-label="حساب المستخدم">
-                    <i class="fas fa-user"></i>
-                    <span id="userNavName"></span>
-                </a>
-            </div>
-            <div class="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
         <ul class="nav-links" id="navLinks">
             <li><a href="#" onclick="goTo('home')">الرئيسية</a></li>
             <li><a href="#" onclick="goTo('services')">خدماتنا</a></li>
             <li><a href="#" onclick="goTo('formPage')">اتصل بنا</a></li>
         </ul>
+        <div class="hamburger" onclick="toggleMenu()" aria-label="فتح القائمة">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 
     <div id="particles-js"></div>
@@ -633,7 +548,7 @@
                         </span>
                         لتطوير مشروعك الخاص
                     </div>
-                    <button class="btn-main" style="width:100%;" onclick="checkAuthBeforeOrder('تصميم محتوى بصري')">اطلب الخدمة الآن</button>
+                    <button class="btn-main" style="width:100%;" onclick="requestService('تصميم محتوى بصري')">اطلب الخدمة الآن</button>
                 </div>
                 <div class="glass-card">
                     <i class="fas fa-code"></i>
@@ -647,7 +562,7 @@
                         </span>
                         لتعزيز حضورك الرقمي
                     </div>
-                    <button class="btn-main" style="width:100%;" onclick="checkAuthBeforeOrder('تصميم موقع تعريفي')">اطلب الخدمة الآن</button>
+                    <button class="btn-main" style="width:100%;" onclick="requestService('تصميم موقع تعريفي')">اطلب الخدمة الآن</button>
                 </div>
             </div>
         </section>
@@ -693,17 +608,17 @@
                 <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 20px;">العودة للرئيسية</button>
             </div>
             <div class="grid-container">
-                <div class="glass-card" onclick="checkAuthBeforeOrder('تصميم متجر ذكي')">
+                <div class="glass-card clickable" onclick="requestService('تصميم متجر ذكي')">
                     <i class="fas fa-shopping-cart"></i>
                     <h3>متاجر إلكترونية</h3>
                     <p>متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
                 </div>
-                <div class="glass-card" onclick="checkAuthBeforeOrder('تصميم جرافيك')">
+                <div class="glass-card clickable" onclick="requestService('تصميم جرافيك')">
                     <i class="fas fa-paint-brush"></i>
                     <h3>تصميم إبداعي</h3>
                     <p>بوسترات وشعارات تخطف الأنظار.</p>
                 </div>
-                <div class="glass-card" onclick="checkAuthBeforeOrder('تطوير ويب')">
+                <div class="glass-card clickable" onclick="requestService('تطوير ويب')">
                     <i class="fas fa-code"></i>
                     <h3>تطوير ويب</h3>
                     <p>برمجة منصات خاصة تلبي احتياجات عملك.</p>
@@ -765,8 +680,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-        import { getDatabase, ref, push, serverTimestamp, get } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: 'AIzaSyDcjbHnDcYbM8CN5i2TqFSVFC2JMacCP2I',
@@ -780,13 +694,7 @@
 
         const app = initializeApp(firebaseConfig);
         getAnalytics(app);
-        const auth = getAuth(app);
         const database = getDatabase(app);
-
-        const authButtons = document.getElementById("auth-buttons");
-        const userMenu = document.getElementById("user-menu");
-        const profileLink = document.getElementById("profileLink");
-        const userNavNameEl = document.getElementById("userNavName");
 
         particlesJS("particles-js", {
             "particles": {
@@ -840,20 +748,9 @@
             }
         }
 
-        function getCurrentUser() {
-            return new Promise((resolve) => {
-                const unsubscribe = onAuthStateChanged(auth, (user) => {
-                    unsubscribe();
-                    resolve(user);
-                });
-            });
-        }
-
-        async function checkAuthBeforeOrder(serviceType) {
-            // Allow anonymous users to order (no auth gate).
+        function requestService(serviceType) {
             openOrderModal(serviceType);
         }
-
 
         async function sendToTelegram(orderData) {
             const { name, service, phone } = orderData;
@@ -887,94 +784,38 @@
 
             const form = e.target;
             const name = form.querySelector('input[name="name"]').value.trim();
-            const service = form.querySelector('input[name="service"]').value.trim();
+            const serviceInput = form.querySelector('input[name="service"]');
+            const service = serviceInput ? serviceInput.value.trim() : "";
             const phone = form.querySelector('input[name="phone"]').value.trim();
-            const user = auth.currentUser;
 
             try {
                 await push(ref(database, "orders"), {
                     name,
                     phone,
-                    serviceType: service,
-                    userId: user ? user.uid : "guest",
+                    serviceType: service || "طلب عام",
                     createdAt: serverTimestamp()
                 });
 
-                await sendToTelegram({ name, service, phone });
+                await sendToTelegram({ name, service: service || "طلب عام", phone });
 
                 closeOrderModal();
                 document.getElementById('successModal').classList.add('active');
-                document.getElementById('orderForm').reset();
+                form.reset();
             } catch (error) {
                 console.error("Order submit error:", error);
                 alert('وقع خطأ في الإرسال، حاول مرة أخرى');
             }
         }
 
-        const pendingServiceType = sessionStorage.getItem("pendingServiceType");
-        if (pendingServiceType) {
-            getCurrentUser().then((user) => {
-                if (user) {
-                    const opened = openOrderModal(pendingServiceType);
-                    if (opened) {
-                        sessionStorage.removeItem("pendingServiceType");
-                    }
-                }
-            });
-        }
-
         document.getElementById("orderForm").addEventListener("submit", submitOrder);
         document.getElementById("projectForm").addEventListener("submit", submitOrder);
-
-        async function loadUserName(user) {
-            try {
-                const snap = await get(ref(database, `users/${user.uid}`));
-                const data = snap.exists() ? snap.val() : {};
-                const firstName = data.firstName || "";
-                return firstName || user.email || "";
-            } catch (e) {
-                console.error("Profile load failed:", e);
-                return user.email || "";
-            }
-        }
-
-        onAuthStateChanged(auth, async (user) => {
-            const authButtons = document.getElementById("auth-buttons");
-            const userMenu = document.getElementById("user-menu");
-            const userNavNameEl = document.getElementById("userNavName");
-
-            if (user) {
-                // إخفاء أزرار الدخول وإظهار المنيو
-                authButtons.style.setProperty("display", "none", "important");
-                userMenu.style.setProperty("display", "flex", "important");
-                profileLink.href = "profile.html";
-
-                // جلب الاسم من القاعدة بشكل سريع
-                try {
-                    const snap = await get(ref(database, `users/${user.uid}`));
-                    if (snap.exists()) {
-                        userNavNameEl.textContent = snap.val().firstName || "حسابي";
-                    } else {
-                        userNavNameEl.textContent = user.email ? user.email.split("@")[0] : "حسابي";
-                    }
-                } catch (e) {
-                    userNavNameEl.textContent = "حسابي";
-                }
-            } else {
-                // حالة الزائر
-                profileLink.href = "auth.html";
-                userNavNameEl.textContent = "";
-                authButtons.style.setProperty("display", "flex", "important");
-                userMenu.style.setProperty("display", "none", "important");
-            }
-        });
 
         window.toggleMenu = toggleMenu;
         window.goTo = goTo;
         window.goToForm = goToForm;
         window.closeModal = closeModal;
         window.closeOrderModal = closeOrderModal;
-        window.checkAuthBeforeOrder = checkAuthBeforeOrder;
+        window.requestService = requestService;
     </script>
 
 </body>
