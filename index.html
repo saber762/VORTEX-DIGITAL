@@ -474,6 +474,181 @@
             animation: fadeInUp 0.4s ease;
         }
 
+        .order-modal-box {
+            max-width: 480px;
+            text-align: right;
+            position: relative;
+            padding-top: 48px;
+        }
+
+        .modal-dismiss-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 245, 255, 0.35);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+            font-size: 1rem;
+            z-index: 2;
+        }
+
+        .modal-dismiss-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.45), 0 0 8px rgba(255, 0, 255, 0.2);
+            transform: scale(1.08);
+        }
+
+        .modal-dismiss-btn:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .modal-title {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .order-form {
+            text-align: right;
+        }
+
+        .form-field {
+            margin-bottom: 14px;
+        }
+
+        .form-field label {
+            display: block;
+            color: var(--text-light);
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .form-field .required {
+            color: #ff6b6b;
+        }
+
+        .form-field .optional {
+            color: #64748b;
+            font-weight: 400;
+            font-size: 0.75rem;
+        }
+
+        .service-badge {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1rem;
+            font-family: 'Almarai', sans-serif;
+            color: #39ff14;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.14), rgba(0, 245, 255, 0.08));
+            border: 1px solid rgba(57, 255, 20, 0.55);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.22), inset 0 0 14px rgba(57, 255, 20, 0.06);
+            text-shadow: 0 0 12px rgba(57, 255, 20, 0.55);
+            min-height: 46px;
+            line-height: 1.4;
+        }
+
+        .order-form input,
+        .order-form textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-family: 'Cairo', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .order-form input:focus,
+        .order-form textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.2);
+        }
+
+        .order-form input.invalid {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.25);
+        }
+
+        .order-form textarea {
+            resize: vertical;
+            min-height: 96px;
+        }
+
+        .field-error {
+            display: block;
+            color: #ff6b6b;
+            font-size: 0.75rem;
+            margin-top: 5px;
+            min-height: 1em;
+        }
+
+        .btn-submit-order {
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        .btn-modal-close {
+            width: 100%;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            box-shadow: none;
+        }
+
+        .success-modal-box {
+            max-width: 420px;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: #39ff14;
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.7);
+            animation: successFadeIn 0.6s ease forwards;
+        }
+
+        .success-message {
+            color: #39ff14;
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin-bottom: 22px;
+            text-shadow: 0 0 14px rgba(57, 255, 20, 0.65);
+            animation: successFadeIn 0.6s ease 0.15s both;
+        }
+
+        @keyframes successFadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .modal-box p {
             color: var(--text-light);
             font-size: 0.95rem;
@@ -492,6 +667,9 @@
             .btn-main { padding: 8px 22px; font-size: 0.8rem; }
             .flip-wrapper { width: 80px; height: 28px; }
             .flip-word { font-size: 0.85rem; }
+            .order-modal-box { padding: 22px 18px; }
+            .service-badge { font-size: 0.92rem; padding: 10px 12px; }
+            .success-message { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -513,7 +691,7 @@
 
     <div id="particles-js"></div>
 
-    <a href="https://wa.me/212707538787" target="_blank" class="whatsapp-float">
+    <a href="https://wa.me/212605555740" target="_blank" class="whatsapp-float">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -548,7 +726,7 @@
                         </span>
                         لتطوير مشروعك الخاص
                     </div>
-                    <button class="btn-main" style="width:100%;" onclick="requestService('تصميم محتوى بصري')">اطلب الخدمة الآن</button>
+                    <button type="button" class="btn-main order-trigger" style="width:100%;" data-service="تصميم المحتوى البصري">اطلب الخدمة الآن</button>
                 </div>
                 <div class="glass-card">
                     <i class="fas fa-code"></i>
@@ -562,7 +740,7 @@
                         </span>
                         لتعزيز حضورك الرقمي
                     </div>
-                    <button class="btn-main" style="width:100%;" onclick="requestService('تصميم موقع تعريفي')">اطلب الخدمة الآن</button>
+                    <button type="button" class="btn-main order-trigger" style="width:100%;" data-service="تصميم المواقع التعريفية">اطلب الخدمة الآن</button>
                 </div>
             </div>
         </section>
@@ -608,17 +786,17 @@
                 <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 20px;">العودة للرئيسية</button>
             </div>
             <div class="grid-container">
-                <div class="glass-card clickable" onclick="requestService('تصميم متجر ذكي')">
+                <div class="glass-card clickable order-trigger" data-service="متاجر إلكترونية">
                     <i class="fas fa-shopping-cart"></i>
                     <h3>متاجر إلكترونية</h3>
                     <p>متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
                 </div>
-                <div class="glass-card clickable" onclick="requestService('تصميم جرافيك')">
+                <div class="glass-card clickable order-trigger" data-service="تصميم جرافيك">
                     <i class="fas fa-paint-brush"></i>
                     <h3>تصميم إبداعي</h3>
                     <p>بوسترات وشعارات تخطف الأنظار.</p>
                 </div>
-                <div class="glass-card clickable" onclick="requestService('تطوير ويب')">
+                <div class="glass-card clickable order-trigger" data-service="تطوير ويب">
                     <i class="fas fa-code"></i>
                     <h3>تطوير ويب</h3>
                     <p>برمجة منصات خاصة تلبي احتياجات عملك.</p>
@@ -640,7 +818,7 @@
                     <button type="submit" class="btn-main" style="width: 100%;">إرسال الطلب</button>
                 </form>
                 <div style="text-align:center; margin-top:12px;">
-                    <a href="https://wa.me/212707538787" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block; font-size:0.8rem; padding:8px 20px;">
+                    <a href="https://wa.me/212605555740" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block; font-size:0.8rem; padding:8px 20px;">
                         <i class="fab fa-whatsapp"></i> تواصل سريع عبر واتساب
                     </a>
                 </div>
@@ -649,23 +827,47 @@
     </div>
 
     <div class="modal-overlay" id="successModal">
-        <div class="modal-box">
-            <p>تم إرسال بياناتك بنجاح، سيتم التواصل معكم في أقرب وقت. إذا كنتم مستعجلين، المرجو التواصل معنا مباشرة عبر واتساب.</p>
-            <a href="https://wa.me/212707538787" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block;"><i class="fab fa-whatsapp"></i> واتساب</a>
-            <button class="btn-main" onclick="closeModal()" style="background: linear-gradient(45deg, var(--primary), var(--secondary));">إغلاق</button>
+        <div class="modal-box success-modal-box">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <p class="success-message">تم إرسال بياناتك لنا بنجاح! سوف نتواصل معك في أقرب وقت.</p>
+            <a href="https://wa.me/212605555740" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block;"><i class="fab fa-whatsapp"></i> واتساب</a>
+            <button type="button" class="btn-main" onclick="closeModal()" style="background: linear-gradient(45deg, var(--primary), var(--secondary));">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="orderModal">
-        <div class="modal-box">
-            <p>أدخل بياناتك لتأكيد الطلب وسيتم التواصل معك في أقرب وقت.</p>
-            <form id="orderForm" class="form-container">
-                <input type="text" name="name" placeholder="اسمك الكريم" required>
-                <input type="text" name="service" id="modalServiceType" readonly>
-                <input type="tel" name="phone" placeholder="رقم الواتساب" required>
-                <button type="submit" class="btn-main" style="width: 100%;">تأكيد وإرسال الطلب</button>
+        <div class="modal-box order-modal-box">
+            <button type="button" class="modal-dismiss-btn" id="cancelOrderBtn" aria-label="العودة والإلغاء" title="العودة والإلغاء">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <h3 class="modal-title">طلب خدمة</h3>
+            <p class="modal-subtitle">أدخل بياناتك وسيتم تحويلك إلى واتساب لإرسال طلبك مباشرة.</p>
+            <form id="orderForm" class="order-form" novalidate>
+                <div class="form-field">
+                    <label>الخدمة المختارة</label>
+                    <div class="service-badge" id="selectedServiceBadge" aria-live="polite">—</div>
+                    <input type="hidden" name="service" id="modalServiceType">
+                </div>
+                <div class="form-field">
+                    <label for="orderFullName">الاسم والنسب <span class="required">*</span></label>
+                    <input type="text" id="orderFullName" name="name" placeholder="مثال: أحمد العلوي" autocomplete="name" required>
+                </div>
+                <div class="form-field">
+                    <label for="orderPhone">رقم الهاتف / الواتساب <span class="required">*</span></label>
+                    <input type="tel" id="orderPhone" name="phone" inputmode="numeric" placeholder="مثال: 0612345678" autocomplete="tel" required>
+                    <span class="field-error" id="phoneError"></span>
+                </div>
+                <div class="form-field">
+                    <label for="orderProjectName">اسم المشروع <span class="optional">(اختياري)</span></label>
+                    <input type="text" id="orderProjectName" name="projectName" placeholder="مثال: متجر الأزياء">
+                </div>
+                <div class="form-field">
+                    <label for="orderDetails">وصف الشيء الذي تريده <span class="required">*</span></label>
+                    <textarea id="orderDetails" name="details" rows="4" placeholder="اشرح لنا احتياجاتك بالتفصيل..." required></textarea>
+                </div>
+                <button type="submit" class="btn-main btn-submit-order" id="submitOrderBtn">تأكيد وإرسال الطلب</button>
             </form>
-            <button class="btn-main" onclick="closeOrderModal()" style="background: linear-gradient(45deg, var(--primary), var(--secondary)); margin-top:10px;">إغلاق</button>
+            <button type="button" class="btn-main btn-modal-close" id="closeOrderBtn">إغلاق</button>
         </div>
     </div>
 
@@ -725,40 +927,149 @@
             goTo('formPage');
         }
 
+        const WHATSAPP_NUMBER = "212605555740";
+        const WHATSAPP_REDIRECT_DELAY = 1800;
+
+        let selectedService = "";
+        let lastBrowsingPage = "home";
+        let whatsappRedirectTimer = null;
+
+        const orderModal = document.getElementById("orderModal");
+        const orderForm = document.getElementById("orderForm");
+        const serviceBadge = document.getElementById("selectedServiceBadge");
+        const serviceInput = document.getElementById("modalServiceType");
+        const phoneInput = document.getElementById("orderPhone");
+        const phoneError = document.getElementById("phoneError");
+        const submitOrderBtn = document.getElementById("submitOrderBtn");
+        const cancelOrderBtn = document.getElementById("cancelOrderBtn");
+        const closeOrderBtn = document.getElementById("closeOrderBtn");
+
+        function showSuccessModal() {
+            const modal = document.getElementById('successModal');
+            const message = modal.querySelector('.success-message');
+            const icon = modal.querySelector('.success-icon');
+
+            [message, icon].forEach((el) => {
+                el.style.animation = 'none';
+                void el.offsetWidth;
+                el.style.animation = '';
+            });
+
+            modal.classList.add('active');
+        }
+
         function closeModal() {
             document.getElementById('successModal').classList.remove('active');
         }
 
+        function resetOrderForm() {
+            orderForm.reset();
+            selectedService = "";
+            serviceBadge.textContent = "—";
+            serviceInput.value = "";
+            clearPhoneError();
+        }
+
         function closeOrderModal() {
-            document.getElementById('orderModal').classList.remove('active');
+            orderModal.classList.remove("active");
+            clearPhoneError();
+        }
+
+        function cancelOrderModal() {
+            if (whatsappRedirectTimer) {
+                clearTimeout(whatsappRedirectTimer);
+                whatsappRedirectTimer = null;
+            }
+            closeOrderModal();
+            resetOrderForm();
+            goTo(lastBrowsingPage);
+        }
+
+        function buildWhatsAppMessage({ service, name, phone, projectName, details }) {
+            return [
+                "طلب خدمة جديد من الموقع:",
+                "• الخدمة المطلوبة: " + service,
+                "• الاسم والنسب: " + name,
+                "• رقم الهاتف/الواتساب: " + phone,
+                "• اسم المشروع: " + (projectName || "غير محدد"),
+                "• الوصف والتفاصيل: " + details
+            ].join("\n");
+        }
+
+        function openWhatsAppWithMessage(message) {
+            const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+        function setSelectedService(serviceType) {
+            selectedService = serviceType;
+            serviceBadge.textContent = serviceType;
+            serviceInput.value = serviceType;
         }
 
         function openOrderModal(serviceType) {
-            try {
-                const serviceInput = document.getElementById('modalServiceType');
-                const modal = document.getElementById('orderModal');
-                if (!serviceInput || !modal) return false;
+            if (!serviceType || !orderModal) return false;
 
-                serviceInput.value = serviceType;
-                modal.classList.add('active');
-                return modal.classList.contains('active');
-            } catch (error) {
-                console.error("Open order modal error:", error);
-                return false;
+            const activePage = document.querySelector(".page.active");
+            if (activePage) {
+                lastBrowsingPage = activePage.id;
             }
+
+            orderForm.reset();
+            setSelectedService(serviceType);
+            clearPhoneError();
+            orderModal.classList.add("active");
+            document.getElementById("orderFullName").focus();
+            return true;
         }
 
         function requestService(serviceType) {
             openOrderModal(serviceType);
         }
 
+        function clearPhoneError() {
+            phoneError.textContent = "";
+            phoneInput.classList.remove("invalid");
+        }
+
+        function validatePhone(phone) {
+            const cleaned = phone.replace(/[\s\-()]/g, "");
+            return /^\+?[0-9]{8,15}$/.test(cleaned);
+        }
+
+        function sanitizePhoneInput(value) {
+            return value.replace(/[^\d+]/g, "");
+        }
+
+        phoneInput.addEventListener("input", () => {
+            const sanitized = sanitizePhoneInput(phoneInput.value);
+            if (phoneInput.value !== sanitized) {
+                phoneInput.value = sanitized;
+            }
+            if (phoneError.textContent) {
+                clearPhoneError();
+            }
+        });
+
+        document.querySelectorAll(".order-trigger").forEach((trigger) => {
+            trigger.addEventListener("click", (e) => {
+                const service = trigger.dataset.service;
+                if (!service) return;
+                e.preventDefault();
+                e.stopPropagation();
+                requestService(service);
+            });
+        });
+
         async function sendToTelegram(orderData) {
-            const { name, service, phone } = orderData;
+            const { name, service, phone, projectName, details } = orderData;
             const tgMsg =
                 "🚀 <b>طلب جديد من موقع VORTEX</b>\n\n" +
                 "👤 <b>العميل:</b> " + name + "\n" +
                 "🛠 <b>نوع الخدمة:</b> " + service + "\n" +
-                "📞 <b>رقم الواتساب:</b> " + phone;
+                "📞 <b>رقم الواتساب:</b> " + phone +
+                (projectName ? "\n📁 <b>اسم المشروع:</b> " + projectName : "") +
+                "\n📝 <b>الوصف:</b> " + details;
 
             const token = "8797699298:AAHsyFQ67W75dwVRRUUTo2s7ND6dmPO-S98";
             const chatId = "8097636020";
@@ -779,42 +1090,111 @@
             }
         }
 
-        async function submitOrder(e) {
+        function submitOrderModal(e) {
+            e.preventDefault();
+            clearPhoneError();
+
+            const name = orderForm.querySelector('input[name="name"]').value.trim();
+            const phone = sanitizePhoneInput(phoneInput.value.trim());
+            const projectName = orderForm.querySelector('input[name="projectName"]').value.trim();
+            const details = orderForm.querySelector('textarea[name="details"]').value.trim();
+            const service = selectedService || serviceInput.value.trim();
+
+            if (!name) {
+                orderForm.querySelector('input[name="name"]').focus();
+                return;
+            }
+
+            if (!validatePhone(phone)) {
+                phoneInput.classList.add("invalid");
+                phoneError.textContent = "يرجى إدخال رقم هاتف صحيح (أرقام فقط، 8–15 رقمًا)";
+                phoneInput.focus();
+                return;
+            }
+
+            if (!details) {
+                orderForm.querySelector('textarea[name="details"]').focus();
+                return;
+            }
+
+            const whatsappMessage = buildWhatsAppMessage({
+                service,
+                name,
+                phone,
+                projectName,
+                details
+            });
+
+            const originalBtnText = submitOrderBtn.innerHTML;
+            submitOrderBtn.disabled = true;
+            submitOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-left:8px;"></i> جاري التحويل...';
+
+            closeOrderModal();
+            resetOrderForm();
+            showSuccessModal();
+
+            if (whatsappRedirectTimer) {
+                clearTimeout(whatsappRedirectTimer);
+            }
+
+            whatsappRedirectTimer = setTimeout(() => {
+                openWhatsAppWithMessage(whatsappMessage);
+                whatsappRedirectTimer = null;
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.innerHTML = originalBtnText;
+            }, WHATSAPP_REDIRECT_DELAY);
+        }
+
+        async function submitContactForm(e) {
             e.preventDefault();
 
             const form = e.target;
             const name = form.querySelector('input[name="name"]').value.trim();
-            const serviceInput = form.querySelector('input[name="service"]');
-            const service = serviceInput ? serviceInput.value.trim() : "";
-            const phone = form.querySelector('input[name="phone"]').value.trim();
+            const service = form.querySelector('input[name="service"]')?.value.trim() || "طلب عام";
+            const phone = sanitizePhoneInput(form.querySelector('input[name="phone"]').value.trim());
+            const details = form.querySelector('textarea[name="details"]').value.trim();
+
+            if (!validatePhone(phone)) {
+                alert("يرجى إدخال رقم هاتف صحيح (أرقام فقط، 8–15 رقمًا)");
+                return;
+            }
 
             try {
                 await push(ref(database, "orders"), {
                     name,
                     phone,
-                    serviceType: service || "طلب عام",
+                    serviceType: service,
+                    details,
                     createdAt: serverTimestamp()
                 });
 
-                await sendToTelegram({ name, service: service || "طلب عام", phone });
+                await sendToTelegram({ name, service, phone, projectName: "", details });
 
-                closeOrderModal();
-                document.getElementById('successModal').classList.add('active');
+                showSuccessModal();
                 form.reset();
             } catch (error) {
-                console.error("Order submit error:", error);
+                console.error("Contact form submit error:", error);
                 alert('وقع خطأ في الإرسال، حاول مرة أخرى');
             }
         }
 
-        document.getElementById("orderForm").addEventListener("submit", submitOrder);
-        document.getElementById("projectForm").addEventListener("submit", submitOrder);
+        orderForm.addEventListener("submit", submitOrderModal);
+        cancelOrderBtn.addEventListener("click", cancelOrderModal);
+        closeOrderBtn.addEventListener("click", cancelOrderModal);
+        document.getElementById("projectForm").addEventListener("submit", submitContactForm);
+
+        orderModal.addEventListener("click", (e) => {
+            if (e.target === orderModal) {
+                cancelOrderModal();
+            }
+        });
 
         window.toggleMenu = toggleMenu;
         window.goTo = goTo;
         window.goToForm = goToForm;
         window.closeModal = closeModal;
         window.closeOrderModal = closeOrderModal;
+        window.cancelOrderModal = cancelOrderModal;
         window.requestService = requestService;
     </script>
 
