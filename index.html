@@ -15,6 +15,8 @@
             --card-bg: rgba(255, 255, 255, 0.07);
             --glass-border: rgba(0, 245, 255, 0.3);
             --text-light: #e0e0e0;
+            --navbar-height: 64px;
+            --navbar-clearance: clamp(100px, 12vh, 124px);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,16 +33,19 @@
         .navbar {
             position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
+            min-height: var(--navbar-height);
             padding: 12px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 16px;
-            background: rgba(10, 10, 10, 0.9);
+            background: rgba(10, 10, 10, 0.92);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
+            z-index: 1100;
         }
 
         .navbar .logo {
@@ -169,7 +174,7 @@
         @media (max-width: 768px) {
             .nav-links {
                 position: absolute;
-                top: 45px;
+                top: var(--navbar-height);
                 inset-inline-end: 0;
                 width: 100%;
                 background: rgba(10, 10, 10, 0.95);
@@ -197,13 +202,14 @@
         }
 
         header {
-            height: 100vh;
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 60px 5% 20px;
+            padding: var(--navbar-clearance) 5% 20px;
             position: relative;
             overflow: hidden;
             background: #0a0a0a;
@@ -273,6 +279,10 @@
             padding: 50px 5%;
             position: relative;
             z-index: 2;
+        }
+
+        .page:not(#home) > section:first-child {
+            padding-top: var(--navbar-clearance);
         }
 
         .section-title {
@@ -452,6 +462,8 @@
         .page {
             display: none;
             animation: fadeInUp 0.8s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .page.active { display: block; }
@@ -485,7 +497,7 @@
         .about-section {
             max-width: 900px;
             margin: 0 auto;
-            padding-top: 20px;
+            padding-top: 0;
             text-align: start;
         }
 
@@ -941,9 +953,17 @@
         }
 
         @media (max-width: 768px) {
+            :root {
+                --navbar-height: 56px;
+                --navbar-clearance: clamp(92px, 14vh, 112px);
+            }
+
             .grid-container { grid-template-columns: 1fr; gap: 14px; }
             .showcase-img { height: 140px; }
             section { padding: 40px 4%; }
+            .page:not(#home) > section:first-child {
+                padding-top: var(--navbar-clearance);
+            }
             .btn-main { padding: 8px 22px; font-size: 0.8rem; }
             .flip-wrapper { width: 80px; height: 28px; }
             .flip-word { font-size: 0.85rem; }
