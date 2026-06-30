@@ -482,31 +482,198 @@
 
         .footer-social a:hover { color: var(--primary); }
 
-        .form-container {
-            max-width: 500px;
-            margin: auto;
+        .about-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-top: 20px;
+            text-align: start;
         }
 
-        .form-container input, .form-container textarea {
-            width: 100%;
-            padding: 10px 14px;
-            margin-bottom: 12px;
-            border-radius: 10px;
+        .about-header {
+            margin-bottom: 36px;
+            text-align: start;
+        }
+
+        .about-eyebrow {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 14px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 245, 255, 0.25);
+            background: rgba(0, 245, 255, 0.06);
+        }
+
+        .about-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 4.5vw, 2.35rem);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.4;
+            margin-bottom: 0;
+            text-align: start;
+        }
+
+        .about-story-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 42px 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .about-story-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            inset-inline-start: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .about-story-card::after {
+            content: "";
+            position: absolute;
+            top: -80px;
+            inset-inline-end: -80px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .about-story-body {
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-story-body p {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            line-height: 2.05;
+            margin-bottom: 1.65rem;
+            text-align: start;
+            font-weight: 400;
+        }
+
+        .about-story-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-story-body p:first-child {
+            color: #e2e8f0;
+            font-size: 1.12rem;
+        }
+
+        .about-contact-block {
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(0, 245, 255, 0.15);
+            text-align: start;
+        }
+
+        .about-contact-block h3 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+
+        .about-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            padding: 12px 20px;
+            border-radius: 14px;
+            background: rgba(0, 245, 255, 0.06);
+            border: 1px solid rgba(0, 245, 255, 0.22);
+            color: var(--primary);
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.04em;
+        }
+
+        .about-phone i {
+            font-size: 1.1rem;
+        }
+
+        .about-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: flex-start;
+        }
+
+        .about-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
-            outline: none;
-            background: rgba(255,255,255,0.1);
-            color: var(--text-light);
-            font-size: 0.9rem;
+            cursor: pointer;
             font-family: 'Cairo', sans-serif;
         }
 
-        .form-container input[readonly] {
-            background: rgba(0,0,0,0.2);
-            color: var(--primary);
-            font-weight: bold;
+        .about-btn:hover {
+            transform: translateY(-3px) scale(1.02);
         }
 
-        .form-container button { margin-top: 8px; }
+        .about-btn-whatsapp {
+            background: #25D366;
+            color: white;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+        }
+
+        .about-btn-whatsapp:hover {
+            box-shadow: 0 10px 28px rgba(37, 211, 102, 0.45);
+        }
+
+        .about-btn-instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            box-shadow: 0 6px 20px rgba(220, 39, 67, 0.3);
+        }
+
+        .about-btn-instagram:hover {
+            box-shadow: 0 10px 28px rgba(220, 39, 67, 0.45);
+        }
+
+        @media (max-width: 768px) {
+            .about-story-card {
+                padding: 28px 22px;
+            }
+            .about-story-body p {
+                font-size: 0.95rem;
+                line-height: 1.95;
+            }
+            .about-story-body p:first-child {
+                font-size: 1rem;
+            }
+            .about-cta {
+                flex-direction: column;
+            }
+            .about-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
 
         .whatsapp-float {
             position: fixed;
@@ -841,7 +1008,7 @@
 
     <div id="particles-js"></div>
 
-    <a href="https://wa.me/212605555740" target="_blank" class="whatsapp-float">
+    <a href="https://wa.me/212605555740" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="WhatsApp +212 605555740">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -960,20 +1127,36 @@
 
     <div class="page" id="formPage">
         <section>
-            <div class="form-container">
-                <h2 id="formTitle" style="text-align:center; margin-bottom:24px; font-size:1.4rem;" data-i18n="form.title">ابدأ مشروعك</h2>
-                <form id="projectForm">
-                    <input type="text" name="name" data-i18n-placeholder="form.name.placeholder" placeholder="اسمك الكريم" required>
-                    <input type="text" id="projectType" name="service" readonly>
-                    <input type="text" id="packagePrice" name="price" readonly>
-                    <textarea name="details" data-i18n-placeholder="form.details.placeholder" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required></textarea>
-                    <input type="tel" name="phone" data-i18n-placeholder="form.phone.placeholder" placeholder="رقم الواتساب" required>
-                    <button type="submit" class="btn-main" style="width: 100%;" data-i18n="form.submit">إرسال الطلب</button>
-                </form>
-                <div style="text-align:center; margin-top:12px;">
-                    <a href="https://wa.me/212605555740" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block; font-size:0.8rem; padding:8px 20px;">
-                        <i class="fab fa-whatsapp"></i> <span data-i18n="form.whatsapp">تواصل سريع عبر واتساب</span>
-                    </a>
+            <div class="about-section">
+                <div class="about-header">
+                    <span class="about-eyebrow" data-i18n="about.eyebrow">من نحن</span>
+                    <h2 data-i18n="about.title">قصة طموح رقمي يغيّر اللعبة</h2>
+                </div>
+
+                <div class="about-story-card">
+                    <div class="about-story-body">
+                        <p data-i18n="about.p1">لم تكن بداية شركتنا مجرد فكرة تجارية عابرة، بل ولدت من شغف حقيقي وسهر ليالٍ طوال، أسسها وصنعها طالب ومبرمج مغربي ذو طموح يعانق السماء. انطلقنا من غمار الدراسة والتحديات البرمجية لنبني كياناً رقمياً يهدف إلى تقديم حلول ذكية ومبتكرة بجودة عالمية.</p>
+                        <p data-i18n="about.p2">رؤيتنا تتجاوز حدود الأكواد البرمجية والتصميم؛ نحن نؤمن بأن النجاح الحقيقي هو الأثر الذي نتركه في المجتمع. لذلك، عهدنا على أنفسنا عهداً: مستقبلاً، ومع تدفق الطلبات ونمو مشاريعنا، سنخصص جزءاً من عوائد كل مشروع للمساهمة في أعمال الخير والإحسان.</p>
+                        <p data-i18n="about.p3">هذه المساهمات ستكون باسمي شخصياً وباسم كل عميل وثق بنا وساهم معنا، بل وحتى باسم كل من نوى أن يساهم ولم تسعفه الظروف. تابعوا رحلتنا وتفاصيل مبادراتنا القادمة عبر حسابنا في إنستغرام، حيث نشارككم الشغف، التطور، والأمل.</p>
+                    </div>
+
+                    <div class="about-contact-block">
+                        <h3 data-i18n="about.connect">تواصل معنا</h3>
+                        <div class="about-phone">
+                            <i class="fab fa-whatsapp"></i>
+                            <span data-i18n="about.phone">+212 605555740</span>
+                        </div>
+                        <div class="about-cta">
+                            <a href="https://wa.me/212605555740" target="_blank" rel="noopener noreferrer" class="about-btn about-btn-whatsapp">
+                                <i class="fab fa-whatsapp"></i>
+                                <span data-i18n="about.whatsapp">تواصل سريع عبر واتساب</span>
+                            </a>
+                            <a href="https://www.instagram.com/v0rtex.ma?igsh=eWhkcTd3cWRwaGhj" target="_blank" rel="noopener noreferrer" class="about-btn about-btn-instagram">
+                                <i class="fab fa-instagram"></i>
+                                <span data-i18n="about.instagram">تابعنا على إنستغرام</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -983,7 +1166,7 @@
         <div class="modal-box success-modal-box">
             <div class="success-icon"><i class="fas fa-check-circle"></i></div>
             <p class="success-message" data-i18n="success.message">تم إرسال بياناتك لنا بنجاح! سوف نتواصل معك في أقرب وقت.</p>
-            <a href="https://wa.me/212605555740" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block;"><i class="fab fa-whatsapp"></i> <span data-i18n="success.whatsapp">واتساب</span></a>
+            <a href="https://wa.me/212605555740" target="_blank" rel="noopener noreferrer" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block;"><i class="fab fa-whatsapp"></i> <span data-i18n="success.whatsapp">واتساب</span></a>
             <button type="button" class="btn-main" onclick="closeModal()" style="background: linear-gradient(45deg, var(--primary), var(--secondary));" data-i18n="success.close">إغلاق</button>
         </div>
     </div>
@@ -1035,7 +1218,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
-        import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: 'AIzaSyDcjbHnDcYbM8CN5i2TqFSVFC2JMacCP2I',
@@ -1049,7 +1231,6 @@
 
         const app = initializeApp(firebaseConfig);
         getAnalytics(app);
-        const database = getDatabase(app);
 
         let currentLang = 'ar';
         let selectedServiceKey = "";
@@ -1102,12 +1283,15 @@
                 "services.graphic": "تصميم إبداعي",
                 "services.webdev": "تطوير ويب",
                 "services.general": "طلب عام",
-                "form.title": "ابدأ مشروعك",
-                "form.name.placeholder": "اسمك الكريم",
-                "form.details.placeholder": "اشرح لنا فكرتك باختصار...",
-                "form.phone.placeholder": "رقم الواتساب",
-                "form.submit": "إرسال الطلب",
-                "form.whatsapp": "تواصل سريع عبر واتساب",
+                "about.eyebrow": "من نحن؟",
+                "about.title": "قصة طموح رقمي يغيّر اللعبة",
+                "about.p1": "لم تكن بداية شركتنا مجرد فكرة تجارية عابرة، بل ولدت من شغف حقيقي وسهر ليالٍ طوال، أسسها وصنعها طالب ومبرمج مغربي ذو طموح يعانق السماء. انطلقنا من غمار الدراسة والتحديات البرمجية لنبني كياناً رقمياً يهدف إلى تقديم حلول ذكية ومبتكرة بجودة عالمية.",
+                "about.p2": "رؤيتنا تتجاوز حدود الأكواد البرمجية والتصميم؛ نحن نؤمن بأن النجاح الحقيقي هو الأثر الذي نتركه في المجتمع. لذلك، عهدنا على أنفسنا عهداً: مستقبلاً، ومع تدفق الطلبات ونمو مشاريعنا، سنخصص جزءاً من عوائد كل مشروع للمساهمة في أعمال الخير والإحسان.",
+                "about.p3": "هذه المساهمات ستكون باسمي شخصياً وباسم كل عميل وثق بنا وساهم معنا، بل وحتى باسم كل من نوى أن يساهم ولم تسعفه الظروف. تابعوا رحلتنا وتفاصيل مبادراتنا القادمة عبر حسابنا في إنستغرام، حيث نشارككم الشغف، التطور، والأمل.",
+                "about.connect": "تواصل معنا",
+                "about.phone": "+212 605555740",
+                "about.whatsapp": "تواصل سريع عبر واتساب",
+                "about.instagram": "تابعنا على إنستغرام",
                 "success.message": "تم إرسال بياناتك لنا بنجاح! سوف نتواصل معك في أقرب وقت.",
                 "success.whatsapp": "واتساب",
                 "success.close": "إغلاق",
@@ -1184,12 +1368,15 @@
                 "services.graphic": "Creative Design",
                 "services.webdev": "Web Development",
                 "services.general": "General Request",
-                "form.title": "Start Your Project",
-                "form.name.placeholder": "Your name",
-                "form.details.placeholder": "Briefly explain your idea...",
-                "form.phone.placeholder": "WhatsApp number",
-                "form.submit": "Send Request",
-                "form.whatsapp": "Quick contact via WhatsApp",
+                "about.eyebrow": "About Us",
+                "about.title": "A Journey of Digital Ambition and Impact",
+                "about.p1": "Our agency wasn't just built as a business; it was born out of pure passion, sleepless nights, and tireless dedication, founded by an ambitious student and web developer with sky-high dreams. Emerging from the challenges of academic life and complex coding, we created a digital powerhouse aimed at delivering elite, innovative solutions.",
+                "about.p2": "But our vision goes beyond lines of code and modern designs; we believe true success lies in social impact. We have made a solemn promise: in the near future, as our orders grow, a portion of the revenue from every single project will be dedicated to charitable causes.",
+                "about.p3": "This charity will be made in my name, in the name of every client who trusts us and contributes with us, and even in the name of those who sincerely intended to contribute but couldn't. Follow our journey on Instagram to see our passion, tech updates, and upcoming community initiatives.",
+                "about.connect": "Get in Touch",
+                "about.phone": "+212 605555740",
+                "about.whatsapp": "Quick Contact via WhatsApp",
+                "about.instagram": "Follow Us on Instagram",
                 "success.message": "Your data has been sent successfully! We will contact you as soon as possible.",
                 "success.whatsapp": "WhatsApp",
                 "success.close": "Close",
@@ -1266,12 +1453,15 @@
                 "services.graphic": "Design Créatif",
                 "services.webdev": "Développement Web",
                 "services.general": "Demande Générale",
-                "form.title": "Lancez Votre Projet",
-                "form.name.placeholder": "Votre nom",
-                "form.details.placeholder": "Expliquez brièvement votre idée...",
-                "form.phone.placeholder": "Numéro WhatsApp",
-                "form.submit": "Envoyer la Demande",
-                "form.whatsapp": "Contact rapide via WhatsApp",
+                "about.eyebrow": "À Propos",
+                "about.title": "L'histoire d'une ambition numérique avec un cœur",
+                "about.p1": "Notre agence n'est pas simplement une entreprise; elle est née d'une véritable passion et de nuits blanches, fondée par un étudiant et développeur marocain ambitieux aux rêves infinis. Issus des défis académiques et du codage, nous avons bâti une entité numérique pour offrir des solutions innovantes de classe mondiale.",
+                "about.p2": "Cependant, notre vision dépasse le cadre du code. Nous croyons que le vrai succès est l'impact que nous laissons dans la société. C'est pourquoi nous prenons un engagement fort : à l'avenir, avec la croissance de nos commandes, une partie des revenus de chaque projet sera reversée à des œuvres caritatives.",
+                "about.p3": "Ces actions seront faites en mon nom, au nom de chaque client qui nous fait confiance, et même au nom de ceux qui avaient l'intention de contribuer mais n'ont pas pu. Suivez notre parcours sur Instagram pour partager notre passion, notre évolution et nos futures initiatives solidaires.",
+                "about.connect": "Contactez-nous",
+                "about.phone": "+212 605555740",
+                "about.whatsapp": "Contact rapide via WhatsApp",
+                "about.instagram": "Suivez-nous sur Instagram",
                 "success.message": "Vos données ont été envoyées avec succès ! Nous vous contacterons dans les plus brefs délais.",
                 "success.whatsapp": "WhatsApp",
                 "success.close": "Fermer",
@@ -1348,12 +1538,15 @@
                 "services.graphic": "Diseño Creativo",
                 "services.webdev": "Desarrollo Web",
                 "services.general": "Solicitud General",
-                "form.title": "Inicia Tu Proyecto",
-                "form.name.placeholder": "Tu nombre",
-                "form.details.placeholder": "Explica brevemente tu idea...",
-                "form.phone.placeholder": "Número de WhatsApp",
-                "form.submit": "Enviar Solicitud",
-                "form.whatsapp": "Contacto rápido por WhatsApp",
+                "about.eyebrow": "Sobre Nosotros",
+                "about.title": "Una historia de ambición digital e impacto social",
+                "about.p1": "Nuestra agencia no nació como un simple negocio; nació de la pura pasión y de noches de desvelo, fundada por un estudiante y desarrollador web ambicioso con sueños que tocan el cielo. Surgiendo de los desafíos académicos y de la programación, construimos una entidad digital para ofrecer soluciones innovadoras de nivel mundial.",
+                "about.p2": "Pero nuestra visión va más allá del código; creemos que el verdadero éxito es el impacto que dejamos en la sociedad. Por ello, nos hemos comprometido firmemente: en el futuro, a medida que crezcan nuestros pedidos, una parte de los ingresos de cada proyecto se destinará a causas benéficas.",
+                "about.p3": "Estas donaciones se harán en mi nombre, en el nombre de cada cliente que confía en nosotros y colabora, e incluso en el nombre de aquellos que deseaban colaborar pero no pudieron. Sigue nuestro viaje en Instagram para compartir nuestra pasión, evolución y próximas iniciativas solidarias.",
+                "about.connect": "Contáctanos",
+                "about.phone": "+212 605555740",
+                "about.whatsapp": "Contacto rápido por WhatsApp",
+                "about.instagram": "Síguenos en Instagram",
                 "success.message": "¡Tus datos se han enviado con éxito! Nos pondremos en contacto contigo lo antes posible.",
                 "success.whatsapp": "WhatsApp",
                 "success.close": "Cerrar",
@@ -1504,12 +1697,6 @@
             document.getElementById('navLinks').classList.remove('active');
         }
 
-        function goToForm(serviceKey) {
-            document.getElementById('projectType').value = getServiceName(serviceKey);
-            document.getElementById('packagePrice').value = "";
-            goTo('formPage');
-        }
-
         const WHATSAPP_NUMBER = "212605555740";
         const WHATSAPP_REDIRECT_DELAY = 1800;
 
@@ -1641,35 +1828,6 @@
             });
         });
 
-        async function sendToTelegram(orderData) {
-            const { name, service, phone, projectName, details } = orderData;
-            const tgMsg =
-                "🚀 <b>طلب جديد من موقع VORTEX</b>\n\n" +
-                "👤 <b>العميل:</b> " + name + "\n" +
-                "🛠 <b>نوع الخدمة:</b> " + service + "\n" +
-                "📞 <b>رقم الواتساب:</b> " + phone +
-                (projectName ? "\n📁 <b>اسم المشروع:</b> " + projectName : "") +
-                "\n📝 <b>الوصف:</b> " + details;
-
-            const token = "8797699298:AAHsyFQ67W75dwVRRUUTo2s7ND6dmPO-S98";
-            const chatId = "8097636020";
-            const url = `https://api.allorigins.win/raw?url=https://api.telegram.org/bot${token}/sendMessage`;
-
-            const response = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: tgMsg,
-                    parse_mode: "HTML"
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-        }
-
         function submitOrderModal(e) {
             e.preventDefault();
             clearPhoneError();
@@ -1725,43 +1883,9 @@
             }, WHATSAPP_REDIRECT_DELAY);
         }
 
-        async function submitContactForm(e) {
-            e.preventDefault();
-
-            const form = e.target;
-            const name = form.querySelector('input[name="name"]').value.trim();
-            const service = form.querySelector('input[name="service"]')?.value.trim() || t("services.general");
-            const phone = sanitizePhoneInput(form.querySelector('input[name="phone"]').value.trim());
-            const details = form.querySelector('textarea[name="details"]').value.trim();
-
-            if (!validatePhone(phone)) {
-                alert(t("alert.phone.error"));
-                return;
-            }
-
-            try {
-                await push(ref(database, "orders"), {
-                    name,
-                    phone,
-                    serviceType: service,
-                    details,
-                    createdAt: serverTimestamp()
-                });
-
-                await sendToTelegram({ name, service, phone, projectName: "", details });
-
-                showSuccessModal();
-                form.reset();
-            } catch (error) {
-                console.error("Contact form submit error:", error);
-                alert(t("alert.submit.error"));
-            }
-        }
-
         orderForm.addEventListener("submit", submitOrderModal);
         cancelOrderBtn.addEventListener("click", cancelOrderModal);
         closeOrderBtn.addEventListener("click", cancelOrderModal);
-        document.getElementById("projectForm").addEventListener("submit", submitContactForm);
 
         orderModal.addEventListener("click", (e) => {
             if (e.target === orderModal) {
@@ -1771,7 +1895,6 @@
 
         window.toggleMenu = toggleMenu;
         window.goTo = goTo;
-        window.goToForm = goToForm;
         window.closeModal = closeModal;
         window.closeOrderModal = closeOrderModal;
         window.cancelOrderModal = cancelOrderModal;
