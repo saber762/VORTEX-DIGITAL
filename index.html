@@ -68,6 +68,86 @@
 
         .nav-links a:hover { color: var(--primary); }
 
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 1002;
+        }
+
+        .lang-switcher {
+            position: relative;
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-light);
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.15);
+        }
+
+        .lang-chevron {
+            font-size: 0.6rem;
+            transition: transform 0.3s;
+        }
+
+        .lang-switcher.open .lang-chevron {
+            transform: rotate(180deg);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            inset-inline-end: 0;
+            min-width: 148px;
+            list-style: none;
+            background: rgba(10, 10, 10, 0.97);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 6px 0;
+            display: none;
+            z-index: 1003;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .lang-switcher.open .lang-dropdown {
+            display: block;
+        }
+
+        .lang-dropdown li {
+            padding: 8px 16px;
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: var(--text-light);
+        }
+
+        .lang-dropdown li:hover,
+        .lang-dropdown li.active {
+            color: var(--primary);
+            background: rgba(0, 245, 255, 0.08);
+        }
+
+        [dir="ltr"] .modal-dismiss-btn {
+            inset-inline-end: 14px;
+            inset-inline-start: auto;
+        }
+
         .hamburger {
             display: none;
             flex-direction: column;
@@ -90,7 +170,7 @@
             .nav-links {
                 position: absolute;
                 top: 45px;
-                right: 0;
+                inset-inline-end: 0;
                 width: 100%;
                 background: rgba(10, 10, 10, 0.95);
                 flex-direction: column;
@@ -102,6 +182,9 @@
             }
             .nav-links.active { display: flex; }
             .hamburger { display: flex; }
+            .lang-dropdown {
+                inset-inline-end: 0;
+            }
         }
 
         #particles-js {
@@ -477,7 +560,7 @@
 
         .order-modal-box {
             max-width: 480px;
-            text-align: right;
+            text-align: start;
             position: relative;
             padding: 40px 24px 20px;
         }
@@ -485,7 +568,7 @@
         .modal-dismiss-btn {
             position: absolute;
             top: 14px;
-            right: 14px;
+            inset-inline-end: 14px;
             width: 38px;
             height: 38px;
             border-radius: 50%;
@@ -529,7 +612,7 @@
         }
 
         .order-form {
-            text-align: right;
+            text-align: start;
         }
 
         .form-field {
@@ -721,7 +804,7 @@
             .order-form textarea { min-height: 64px; max-height: 96px; padding: 7px 10px; font-size: 0.82rem; }
             .btn-submit-order { padding: 8px 16px; font-size: 0.8rem; margin-top: 2px; }
             .btn-modal-close { padding: 7px 16px; margin-top: 5px; }
-            .modal-dismiss-btn { top: 10px; right: 10px; width: 34px; height: 34px; font-size: 0.9rem; }
+            .modal-dismiss-btn { top: 10px; inset-inline-end: 10px; width: 34px; height: 34px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -730,14 +813,29 @@
     <nav class="navbar">
         <div class="logo">VORTEX DIGITAL</div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#" onclick="goTo('home')">الرئيسية</a></li>
-            <li><a href="#" onclick="goTo('services')">خدماتنا</a></li>
-            <li><a href="#" onclick="goTo('formPage')">اتصل بنا</a></li>
+            <li><a href="#" onclick="goTo('home')" data-i18n="nav.home">الرئيسية</a></li>
+            <li><a href="#" onclick="goTo('services')" data-i18n="nav.services">خدماتنا</a></li>
+            <li><a href="#" onclick="goTo('formPage')" data-i18n="nav.contact">اتصل بنا</a></li>
         </ul>
-        <div class="hamburger" onclick="toggleMenu()" aria-label="فتح القائمة">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="navbar-actions">
+            <div class="lang-switcher" id="langSwitcher">
+                <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+                    <i class="fas fa-globe"></i>
+                    <span id="currentLangLabel">AR</span>
+                    <i class="fas fa-chevron-down lang-chevron"></i>
+                </button>
+                <ul class="lang-dropdown" id="langDropdown" role="listbox">
+                    <li role="option" data-lang="ar" class="active">العربية</li>
+                    <li role="option" data-lang="en">English</li>
+                    <li role="option" data-lang="fr">Français</li>
+                    <li role="option" data-lang="es">Español</li>
+                </ul>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()" data-i18n-aria="nav.openMenu" aria-label="فتح القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
@@ -754,77 +852,80 @@
             </video>
             <div class="hero-content">
                 <h1>VORTEX DIGITAL</h1>
-                <p>نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.</p>
+                <p data-i18n="hero.tagline">نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.</p>
                 <br>
-                <button class="btn-main" onclick="goTo('services')">اكتشف خدماتنا <i class="fas fa-arrow-left" style="margin-right:6px;"></i></button>
+                <button class="btn-main" onclick="goTo('services')">
+                    <span data-i18n="hero.cta">اكتشف خدماتنا</span>
+                    <i class="fas fa-arrow-left hero-cta-icon" style="margin-inline-end:6px;"></i>
+                </button>
             </div>
         </header>
 
         <section>
             <div class="section-title">
-                <h2>خدماتنا المتميزة</h2>
-                <p>حلول رقمية متكاملة لتطوير مشروعك</p>
+                <h2 data-i18n="home.services.title">خدماتنا المتميزة</h2>
+                <p data-i18n="home.services.subtitle">حلول رقمية متكاملة لتطوير مشروعك</p>
             </div>
             <div class="grid-container">
                 <div class="glass-card">
                     <i class="fas fa-paint-brush"></i>
-                    <h3>تصميم المحتوى البصري</h3>
+                    <h3 data-i18n="home.service1.title">تصميم المحتوى البصري</h3>
                     <div class="service-text">
-                        نصنع لك محتوى بصرياً
+                        <span data-i18n="home.service1.prefix">نصنع لك محتوى بصرياً</span>
                         <span class="flip-wrapper">
-                            <span class="flip-word flip-blue">جذاباً</span>
-                            <span class="flip-word flip-purple">قوياً</span>
-                            <span class="flip-word flip-green">مبتكراً</span>
+                            <span class="flip-word flip-blue" data-i18n="home.service1.flip1">جذاباً</span>
+                            <span class="flip-word flip-purple" data-i18n="home.service1.flip2">قوياً</span>
+                            <span class="flip-word flip-green" data-i18n="home.service1.flip3">مبتكراً</span>
                         </span>
-                        لتطوير مشروعك الخاص
+                        <span data-i18n="home.service1.suffix">لتطوير مشروعك الخاص</span>
                     </div>
-                    <button type="button" class="btn-main order-trigger" style="width:100%;" data-service="تصميم المحتوى البصري">اطلب الخدمة الآن</button>
+                    <button type="button" class="btn-main order-trigger" style="width:100%;" data-service-key="visual_content" data-i18n="order.now">اطلب الخدمة الآن</button>
                 </div>
                 <div class="glass-card">
                     <i class="fas fa-code"></i>
-                    <h3>تصميم المواقع التعريفية</h3>
+                    <h3 data-i18n="home.service2.title">تصميم المواقع التعريفية</h3>
                     <div class="service-text">
-                        تصميم موقع لمشروعك بشكل
+                        <span data-i18n="home.service2.prefix">تصميم موقع لمشروعك بشكل</span>
                         <span class="flip-wrapper">
-                            <span class="flip-word flip-blue">احترافي</span>
-                            <span class="flip-word flip-purple">متناسق</span>
-                            <span class="flip-word flip-green">عصري</span>
+                            <span class="flip-word flip-blue" data-i18n="home.service2.flip1">احترافي</span>
+                            <span class="flip-word flip-purple" data-i18n="home.service2.flip2">متناسق</span>
+                            <span class="flip-word flip-green" data-i18n="home.service2.flip3">عصري</span>
                         </span>
-                        لتعزيز حضورك الرقمي
+                        <span data-i18n="home.service2.suffix">لتعزيز حضورك الرقمي</span>
                     </div>
-                    <button type="button" class="btn-main order-trigger" style="width:100%;" data-service="تصميم المواقع التعريفية">اطلب الخدمة الآن</button>
+                    <button type="button" class="btn-main order-trigger" style="width:100%;" data-service-key="websites" data-i18n="order.now">اطلب الخدمة الآن</button>
                 </div>
             </div>
         </section>
 
         <section style="background: rgba(0, 0, 0, 0.2);">
             <div class="section-title">
-                <h2>مشاريعنا الاحترافية</h2>
-                <p>دقة في التصميم، قوة في الأداء</p>
+                <h2 data-i18n="projects.title">مشاريعنا الاحترافية</h2>
+                <p data-i18n="projects.subtitle">دقة في التصميم، قوة في الأداء</p>
             </div>
             <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
                 <div class="showcase-card">
                     <img src="images/dashboard.jpg" alt="Dashboard Design" class="showcase-img">
                     <div class="showcase-info">
                         <i class="fas fa-laptop-code"></i>
-                        <h4>واجهات لوحة التحكم</h4>
-                        <p>تصميم أنظمة إدارة البيانات بواجهات زجاجية عصرية متفاعلة.</p>
+                        <h4 data-i18n="project1.title">واجهات لوحة التحكم</h4>
+                        <p data-i18n="project1.desc">تصميم أنظمة إدارة البيانات بواجهات زجاجية عصرية متفاعلة.</p>
                     </div>
                 </div>
                 <div class="showcase-card">
                     <img src="images/ecommerce.jpg" alt="E-commerce UI" class="showcase-img">
                     <div class="showcase-info">
                         <i class="fas fa-shopping-cart"></i>
-                        <h4>متاجر الجيل القادم</h4>
-                        <p>تجربة تسوق فريدة تجمع بين السرعة والجمالية في التصميم.</p>
+                        <h4 data-i18n="project2.title">متاجر الجيل القادم</h4>
+                        <p data-i18n="project2.desc">تجربة تسوق فريدة تجمع بين السرعة والجمالية في التصميم.</p>
                     </div>
                 </div>
                 <div class="showcase-card">
                     <img src="images/security.jpg" alt="Cyber Security UI" class="showcase-img">
                     <div class="showcase-info">
                         <i class="fas fa-shield-halved"></i>
-                        <h4>تطبيقات الويب الذكية</h4>
-                        <p>برمجيات قوية مخصصة لتلبية احتياجاتك التقنية المعقدة بدقة عالية.</p>
+                        <h4 data-i18n="project3.title">تطبيقات الويب الذكية</h4>
+                        <p data-i18n="project3.desc">برمجيات قوية مخصصة لتلبية احتياجاتك التقنية المعقدة بدقة عالية.</p>
                     </div>
                 </div>
             </div>
@@ -834,24 +935,24 @@
     <div class="page" id="services">
         <section>
             <div class="section-title">
-                <h2>ماذا نقدم لك؟</h2>
-                <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 20px;">العودة للرئيسية</button>
+                <h2 data-i18n="services.title">ماذا نقدم لك؟</h2>
+                <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 20px;" data-i18n="services.back">العودة للرئيسية</button>
             </div>
             <div class="grid-container">
-                <div class="glass-card clickable order-trigger" data-service="متاجر إلكترونية">
+                <div class="glass-card clickable order-trigger" data-service-key="ecommerce">
                     <i class="fas fa-shopping-cart"></i>
-                    <h3>متاجر إلكترونية</h3>
-                    <p>متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
+                    <h3 data-i18n="service.ecommerce.title">متاجر إلكترونية</h3>
+                    <p data-i18n="service.ecommerce.desc">متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
                 </div>
-                <div class="glass-card clickable order-trigger" data-service="تصميم جرافيك">
+                <div class="glass-card clickable order-trigger" data-service-key="graphic">
                     <i class="fas fa-paint-brush"></i>
-                    <h3>تصميم إبداعي</h3>
-                    <p>بوسترات وشعارات تخطف الأنظار.</p>
+                    <h3 data-i18n="service.graphic.title">تصميم إبداعي</h3>
+                    <p data-i18n="service.graphic.desc">بوسترات وشعارات تخطف الأنظار.</p>
                 </div>
-                <div class="glass-card clickable order-trigger" data-service="تطوير ويب">
+                <div class="glass-card clickable order-trigger" data-service-key="webdev">
                     <i class="fas fa-code"></i>
-                    <h3>تطوير ويب</h3>
-                    <p>برمجة منصات خاصة تلبي احتياجات عملك.</p>
+                    <h3 data-i18n="service.webdev.title">تطوير ويب</h3>
+                    <p data-i18n="service.webdev.desc">برمجة منصات خاصة تلبي احتياجات عملك.</p>
                 </div>
             </div>
         </section>
@@ -860,18 +961,18 @@
     <div class="page" id="formPage">
         <section>
             <div class="form-container">
-                <h2 id="formTitle" style="text-align:center; margin-bottom:24px; font-size:1.4rem;">ابدأ مشروعك</h2>
+                <h2 id="formTitle" style="text-align:center; margin-bottom:24px; font-size:1.4rem;" data-i18n="form.title">ابدأ مشروعك</h2>
                 <form id="projectForm">
-                    <input type="text" name="name" placeholder="اسمك الكريم" required>
+                    <input type="text" name="name" data-i18n-placeholder="form.name.placeholder" placeholder="اسمك الكريم" required>
                     <input type="text" id="projectType" name="service" readonly>
                     <input type="text" id="packagePrice" name="price" readonly>
-                    <textarea name="details" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required></textarea>
-                    <input type="tel" name="phone" placeholder="رقم الواتساب" required>
-                    <button type="submit" class="btn-main" style="width: 100%;">إرسال الطلب</button>
+                    <textarea name="details" data-i18n-placeholder="form.details.placeholder" placeholder="اشرح لنا فكرتك باختصار..." rows="4" required></textarea>
+                    <input type="tel" name="phone" data-i18n-placeholder="form.phone.placeholder" placeholder="رقم الواتساب" required>
+                    <button type="submit" class="btn-main" style="width: 100%;" data-i18n="form.submit">إرسال الطلب</button>
                 </form>
                 <div style="text-align:center; margin-top:12px;">
                     <a href="https://wa.me/212605555740" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block; font-size:0.8rem; padding:8px 20px;">
-                        <i class="fab fa-whatsapp"></i> تواصل سريع عبر واتساب
+                        <i class="fab fa-whatsapp"></i> <span data-i18n="form.whatsapp">تواصل سريع عبر واتساب</span>
                     </a>
                 </div>
             </div>
@@ -881,50 +982,50 @@
     <div class="modal-overlay" id="successModal">
         <div class="modal-box success-modal-box">
             <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-            <p class="success-message">تم إرسال بياناتك لنا بنجاح! سوف نتواصل معك في أقرب وقت.</p>
-            <a href="https://wa.me/212605555740" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block;"><i class="fab fa-whatsapp"></i> واتساب</a>
-            <button type="button" class="btn-main" onclick="closeModal()" style="background: linear-gradient(45deg, var(--primary), var(--secondary));">إغلاق</button>
+            <p class="success-message" data-i18n="success.message">تم إرسال بياناتك لنا بنجاح! سوف نتواصل معك في أقرب وقت.</p>
+            <a href="https://wa.me/212605555740" target="_blank" class="btn-main" style="background:#25D366; text-decoration:none; display:inline-block;"><i class="fab fa-whatsapp"></i> <span data-i18n="success.whatsapp">واتساب</span></a>
+            <button type="button" class="btn-main" onclick="closeModal()" style="background: linear-gradient(45deg, var(--primary), var(--secondary));" data-i18n="success.close">إغلاق</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="orderModal">
         <div class="modal-box order-modal-box">
-            <button type="button" class="modal-dismiss-btn" id="cancelOrderBtn" aria-label="العودة والإلغاء" title="العودة والإلغاء">
+            <button type="button" class="modal-dismiss-btn" id="cancelOrderBtn" data-i18n-aria="order.cancel" data-i18n-title="order.cancel" aria-label="العودة والإلغاء" title="العودة والإلغاء">
                 <i class="fas fa-arrow-right"></i>
             </button>
-            <h3 class="modal-title">طلب خدمة</h3>
-            <p class="modal-subtitle">أدخل بياناتك وسيتم تحويلك إلى واتساب لإرسال طلبك مباشرة.</p>
+            <h3 class="modal-title" data-i18n="order.title">طلب خدمة</h3>
+            <p class="modal-subtitle" data-i18n="order.subtitle">أدخل بياناتك وسيتم تحويلك إلى واتساب لإرسال طلبك مباشرة.</p>
             <form id="orderForm" class="order-form" novalidate>
                 <div class="form-field">
-                    <label>الخدمة المختارة</label>
+                    <label data-i18n="order.selectedService">الخدمة المختارة</label>
                     <div class="service-badge" id="selectedServiceBadge" aria-live="polite">—</div>
                     <input type="hidden" name="service" id="modalServiceType">
                 </div>
                 <div class="form-field">
-                    <label for="orderFullName">الاسم والنسب <span class="required">*</span></label>
-                    <input type="text" id="orderFullName" name="name" placeholder="مثال: أحمد العلوي" autocomplete="name" required>
+                    <label for="orderFullName"><span data-i18n="order.fullName">الاسم والنسب</span> <span class="required">*</span></label>
+                    <input type="text" id="orderFullName" name="name" data-i18n-placeholder="order.fullName.placeholder" placeholder="مثال: أحمد العلوي" autocomplete="name" required>
                 </div>
                 <div class="form-field">
-                    <label for="orderPhone">رقم الهاتف / الواتساب <span class="required">*</span></label>
-                    <input type="tel" id="orderPhone" name="phone" inputmode="numeric" placeholder="مثال: 0612345678" autocomplete="tel" required>
+                    <label for="orderPhone"><span data-i18n="order.phone">رقم الهاتف / الواتساب</span> <span class="required">*</span></label>
+                    <input type="tel" id="orderPhone" name="phone" inputmode="numeric" data-i18n-placeholder="order.phone.placeholder" placeholder="مثال: 0612345678" autocomplete="tel" required>
                     <span class="field-error" id="phoneError"></span>
                 </div>
                 <div class="form-field">
-                    <label for="orderProjectName">اسم المشروع <span class="optional">(اختياري)</span></label>
-                    <input type="text" id="orderProjectName" name="projectName" placeholder="مثال: متجر الأزياء">
+                    <label for="orderProjectName"><span data-i18n="order.projectName">اسم المشروع</span> <span class="optional" data-i18n="order.optional">(اختياري)</span></label>
+                    <input type="text" id="orderProjectName" name="projectName" data-i18n-placeholder="order.projectName.placeholder" placeholder="مثال: متجر الأزياء">
                 </div>
                 <div class="form-field">
-                    <label for="orderDetails">وصف الشيء الذي تريده <span class="required">*</span></label>
-                    <textarea id="orderDetails" name="details" rows="3" placeholder="اشرح لنا احتياجاتك بالتفصيل..." required></textarea>
+                    <label for="orderDetails"><span data-i18n="order.details">وصف الشيء الذي تريده</span> <span class="required">*</span></label>
+                    <textarea id="orderDetails" name="details" rows="3" data-i18n-placeholder="order.details.placeholder" placeholder="اشرح لنا احتياجاتك بالتفصيل..." required></textarea>
                 </div>
-                <button type="submit" class="btn-main btn-submit-order" id="submitOrderBtn">تأكيد وإرسال الطلب</button>
+                <button type="submit" class="btn-main btn-submit-order" id="submitOrderBtn" data-i18n="order.submit">تأكيد وإرسال الطلب</button>
             </form>
-            <button type="button" class="btn-main btn-modal-close" id="closeOrderBtn">إغلاق</button>
+            <button type="button" class="btn-main btn-modal-close" id="closeOrderBtn" data-i18n="order.close">إغلاق</button>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 VORTEX DIGITAL | تم التصميم بكل احترافية</p>
+        <p data-i18n="footer.copyright">© 2026 VORTEX DIGITAL | تم التصميم بكل احترافية</p>
         <div class="footer-social">
             <a href="https://www.instagram.com/v0rtex.ma?igsh=eWhkcTd3cWRwaGhj" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
@@ -950,6 +1051,436 @@
         getAnalytics(app);
         const database = getDatabase(app);
 
+        let currentLang = 'ar';
+        let selectedServiceKey = "";
+        let lastBrowsingPage = "home";
+        let whatsappRedirectTimer = null;
+
+        const translations = {
+            ar: {
+                "page.title": "VORTEX DIGITAL | الحلول الذكية",
+                "nav.home": "الرئيسية",
+                "nav.services": "خدماتنا",
+                "nav.contact": "اتصل بنا",
+                "nav.openMenu": "فتح القائمة",
+                "hero.tagline": "نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.",
+                "hero.cta": "اكتشف خدماتنا",
+                "home.services.title": "خدماتنا المتميزة",
+                "home.services.subtitle": "حلول رقمية متكاملة لتطوير مشروعك",
+                "home.service1.title": "تصميم المحتوى البصري",
+                "home.service1.prefix": "نصنع لك محتوى بصرياً",
+                "home.service1.flip1": "جذاباً",
+                "home.service1.flip2": "قوياً",
+                "home.service1.flip3": "مبتكراً",
+                "home.service1.suffix": "لتطوير مشروعك الخاص",
+                "home.service2.title": "تصميم المواقع التعريفية",
+                "home.service2.prefix": "تصميم موقع لمشروعك بشكل",
+                "home.service2.flip1": "احترافي",
+                "home.service2.flip2": "متناسق",
+                "home.service2.flip3": "عصري",
+                "home.service2.suffix": "لتعزيز حضورك الرقمي",
+                "order.now": "اطلب الخدمة الآن",
+                "projects.title": "مشاريعنا الاحترافية",
+                "projects.subtitle": "دقة في التصميم، قوة في الأداء",
+                "project1.title": "واجهات لوحة التحكم",
+                "project1.desc": "تصميم أنظمة إدارة البيانات بواجهات زجاجية عصرية متفاعلة.",
+                "project2.title": "متاجر الجيل القادم",
+                "project2.desc": "تجربة تسوق فريدة تجمع بين السرعة والجمالية في التصميم.",
+                "project3.title": "تطبيقات الويب الذكية",
+                "project3.desc": "برمجيات قوية مخصصة لتلبية احتياجاتك التقنية المعقدة بدقة عالية.",
+                "services.title": "ماذا نقدم لك؟",
+                "services.back": "العودة للرئيسية",
+                "service.ecommerce.title": "متاجر إلكترونية",
+                "service.ecommerce.desc": "متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.",
+                "service.graphic.title": "تصميم إبداعي",
+                "service.graphic.desc": "بوسترات وشعارات تخطف الأنظار.",
+                "service.webdev.title": "تطوير ويب",
+                "service.webdev.desc": "برمجة منصات خاصة تلبي احتياجات عملك.",
+                "services.visual_content": "تصميم المحتوى البصري",
+                "services.websites": "تصميم المواقع التعريفية",
+                "services.ecommerce": "متاجر إلكترونية",
+                "services.graphic": "تصميم إبداعي",
+                "services.webdev": "تطوير ويب",
+                "services.general": "طلب عام",
+                "form.title": "ابدأ مشروعك",
+                "form.name.placeholder": "اسمك الكريم",
+                "form.details.placeholder": "اشرح لنا فكرتك باختصار...",
+                "form.phone.placeholder": "رقم الواتساب",
+                "form.submit": "إرسال الطلب",
+                "form.whatsapp": "تواصل سريع عبر واتساب",
+                "success.message": "تم إرسال بياناتك لنا بنجاح! سوف نتواصل معك في أقرب وقت.",
+                "success.whatsapp": "واتساب",
+                "success.close": "إغلاق",
+                "order.title": "طلب خدمة",
+                "order.subtitle": "أدخل بياناتك وسيتم تحويلك إلى واتساب لإرسال طلبك مباشرة.",
+                "order.selectedService": "الخدمة المختارة",
+                "order.fullName": "الاسم والنسب",
+                "order.phone": "رقم الهاتف / الواتساب",
+                "order.projectName": "اسم المشروع",
+                "order.optional": "(اختياري)",
+                "order.details": "وصف الشيء الذي تريده",
+                "order.submit": "تأكيد وإرسال الطلب",
+                "order.close": "إغلاق",
+                "order.cancel": "العودة والإلغاء",
+                "order.fullName.placeholder": "مثال: أحمد العلوي",
+                "order.phone.placeholder": "مثال: 0612345678",
+                "order.projectName.placeholder": "مثال: متجر الأزياء",
+                "order.details.placeholder": "اشرح لنا احتياجاتك بالتفصيل...",
+                "order.phone.error": "يرجى إدخال رقم هاتف صحيح (أرقام فقط، 8–15 رقمًا)",
+                "order.redirecting": "جاري التحويل...",
+                "order.unspecified": "غير محدد",
+                "footer.copyright": "© 2026 VORTEX DIGITAL | تم التصميم بكل احترافية",
+                "whatsapp.header": "طلب خدمة جديد من الموقع:",
+                "whatsapp.service": "الخدمة المطلوبة:",
+                "whatsapp.name": "الاسم والنسب:",
+                "whatsapp.phone": "رقم الهاتف/الواتساب:",
+                "whatsapp.project": "اسم المشروع:",
+                "whatsapp.details": "الوصف والتفاصيل:",
+                "alert.phone.error": "يرجى إدخال رقم هاتف صحيح (أرقام فقط، 8–15 رقمًا)",
+                "alert.submit.error": "وقع خطأ في الإرسال، حاول مرة أخرى"
+            },
+            en: {
+                "page.title": "VORTEX DIGITAL | Smart Solutions",
+                "nav.home": "Home",
+                "nav.services": "Our Services",
+                "nav.contact": "Contact Us",
+                "nav.openMenu": "Open menu",
+                "hero.tagline": "We build the digital future. We design user experiences that exceed expectations using the latest modern programming technologies.",
+                "hero.cta": "Discover Our Services",
+                "home.services.title": "Our Premium Services",
+                "home.services.subtitle": "Integrated digital solutions to grow your project",
+                "home.service1.title": "Visual Content Design",
+                "home.service1.prefix": "We create visual content that is",
+                "home.service1.flip1": "attractive",
+                "home.service1.flip2": "powerful",
+                "home.service1.flip3": "innovative",
+                "home.service1.suffix": "to develop your own project",
+                "home.service2.title": "Corporate Website Design",
+                "home.service2.prefix": "Designing a website for your project in a",
+                "home.service2.flip1": "professional",
+                "home.service2.flip2": "harmonious",
+                "home.service2.flip3": "modern",
+                "home.service2.suffix": "way to boost your digital presence",
+                "order.now": "Order Now",
+                "projects.title": "Our Professional Projects",
+                "projects.subtitle": "Precision in design, power in performance",
+                "project1.title": "Dashboard Interfaces",
+                "project1.desc": "Designing data management systems with modern interactive glass interfaces.",
+                "project2.title": "Next-Gen Stores",
+                "project2.desc": "A unique shopping experience combining speed and design aesthetics.",
+                "project3.title": "Smart Web Applications",
+                "project3.desc": "Powerful custom software to meet your complex technical needs with high precision.",
+                "services.title": "What Do We Offer You?",
+                "services.back": "Back to Home",
+                "service.ecommerce.title": "E-commerce Stores",
+                "service.ecommerce.desc": "Fast stores equipped to convert visitors directly into customers.",
+                "service.graphic.title": "Creative Design",
+                "service.graphic.desc": "Eye-catching posters and logos.",
+                "service.webdev.title": "Web Development",
+                "service.webdev.desc": "Custom platforms tailored to your business needs.",
+                "services.visual_content": "Visual Content Design",
+                "services.websites": "Corporate Website Design",
+                "services.ecommerce": "E-commerce Stores",
+                "services.graphic": "Creative Design",
+                "services.webdev": "Web Development",
+                "services.general": "General Request",
+                "form.title": "Start Your Project",
+                "form.name.placeholder": "Your name",
+                "form.details.placeholder": "Briefly explain your idea...",
+                "form.phone.placeholder": "WhatsApp number",
+                "form.submit": "Send Request",
+                "form.whatsapp": "Quick contact via WhatsApp",
+                "success.message": "Your data has been sent successfully! We will contact you as soon as possible.",
+                "success.whatsapp": "WhatsApp",
+                "success.close": "Close",
+                "order.title": "Service Request",
+                "order.subtitle": "Enter your details and you will be redirected to WhatsApp to send your request directly.",
+                "order.selectedService": "Selected Service",
+                "order.fullName": "Full Name",
+                "order.phone": "Phone / WhatsApp Number",
+                "order.projectName": "Project Name",
+                "order.optional": "(optional)",
+                "order.details": "Describe what you need",
+                "order.submit": "Confirm and Send Request",
+                "order.close": "Close",
+                "order.cancel": "Go back and cancel",
+                "order.fullName.placeholder": "e.g. Ahmed Alawi",
+                "order.phone.placeholder": "e.g. 0612345678",
+                "order.projectName.placeholder": "e.g. Fashion Store",
+                "order.details.placeholder": "Explain your needs in detail...",
+                "order.phone.error": "Please enter a valid phone number (digits only, 8–15 digits)",
+                "order.redirecting": "Redirecting...",
+                "order.unspecified": "Not specified",
+                "footer.copyright": "© 2026 VORTEX DIGITAL | Professionally designed",
+                "whatsapp.header": "New service request from the website:",
+                "whatsapp.service": "Required service:",
+                "whatsapp.name": "Full name:",
+                "whatsapp.phone": "Phone/WhatsApp:",
+                "whatsapp.project": "Project name:",
+                "whatsapp.details": "Description and details:",
+                "alert.phone.error": "Please enter a valid phone number (digits only, 8–15 digits)",
+                "alert.submit.error": "An error occurred while sending, please try again"
+            },
+            fr: {
+                "page.title": "VORTEX DIGITAL | Solutions Intelligentes",
+                "nav.home": "Accueil",
+                "nav.services": "Nos Services",
+                "nav.contact": "Contactez-nous",
+                "nav.openMenu": "Ouvrir le menu",
+                "hero.tagline": "Nous construisons le futur numérique. Nous concevons des expériences utilisateur qui dépassent les attentes grâce aux dernières technologies de programmation modernes.",
+                "hero.cta": "Découvrez Nos Services",
+                "home.services.title": "Nos Services Premium",
+                "home.services.subtitle": "Des solutions numériques intégrées pour développer votre projet",
+                "home.service1.title": "Conception de Contenu Visuel",
+                "home.service1.prefix": "Nous créons pour vous un contenu visuel",
+                "home.service1.flip1": "attrayant",
+                "home.service1.flip2": "puissant",
+                "home.service1.flip3": "innovant",
+                "home.service1.suffix": "pour développer votre propre projet",
+                "home.service2.title": "Conception de Sites Vitrines",
+                "home.service2.prefix": "Conception d'un site pour votre projet de manière",
+                "home.service2.flip1": "professionnelle",
+                "home.service2.flip2": "harmonieuse",
+                "home.service2.flip3": "moderne",
+                "home.service2.suffix": "pour renforcer votre présence numérique",
+                "order.now": "Commander Maintenant",
+                "projects.title": "Nos Projets Professionnels",
+                "projects.subtitle": "Précision dans le design, puissance dans la performance",
+                "project1.title": "Interfaces de Tableau de Bord",
+                "project1.desc": "Conception de systèmes de gestion de données avec des interfaces vitrées modernes et interactives.",
+                "project2.title": "Boutiques Nouvelle Génération",
+                "project2.desc": "Une expérience d'achat unique alliant rapidité et esthétique du design.",
+                "project3.title": "Applications Web Intelligentes",
+                "project3.desc": "Des logiciels puissants et sur mesure pour répondre à vos besoins techniques complexes avec une grande précision.",
+                "services.title": "Que Vous Proposons-Nous ?",
+                "services.back": "Retour à l'Accueil",
+                "service.ecommerce.title": "Boutiques en Ligne",
+                "service.ecommerce.desc": "Des boutiques rapides conçues pour convertir directement les visiteurs en clients.",
+                "service.graphic.title": "Design Créatif",
+                "service.graphic.desc": "Affiches et logos qui captent le regard.",
+                "service.webdev.title": "Développement Web",
+                "service.webdev.desc": "Des plateformes sur mesure adaptées aux besoins de votre entreprise.",
+                "services.visual_content": "Conception de Contenu Visuel",
+                "services.websites": "Conception de Sites Vitrines",
+                "services.ecommerce": "Boutiques en Ligne",
+                "services.graphic": "Design Créatif",
+                "services.webdev": "Développement Web",
+                "services.general": "Demande Générale",
+                "form.title": "Lancez Votre Projet",
+                "form.name.placeholder": "Votre nom",
+                "form.details.placeholder": "Expliquez brièvement votre idée...",
+                "form.phone.placeholder": "Numéro WhatsApp",
+                "form.submit": "Envoyer la Demande",
+                "form.whatsapp": "Contact rapide via WhatsApp",
+                "success.message": "Vos données ont été envoyées avec succès ! Nous vous contacterons dans les plus brefs délais.",
+                "success.whatsapp": "WhatsApp",
+                "success.close": "Fermer",
+                "order.title": "Demande de Service",
+                "order.subtitle": "Entrez vos informations et vous serez redirigé vers WhatsApp pour envoyer votre demande directement.",
+                "order.selectedService": "Service Sélectionné",
+                "order.fullName": "Nom Complet",
+                "order.phone": "Téléphone / WhatsApp",
+                "order.projectName": "Nom du Projet",
+                "order.optional": "(facultatif)",
+                "order.details": "Décrivez ce dont vous avez besoin",
+                "order.submit": "Confirmer et Envoyer",
+                "order.close": "Fermer",
+                "order.cancel": "Retour et annulation",
+                "order.fullName.placeholder": "ex. Ahmed Alawi",
+                "order.phone.placeholder": "ex. 0612345678",
+                "order.projectName.placeholder": "ex. Boutique de Mode",
+                "order.details.placeholder": "Expliquez vos besoins en détail...",
+                "order.phone.error": "Veuillez entrer un numéro de téléphone valide (chiffres uniquement, 8 à 15 chiffres)",
+                "order.redirecting": "Redirection en cours...",
+                "order.unspecified": "Non spécifié",
+                "footer.copyright": "© 2026 VORTEX DIGITAL | Conçu avec professionnalisme",
+                "whatsapp.header": "Nouvelle demande de service depuis le site :",
+                "whatsapp.service": "Service demandé :",
+                "whatsapp.name": "Nom complet :",
+                "whatsapp.phone": "Téléphone/WhatsApp :",
+                "whatsapp.project": "Nom du projet :",
+                "whatsapp.details": "Description et détails :",
+                "alert.phone.error": "Veuillez entrer un numéro de téléphone valide (chiffres uniquement, 8 à 15 chiffres)",
+                "alert.submit.error": "Une erreur s'est produite lors de l'envoi, veuillez réessayer"
+            },
+            es: {
+                "page.title": "VORTEX DIGITAL | Soluciones Inteligentes",
+                "nav.home": "Inicio",
+                "nav.services": "Nuestros Servicios",
+                "nav.contact": "Contáctanos",
+                "nav.openMenu": "Abrir menú",
+                "hero.tagline": "Construimos el futuro digital. Diseñamos experiencias de usuario que superan las expectativas utilizando las últimas tecnologías de programación modernas.",
+                "hero.cta": "Descubre Nuestros Servicios",
+                "home.services.title": "Nuestros Servicios Premium",
+                "home.services.subtitle": "Soluciones digitales integradas para desarrollar tu proyecto",
+                "home.service1.title": "Diseño de Contenido Visual",
+                "home.service1.prefix": "Creamos contenido visual",
+                "home.service1.flip1": "atractivo",
+                "home.service1.flip2": "potente",
+                "home.service1.flip3": "innovador",
+                "home.service1.suffix": "para desarrollar tu propio proyecto",
+                "home.service2.title": "Diseño de Sitios Web Corporativos",
+                "home.service2.prefix": "Diseño de un sitio web para tu proyecto de forma",
+                "home.service2.flip1": "profesional",
+                "home.service2.flip2": "armoniosa",
+                "home.service2.flip3": "moderna",
+                "home.service2.suffix": "para potenciar tu presencia digital",
+                "order.now": "Solicitar Ahora",
+                "projects.title": "Nuestros Proyectos Profesionales",
+                "projects.subtitle": "Precisión en el diseño, potencia en el rendimiento",
+                "project1.title": "Interfaces de Panel de Control",
+                "project1.desc": "Diseño de sistemas de gestión de datos con interfaces de cristal modernas e interactivas.",
+                "project2.title": "Tiendas de Nueva Generación",
+                "project2.desc": "Una experiencia de compra única que combina velocidad y estética en el diseño.",
+                "project3.title": "Aplicaciones Web Inteligentes",
+                "project3.desc": "Software personalizado y potente para satisfacer tus necesidades técnicas complejas con alta precisión.",
+                "services.title": "¿Qué Te Ofrecemos?",
+                "services.back": "Volver al Inicio",
+                "service.ecommerce.title": "Tiendas en Línea",
+                "service.ecommerce.desc": "Tiendas rápidas preparadas para convertir visitantes directamente en clientes.",
+                "service.graphic.title": "Diseño Creativo",
+                "service.graphic.desc": "Pósters y logotipos que captan la atención.",
+                "service.webdev.title": "Desarrollo Web",
+                "service.webdev.desc": "Plataformas personalizadas adaptadas a las necesidades de tu negocio.",
+                "services.visual_content": "Diseño de Contenido Visual",
+                "services.websites": "Diseño de Sitios Web Corporativos",
+                "services.ecommerce": "Tiendas en Línea",
+                "services.graphic": "Diseño Creativo",
+                "services.webdev": "Desarrollo Web",
+                "services.general": "Solicitud General",
+                "form.title": "Inicia Tu Proyecto",
+                "form.name.placeholder": "Tu nombre",
+                "form.details.placeholder": "Explica brevemente tu idea...",
+                "form.phone.placeholder": "Número de WhatsApp",
+                "form.submit": "Enviar Solicitud",
+                "form.whatsapp": "Contacto rápido por WhatsApp",
+                "success.message": "¡Tus datos se han enviado con éxito! Nos pondremos en contacto contigo lo antes posible.",
+                "success.whatsapp": "WhatsApp",
+                "success.close": "Cerrar",
+                "order.title": "Solicitud de Servicio",
+                "order.subtitle": "Introduce tus datos y serás redirigido a WhatsApp para enviar tu solicitud directamente.",
+                "order.selectedService": "Servicio Seleccionado",
+                "order.fullName": "Nombre Completo",
+                "order.phone": "Teléfono / WhatsApp",
+                "order.projectName": "Nombre del Proyecto",
+                "order.optional": "(opcional)",
+                "order.details": "Describe lo que necesitas",
+                "order.submit": "Confirmar y Enviar",
+                "order.close": "Cerrar",
+                "order.cancel": "Volver y cancelar",
+                "order.fullName.placeholder": "ej. Ahmed Alawi",
+                "order.phone.placeholder": "ej. 0612345678",
+                "order.projectName.placeholder": "ej. Tienda de Moda",
+                "order.details.placeholder": "Explica tus necesidades en detalle...",
+                "order.phone.error": "Por favor, introduce un número de teléfono válido (solo dígitos, 8–15 dígitos)",
+                "order.redirecting": "Redirigiendo...",
+                "order.unspecified": "No especificado",
+                "footer.copyright": "© 2026 VORTEX DIGITAL | Diseñado con profesionalismo",
+                "whatsapp.header": "Nueva solicitud de servicio desde el sitio web:",
+                "whatsapp.service": "Servicio solicitado:",
+                "whatsapp.name": "Nombre completo:",
+                "whatsapp.phone": "Teléfono/WhatsApp:",
+                "whatsapp.project": "Nombre del proyecto:",
+                "whatsapp.details": "Descripción y detalles:",
+                "alert.phone.error": "Por favor, introduce un número de teléfono válido (solo dígitos, 8–15 dígitos)",
+                "alert.submit.error": "Ocurrió un error al enviar, inténtalo de nuevo"
+            }
+        };
+
+        function t(key, lang = currentLang) {
+            return translations[lang]?.[key] ?? translations.ar[key] ?? key;
+        }
+
+        function getServiceName(serviceKey, lang = currentLang) {
+            return t(`services.${serviceKey}`, lang);
+        }
+
+        function changeLanguage(lang) {
+            if (!translations[lang]) lang = 'ar';
+            currentLang = lang;
+
+            const isRtl = lang === 'ar';
+            document.documentElement.lang = isRtl ? 'ar' : lang;
+            document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('[data-i18n]').forEach((el) => {
+                const key = el.getAttribute('data-i18n');
+                const text = t(key, lang);
+                if (text !== undefined) el.textContent = text;
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                const text = t(key, lang);
+                if (text !== undefined) el.placeholder = text;
+            });
+
+            document.querySelectorAll('[data-i18n-aria]').forEach((el) => {
+                const key = el.getAttribute('data-i18n-aria');
+                const text = t(key, lang);
+                if (text !== undefined) el.setAttribute('aria-label', text);
+            });
+
+            document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+                const key = el.getAttribute('data-i18n-title');
+                const text = t(key, lang);
+                if (text !== undefined) el.setAttribute('title', text);
+            });
+
+            document.title = t('page.title', lang);
+
+            const ctaIcon = document.querySelector('.hero-cta-icon');
+            if (ctaIcon) {
+                ctaIcon.className = isRtl ? 'fas fa-arrow-left hero-cta-icon' : 'fas fa-arrow-right hero-cta-icon';
+                ctaIcon.style.marginInlineEnd = '6px';
+                ctaIcon.style.marginInlineStart = '0';
+            }
+
+            const dismissIcon = document.querySelector('#cancelOrderBtn i');
+            if (dismissIcon) {
+                dismissIcon.className = isRtl ? 'fas fa-arrow-right' : 'fas fa-arrow-left';
+            }
+
+            const langLabel = document.getElementById('currentLangLabel');
+            if (langLabel) langLabel.textContent = lang.toUpperCase();
+
+            document.querySelectorAll('.lang-dropdown li').forEach((li) => {
+                li.classList.toggle('active', li.dataset.lang === lang);
+            });
+
+            if (selectedServiceKey) {
+                setSelectedService(selectedServiceKey);
+            }
+
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        function initLangSwitcher() {
+            const langSwitcher = document.getElementById('langSwitcher');
+            const langBtn = document.getElementById('langBtn');
+            const langDropdown = document.getElementById('langDropdown');
+
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = langSwitcher.classList.toggle('open');
+                langBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            langDropdown.querySelectorAll('li').forEach((li) => {
+                li.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    changeLanguage(li.dataset.lang);
+                    langSwitcher.classList.remove('open');
+                    langBtn.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            document.addEventListener('click', () => {
+                langSwitcher.classList.remove('open');
+                langBtn.setAttribute('aria-expanded', 'false');
+            });
+        }
+
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
@@ -973,18 +1504,14 @@
             document.getElementById('navLinks').classList.remove('active');
         }
 
-        function goToForm(service) {
-            document.getElementById('projectType').value = service;
+        function goToForm(serviceKey) {
+            document.getElementById('projectType').value = getServiceName(serviceKey);
             document.getElementById('packagePrice').value = "";
             goTo('formPage');
         }
 
         const WHATSAPP_NUMBER = "212605555740";
         const WHATSAPP_REDIRECT_DELAY = 1800;
-
-        let selectedService = "";
-        let lastBrowsingPage = "home";
-        let whatsappRedirectTimer = null;
 
         const orderModal = document.getElementById("orderModal");
         const orderForm = document.getElementById("orderForm");
@@ -1016,7 +1543,7 @@
 
         function resetOrderForm() {
             orderForm.reset();
-            selectedService = "";
+            selectedServiceKey = "";
             serviceBadge.textContent = "—";
             serviceInput.value = "";
             clearPhoneError();
@@ -1039,12 +1566,12 @@
 
         function buildWhatsAppMessage({ service, name, phone, projectName, details }) {
             return [
-                "طلب خدمة جديد من الموقع:",
-                "• الخدمة المطلوبة: " + service,
-                "• الاسم والنسب: " + name,
-                "• رقم الهاتف/الواتساب: " + phone,
-                "• اسم المشروع: " + (projectName || "غير محدد"),
-                "• الوصف والتفاصيل: " + details
+                t("whatsapp.header"),
+                "• " + t("whatsapp.service") + " " + service,
+                "• " + t("whatsapp.name") + " " + name,
+                "• " + t("whatsapp.phone") + " " + phone,
+                "• " + t("whatsapp.project") + " " + (projectName || t("order.unspecified")),
+                "• " + t("whatsapp.details") + " " + details
             ].join("\n");
         }
 
@@ -1053,14 +1580,15 @@
             window.open(url, "_blank", "noopener,noreferrer");
         }
 
-        function setSelectedService(serviceType) {
-            selectedService = serviceType;
-            serviceBadge.textContent = serviceType;
-            serviceInput.value = serviceType;
+        function setSelectedService(serviceKey) {
+            selectedServiceKey = serviceKey;
+            const serviceName = getServiceName(serviceKey);
+            serviceBadge.textContent = serviceName;
+            serviceInput.value = serviceName;
         }
 
-        function openOrderModal(serviceType) {
-            if (!serviceType || !orderModal) return false;
+        function openOrderModal(serviceKey) {
+            if (!serviceKey || !orderModal) return false;
 
             const activePage = document.querySelector(".page.active");
             if (activePage) {
@@ -1068,15 +1596,15 @@
             }
 
             orderForm.reset();
-            setSelectedService(serviceType);
+            setSelectedService(serviceKey);
             clearPhoneError();
             orderModal.classList.add("active");
             document.getElementById("orderFullName").focus();
             return true;
         }
 
-        function requestService(serviceType) {
-            openOrderModal(serviceType);
+        function requestService(serviceKey) {
+            openOrderModal(serviceKey);
         }
 
         function clearPhoneError() {
@@ -1105,11 +1633,11 @@
 
         document.querySelectorAll(".order-trigger").forEach((trigger) => {
             trigger.addEventListener("click", (e) => {
-                const service = trigger.dataset.service;
-                if (!service) return;
+                const serviceKey = trigger.dataset.serviceKey;
+                if (!serviceKey) return;
                 e.preventDefault();
                 e.stopPropagation();
-                requestService(service);
+                requestService(serviceKey);
             });
         });
 
@@ -1150,7 +1678,7 @@
             const phone = sanitizePhoneInput(phoneInput.value.trim());
             const projectName = orderForm.querySelector('input[name="projectName"]').value.trim();
             const details = orderForm.querySelector('textarea[name="details"]').value.trim();
-            const service = selectedService || serviceInput.value.trim();
+            const service = getServiceName(selectedServiceKey) || serviceInput.value.trim();
 
             if (!name) {
                 orderForm.querySelector('input[name="name"]').focus();
@@ -1159,7 +1687,7 @@
 
             if (!validatePhone(phone)) {
                 phoneInput.classList.add("invalid");
-                phoneError.textContent = "يرجى إدخال رقم هاتف صحيح (أرقام فقط، 8–15 رقمًا)";
+                phoneError.textContent = t("order.phone.error");
                 phoneInput.focus();
                 return;
             }
@@ -1179,7 +1707,7 @@
 
             const originalBtnText = submitOrderBtn.innerHTML;
             submitOrderBtn.disabled = true;
-            submitOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-left:8px;"></i> جاري التحويل...';
+            submitOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-inline-end:8px;"></i> ' + t("order.redirecting");
 
             closeOrderModal();
             resetOrderForm();
@@ -1202,12 +1730,12 @@
 
             const form = e.target;
             const name = form.querySelector('input[name="name"]').value.trim();
-            const service = form.querySelector('input[name="service"]')?.value.trim() || "طلب عام";
+            const service = form.querySelector('input[name="service"]')?.value.trim() || t("services.general");
             const phone = sanitizePhoneInput(form.querySelector('input[name="phone"]').value.trim());
             const details = form.querySelector('textarea[name="details"]').value.trim();
 
             if (!validatePhone(phone)) {
-                alert("يرجى إدخال رقم هاتف صحيح (أرقام فقط، 8–15 رقمًا)");
+                alert(t("alert.phone.error"));
                 return;
             }
 
@@ -1226,7 +1754,7 @@
                 form.reset();
             } catch (error) {
                 console.error("Contact form submit error:", error);
-                alert('وقع خطأ في الإرسال، حاول مرة أخرى');
+                alert(t("alert.submit.error"));
             }
         }
 
@@ -1248,6 +1776,13 @@
         window.closeOrderModal = closeOrderModal;
         window.cancelOrderModal = cancelOrderModal;
         window.requestService = requestService;
+        window.changeLanguage = changeLanguage;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLang') || 'ar';
+            changeLanguage(savedLang);
+            initLangSwitcher();
+        });
     </script>
 
 </body>
