@@ -93,12 +93,19 @@
             transition: background 0.35s ease, border-color 0.35s ease;
         }
 
-        .navbar-start {
+
+        .navbar-leading {
+            display: none;
+            align-items: center;
+            justify-content: flex-start;
+            flex-shrink: 0;
+        }
+
+        .navbar-trailing {
             display: flex;
             align-items: center;
             gap: 10px;
             flex-shrink: 0;
-            min-width: 0;
         }
 
         .navbar .logo {
@@ -270,15 +277,35 @@
 
             .navbar {
                 padding: 10px 4%;
-                gap: 8px;
+                gap: 0;
+                justify-content: center;
             }
 
-            .navbar-start {
+            .navbar-leading {
+                display: flex;
+                position: absolute;
+                left: 4%;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1002;
+            }
+
+            .navbar-trailing {
+                display: flex;
+                position: absolute;
+                right: 4%;
+                top: 50%;
+                transform: translateY(-50%);
                 gap: 8px;
+                z-index: 1002;
             }
 
             .navbar .logo {
+                flex: 0 1 auto;
+                max-width: calc(100% - 148px);
+                margin: 0 12px;
                 font-size: 0.92rem;
+                text-align: center;
             }
 
             .theme-toggle {
@@ -296,7 +323,8 @@
             .nav-links {
                 position: absolute;
                 top: var(--navbar-height);
-                inset-inline-end: 0;
+                left: 0;
+                right: 0;
                 width: 100%;
                 background: var(--bg-elevated);
                 flex-direction: column;
@@ -312,6 +340,8 @@
             .hamburger { display: flex; }
             .lang-dropdown {
                 inset-inline-end: 0;
+                right: 0;
+                left: auto;
             }
         }
 
@@ -1104,8 +1134,20 @@
 <body>
 
     <nav class="navbar">
-        <div class="navbar-start">
-            <div class="logo">VORTEX DIGITAL</div>
+        <div class="navbar-leading">
+            <div class="hamburger" onclick="toggleMenu()" data-i18n-aria="nav.openMenu" aria-label="فتح القائمة">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="logo">VORTEX DIGITAL</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" onclick="goTo('home')" data-i18n="nav.home">الرئيسية</a></li>
+            <li><a href="#" onclick="goTo('services')" data-i18n="nav.services">خدماتنا</a></li>
+            <li><a href="#" onclick="goTo('formPage')" data-i18n="nav.contact">اتصل بنا</a></li>
+        </ul>
+        <div class="navbar-trailing">
             <button type="button" class="theme-toggle" id="themeToggle" data-i18n-aria="theme.switchLight" aria-label="التبديل إلى الوضع الفاتح">
                 <i class="fas fa-sun theme-icon-light" aria-hidden="true"></i>
                 <i class="fas fa-moon theme-icon-dark" aria-hidden="true"></i>
@@ -1123,16 +1165,6 @@
                     <li role="option" data-lang="es">Español</li>
                 </ul>
             </div>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#" onclick="goTo('home')" data-i18n="nav.home">الرئيسية</a></li>
-            <li><a href="#" onclick="goTo('services')" data-i18n="nav.services">خدماتنا</a></li>
-            <li><a href="#" onclick="goTo('formPage')" data-i18n="nav.contact">اتصل بنا</a></li>
-        </ul>
-        <div class="hamburger" onclick="toggleMenu()" data-i18n-aria="nav.openMenu" aria-label="فتح القائمة">
-            <span></span>
-            <span></span>
-            <span></span>
         </div>
     </nav>
 
