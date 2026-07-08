@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VORTEX DIGITAL | الحلول الذكية</title>
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('preferredTheme') === 'light') {
+                    document.documentElement.classList.add('light-mode');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Cairo:wght@300;400;700&family=Orbitron:wght@500;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,11 +21,45 @@
             --primary: #00f5ff;
             --secondary: #ff00ff;
             --bg-dark: #0a0a0a;
+            --bg-elevated: rgba(10, 10, 10, 0.92);
+            --bg-dropdown: rgba(10, 10, 10, 0.97);
             --card-bg: rgba(255, 255, 255, 0.07);
             --glass-border: rgba(0, 245, 255, 0.3);
             --text-light: #e0e0e0;
+            --text-muted: #cbd5e1;
+            --text-heading: #ffffff;
+            --text-subtle: #64748b;
+            --text-modal-sub: #94a3b8;
+            --header-overlay: rgba(10, 10, 10, 0.6);
+            --section-alt-bg: rgba(0, 0, 0, 0.2);
+            --input-bg: rgba(255, 255, 255, 0.1);
+            --input-bg-order: rgba(255, 255, 255, 0.08);
+            --hero-highlight: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --toggle-bg: rgba(255, 255, 255, 0.06);
             --navbar-height: 64px;
             --navbar-clearance: clamp(100px, 12vh, 124px);
+        }
+
+        html.light-mode,
+        body.light-mode {
+            --bg-dark: #f0f4f8;
+            --bg-elevated: rgba(255, 255, 255, 0.94);
+            --bg-dropdown: rgba(255, 255, 255, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --glass-border: rgba(0, 140, 155, 0.28);
+            --text-light: #1e293b;
+            --text-muted: #475569;
+            --text-heading: #0f172a;
+            --text-subtle: #64748b;
+            --text-modal-sub: #64748b;
+            --header-overlay: rgba(240, 244, 248, 0.78);
+            --section-alt-bg: rgba(0, 0, 0, 0.04);
+            --input-bg: rgba(0, 0, 0, 0.05);
+            --input-bg-order: rgba(0, 0, 0, 0.04);
+            --hero-highlight: #1e293b;
+            --shadow-color: rgba(0, 0, 0, 0.12);
+            --toggle-bg: rgba(0, 0, 0, 0.04);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,6 +70,7 @@
             font-family: 'Cairo', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.35s ease, color 0.35s ease;
         }
 
         /* Navbar */
@@ -41,11 +85,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 16px;
-            background: rgba(10, 10, 10, 0.92);
+            gap: 12px;
+            background: var(--bg-elevated);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 1100;
+            transition: background 0.35s ease, border-color 0.35s ease;
+        }
+
+        .navbar-start {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            min-width: 0;
         }
 
         .navbar .logo {
@@ -55,6 +108,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-links {
@@ -62,6 +117,8 @@
             gap: 20px;
             list-style: none;
             z-index: 1001;
+            flex: 1;
+            justify-content: center;
         }
 
         .nav-links a {
@@ -73,12 +130,48 @@
 
         .nav-links a:hover { color: var(--primary); }
 
-        .navbar-actions {
+        .theme-toggle {
             display: flex;
             align-items: center;
-            gap: 14px;
-            z-index: 1002;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--toggle-bg);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s, background 0.3s;
+            font-size: 0.9rem;
+            padding: 0;
         }
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.14), rgba(255, 0, 255, 0.14));
+            color: var(--primary);
+            box-shadow: 0 0 16px rgba(0, 245, 255, 0.22), 0 0 6px rgba(255, 0, 255, 0.15);
+            transform: scale(1.06);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.96);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.35), 0 0 10px rgba(255, 0, 255, 0.25);
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        body.light-mode .theme-icon-dark,
+        html.light-mode .theme-icon-dark { display: none; }
+
+        body:not(.light-mode) .theme-icon-light,
+        html:not(.light-mode) .theme-icon-light { display: none; }
+
+        html.light-mode body { background-color: var(--bg-dark); color: var(--text-light); }
 
         .lang-switcher {
             position: relative;
@@ -91,7 +184,7 @@
             padding: 6px 12px;
             border-radius: 50px;
             border: 1px solid var(--glass-border);
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--toggle-bg);
             color: var(--text-light);
             font-size: 0.78rem;
             cursor: pointer;
@@ -120,14 +213,14 @@
             inset-inline-end: 0;
             min-width: 148px;
             list-style: none;
-            background: rgba(10, 10, 10, 0.97);
+            background: var(--bg-dropdown);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             padding: 6px 0;
             display: none;
             z-index: 1003;
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 24px var(--shadow-color);
         }
 
         .lang-switcher.open .lang-dropdown {
@@ -158,9 +251,7 @@
             flex-direction: column;
             gap: 4px;
             cursor: pointer;
-        }
-
-        .hamburger {
+            flex-shrink: 0;
             z-index: 1002;
         }
 
@@ -172,18 +263,50 @@
         }
 
         @media (max-width: 768px) {
+            :root {
+                --navbar-height: 56px;
+                --navbar-clearance: clamp(92px, 14vh, 112px);
+            }
+
+            .navbar {
+                padding: 10px 4%;
+                gap: 8px;
+            }
+
+            .navbar-start {
+                gap: 8px;
+            }
+
+            .navbar .logo {
+                font-size: 0.92rem;
+            }
+
+            .theme-toggle {
+                width: 34px;
+                height: 34px;
+                font-size: 0.82rem;
+            }
+
+            .lang-btn {
+                padding: 5px 10px;
+                font-size: 0.72rem;
+                gap: 4px;
+            }
+
             .nav-links {
                 position: absolute;
                 top: var(--navbar-height);
                 inset-inline-end: 0;
                 width: 100%;
-                background: rgba(10, 10, 10, 0.95);
+                background: var(--bg-elevated);
                 flex-direction: column;
                 align-items: center;
                 padding: 15px 0;
                 gap: 12px;
                 display: none;
                 border-bottom: 1px solid var(--glass-border);
+                flex: unset;
+                justify-content: flex-start;
             }
             .nav-links.active { display: flex; }
             .hamburger { display: flex; }
@@ -212,7 +335,7 @@
             padding: var(--navbar-clearance) 5% 20px;
             position: relative;
             overflow: hidden;
-            background: #0a0a0a;
+            background: var(--bg-dark);
         }
 
         .header-video {
@@ -236,7 +359,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(10,10,10,0.6), var(--bg-dark));
+            background: linear-gradient(to bottom, var(--header-overlay), var(--bg-dark));
             z-index: 1;
         }
 
@@ -339,13 +462,13 @@
         }
 
         .glass-card h3 {
-            color: #fff;
+            color: var(--text-heading);
             margin-bottom: 14px;
             font-size: 1.1rem;
         }
 
         .service-text {
-            color: #cbd5e1;
+            color: var(--text-muted);
             font-size: 0.9rem;
             line-height: 1.8;
             margin-bottom: 20px;
@@ -449,13 +572,13 @@
         }
 
         .showcase-info h4 {
-            color: #fff;
+            color: var(--text-heading);
             margin-bottom: 6px;
             font-size: 1rem;
         }
 
         .showcase-info p {
-            color: #cbd5e1;
+            color: var(--text-muted);
             font-size: 0.85rem;
         }
 
@@ -477,7 +600,7 @@
             text-align: center;
             padding: 30px;
             border-top: 1px solid var(--glass-border);
-            color: #64748b;
+            color: var(--text-subtle);
             font-size: 0.8rem;
         }
 
@@ -570,7 +693,7 @@
         }
 
         .about-story-body p {
-            color: #cbd5e1;
+            color: var(--text-muted);
             font-size: 1.05rem;
             line-height: 2.05;
             margin-bottom: 1.65rem;
@@ -583,7 +706,7 @@
         }
 
         .about-story-body p:first-child {
-            color: #e2e8f0;
+            color: var(--hero-highlight);
             font-size: 1.12rem;
         }
 
@@ -596,7 +719,7 @@
 
         .about-contact-block h3 {
             font-size: 1rem;
-            color: #fff;
+            color: var(--text-heading);
             margin-bottom: 18px;
             font-weight: 700;
         }
@@ -762,7 +885,7 @@
         }
 
         .modal-subtitle {
-            color: #94a3b8;
+            color: var(--text-modal-sub);
             font-size: 0.8rem;
             line-height: 1.5;
             margin-bottom: 14px;
@@ -791,7 +914,7 @@
         }
 
         .form-field .optional {
-            color: #64748b;
+            color: var(--text-subtle);
             font-weight: 400;
             font-size: 0.75rem;
         }
@@ -816,13 +939,17 @@
             line-height: 1.3;
         }
 
+        .section-alt {
+            background: var(--section-alt-bg);
+        }
+
         .order-form input,
         .order-form textarea {
             width: 100%;
             border-radius: 8px;
             border: 1px solid rgba(0, 245, 255, 0.2);
             outline: none;
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--input-bg-order);
             color: var(--text-light);
             font-size: 0.85rem;
             font-family: 'Cairo', sans-serif;
@@ -977,13 +1104,12 @@
 <body>
 
     <nav class="navbar">
-        <div class="logo">VORTEX DIGITAL</div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#" onclick="goTo('home')" data-i18n="nav.home">الرئيسية</a></li>
-            <li><a href="#" onclick="goTo('services')" data-i18n="nav.services">خدماتنا</a></li>
-            <li><a href="#" onclick="goTo('formPage')" data-i18n="nav.contact">اتصل بنا</a></li>
-        </ul>
-        <div class="navbar-actions">
+        <div class="navbar-start">
+            <div class="logo">VORTEX DIGITAL</div>
+            <button type="button" class="theme-toggle" id="themeToggle" data-i18n-aria="theme.switchLight" aria-label="التبديل إلى الوضع الفاتح">
+                <i class="fas fa-sun theme-icon-light" aria-hidden="true"></i>
+                <i class="fas fa-moon theme-icon-dark" aria-hidden="true"></i>
+            </button>
             <div class="lang-switcher" id="langSwitcher">
                 <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
                     <i class="fas fa-globe"></i>
@@ -997,11 +1123,16 @@
                     <li role="option" data-lang="es">Español</li>
                 </ul>
             </div>
-            <div class="hamburger" onclick="toggleMenu()" data-i18n-aria="nav.openMenu" aria-label="فتح القائمة">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" onclick="goTo('home')" data-i18n="nav.home">الرئيسية</a></li>
+            <li><a href="#" onclick="goTo('services')" data-i18n="nav.services">خدماتنا</a></li>
+            <li><a href="#" onclick="goTo('formPage')" data-i18n="nav.contact">اتصل بنا</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()" data-i18n-aria="nav.openMenu" aria-label="فتح القائمة">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
 
@@ -1060,7 +1191,7 @@
             </div>
         </section>
 
-        <section style="background: rgba(0, 0, 0, 0.2);">
+        <section class="section-alt">
             <div class="section-title">
                 <h2 data-i18n="projects.title">مشاريعنا الاحترافية</h2>
                 <p data-i18n="projects.subtitle">دقة في التصميم، قوة في الأداء</p>
@@ -1239,6 +1370,8 @@
                 "nav.services": "خدماتنا",
                 "nav.contact": "اتصل بنا",
                 "nav.openMenu": "فتح القائمة",
+                "theme.switchLight": "التبديل إلى الوضع الفاتح",
+                "theme.switchDark": "التبديل إلى الوضع الداكن",
                 "hero.tagline": "نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.",
                 "hero.cta": "اكتشف خدماتنا",
                 "home.services.title": "خدماتنا المتميزة",
@@ -1324,6 +1457,8 @@
                 "nav.services": "Our Services",
                 "nav.contact": "Contact Us",
                 "nav.openMenu": "Open menu",
+                "theme.switchLight": "Switch to light mode",
+                "theme.switchDark": "Switch to dark mode",
                 "hero.tagline": "We build the digital future. We design user experiences that exceed expectations using the latest modern programming technologies.",
                 "hero.cta": "Discover Our Services",
                 "home.services.title": "Our Premium Services",
@@ -1409,6 +1544,8 @@
                 "nav.services": "Nos Services",
                 "nav.contact": "Contactez-nous",
                 "nav.openMenu": "Ouvrir le menu",
+                "theme.switchLight": "Passer au mode clair",
+                "theme.switchDark": "Passer au mode sombre",
                 "hero.tagline": "Nous construisons le futur numérique. Nous concevons des expériences utilisateur qui dépassent les attentes grâce aux dernières technologies de programmation modernes.",
                 "hero.cta": "Découvrez Nos Services",
                 "home.services.title": "Nos Services Premium",
@@ -1494,6 +1631,8 @@
                 "nav.services": "Nuestros Servicios",
                 "nav.contact": "Contáctanos",
                 "nav.openMenu": "Abrir menú",
+                "theme.switchLight": "Cambiar a modo claro",
+                "theme.switchDark": "Cambiar a modo oscuro",
                 "hero.tagline": "Construimos el futuro digital. Diseñamos experiencias de usuario que superan las expectativas utilizando las últimas tecnologías de programación modernas.",
                 "hero.cta": "Descubre Nuestros Servicios",
                 "home.services.title": "Nuestros Servicios Premium",
@@ -1640,7 +1779,52 @@
                 setSelectedService(selectedServiceKey);
             }
 
+            updateThemeToggleAria();
+
             localStorage.setItem('preferredLang', lang);
+        }
+
+        function updateParticlesTheme() {
+            if (!window.pJSDom || !window.pJSDom[0]?.pJS) return;
+            const isLight = document.body.classList.contains('light-mode');
+            const pJS = window.pJSDom[0].pJS;
+            const color = isLight ? '#0891b2' : '#00f5ff';
+            pJS.particles.color.value = color;
+            pJS.particles.line_linked.color = color;
+            pJS.particles.opacity.value = isLight ? 0.18 : 0.3;
+            pJS.fn.particlesRefresh();
+        }
+
+        function updateThemeToggleAria() {
+            const themeToggle = document.getElementById('themeToggle');
+            if (!themeToggle) return;
+            const isLight = document.body.classList.contains('light-mode');
+            const key = isLight ? 'theme.switchDark' : 'theme.switchLight';
+            themeToggle.setAttribute('data-i18n-aria', key);
+            themeToggle.setAttribute('aria-label', t(key));
+        }
+
+        function applyTheme(theme) {
+            const isLight = theme === 'light';
+            document.documentElement.classList.toggle('light-mode', isLight);
+            document.body.classList.toggle('light-mode', isLight);
+            localStorage.setItem('preferredTheme', isLight ? 'light' : 'dark');
+            updateThemeToggleAria();
+            updateParticlesTheme();
+        }
+
+        function toggleTheme() {
+            const isLight = document.body.classList.contains('light-mode');
+            applyTheme(isLight ? 'dark' : 'light');
+        }
+
+        function initThemeToggle() {
+            const savedTheme = localStorage.getItem('preferredTheme') || 'dark';
+            applyTheme(savedTheme);
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
         }
 
         function initLangSwitcher() {
@@ -1672,10 +1856,10 @@
         particlesJS("particles-js", {
             "particles": {
                 "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#00f5ff" },
-                "opacity": { "value": 0.3 },
+                "color": { "value": document.documentElement.classList.contains('light-mode') ? '#0891b2' : '#00f5ff' },
+                "opacity": { "value": document.documentElement.classList.contains('light-mode') ? 0.18 : 0.3 },
                 "size": { "value": 3 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#00f5ff", "opacity": 0.2, "width": 1 },
+                "line_linked": { "enable": true, "distance": 150, "color": document.documentElement.classList.contains('light-mode') ? '#0891b2' : '#00f5ff', "opacity": 0.2, "width": 1 },
                 "move": { "enable": true, "speed": 2 }
             },
             "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } }
@@ -1895,8 +2079,10 @@
         window.cancelOrderModal = cancelOrderModal;
         window.requestService = requestService;
         window.changeLanguage = changeLanguage;
+        window.toggleTheme = toggleTheme;
 
         document.addEventListener('DOMContentLoaded', () => {
+            initThemeToggle();
             const savedLang = localStorage.getItem('preferredLang') || 'ar';
             changeLanguage(savedLang);
             initLangSwitcher();
