@@ -86,6 +86,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 12px;
+            direction: ltr;
             background: var(--bg-elevated);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
@@ -93,19 +94,12 @@
             transition: background 0.35s ease, border-color 0.35s ease;
         }
 
-
-        .navbar-leading {
-            display: none;
-            align-items: center;
-            justify-content: flex-start;
-            flex-shrink: 0;
-        }
-
-        .navbar-trailing {
+        .navbar-controls {
             display: flex;
             align-items: center;
             gap: 10px;
             flex-shrink: 0;
+            order: 1;
         }
 
         .navbar .logo {
@@ -117,6 +111,9 @@
             font-weight: 700;
             white-space: nowrap;
             flex-shrink: 0;
+            order: 3;
+            margin-left: auto;
+            text-align: right;
         }
 
         .nav-links {
@@ -126,6 +123,7 @@
             z-index: 1001;
             flex: 1;
             justify-content: center;
+            order: 2;
         }
 
         .nav-links a {
@@ -217,7 +215,8 @@
         .lang-dropdown {
             position: absolute;
             top: calc(100% + 8px);
-            inset-inline-end: 0;
+            left: 0;
+            right: auto;
             min-width: 148px;
             list-style: none;
             background: var(--bg-dropdown);
@@ -277,35 +276,18 @@
 
             .navbar {
                 padding: 10px 4%;
-                gap: 0;
-                justify-content: center;
+                gap: 12px;
             }
 
-            .navbar-leading {
-                display: flex;
-                position: absolute;
-                left: 4%;
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 1002;
-            }
-
-            .navbar-trailing {
-                display: flex;
-                position: absolute;
-                right: 4%;
-                top: 50%;
-                transform: translateY(-50%);
+            .navbar-controls {
                 gap: 8px;
-                z-index: 1002;
             }
 
             .navbar .logo {
-                flex: 0 1 auto;
-                max-width: calc(100% - 148px);
-                margin: 0 12px;
                 font-size: 0.92rem;
-                text-align: center;
+                max-width: 52%;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .theme-toggle {
@@ -335,14 +317,10 @@
                 border-bottom: 1px solid var(--glass-border);
                 flex: unset;
                 justify-content: flex-start;
+                order: unset;
             }
             .nav-links.active { display: flex; }
             .hamburger { display: flex; }
-            .lang-dropdown {
-                inset-inline-end: 0;
-                right: 0;
-                left: auto;
-            }
         }
 
         #particles-js {
@@ -1134,20 +1112,12 @@
 <body>
 
     <nav class="navbar">
-        <div class="navbar-leading">
+        <div class="navbar-controls">
             <div class="hamburger" onclick="toggleMenu()" data-i18n-aria="nav.openMenu" aria-label="فتح القائمة">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-        </div>
-        <div class="logo">VORTEX DIGITAL</div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#" onclick="goTo('home')" data-i18n="nav.home">الرئيسية</a></li>
-            <li><a href="#" onclick="goTo('services')" data-i18n="nav.services">خدماتنا</a></li>
-            <li><a href="#" onclick="goTo('formPage')" data-i18n="nav.contact">اتصل بنا</a></li>
-        </ul>
-        <div class="navbar-trailing">
             <button type="button" class="theme-toggle" id="themeToggle" data-i18n-aria="theme.switchLight" aria-label="التبديل إلى الوضع الفاتح">
                 <i class="fas fa-sun theme-icon-light" aria-hidden="true"></i>
                 <i class="fas fa-moon theme-icon-dark" aria-hidden="true"></i>
@@ -1166,6 +1136,12 @@
                 </ul>
             </div>
         </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" onclick="goTo('home')" data-i18n="nav.home">الرئيسية</a></li>
+            <li><a href="#" onclick="goTo('services')" data-i18n="nav.services">خدماتنا</a></li>
+            <li><a href="#" onclick="goTo('formPage')" data-i18n="nav.contact">اتصل بنا</a></li>
+        </ul>
+        <div class="logo">VORTEX DIGITAL</div>
     </nav>
 
     <div id="particles-js"></div>
