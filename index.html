@@ -39,6 +39,10 @@
             --toggle-bg: rgba(255, 255, 255, 0.06);
             --navbar-height: 64px;
             --navbar-clearance: clamp(100px, 12vh, 124px);
+            --service-title: #ff3355;
+            --service-desc: #39ff14;
+            --service-card-border: rgba(255, 255, 255, 0.88);
+            --service-card-bg: rgba(255, 255, 255, 0.04);
         }
 
         html.light-mode,
@@ -60,6 +64,10 @@
             --hero-highlight: #1e293b;
             --shadow-color: rgba(0, 0, 0, 0.12);
             --toggle-bg: rgba(0, 0, 0, 0.04);
+            --service-title: #dc143c;
+            --service-desc: #15803d;
+            --service-card-border: rgba(15, 23, 42, 0.18);
+            --service-card-bg: rgba(255, 255, 255, 0.92);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -602,6 +610,374 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Services Multi-Stage Flow ─── */
+        .services-stage {
+            display: none;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+
+        .services-stage.is-active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.55s ease;
+        }
+
+        .services-overview-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .services-overview-header h2 {
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-family: 'Almarai', 'Cairo', sans-serif;
+            font-weight: 800;
+        }
+
+        .services-overview-header p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            max-width: 520px;
+            margin: 0 auto 18px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+            max-width: 960px;
+            margin: 0 auto;
+            perspective: 1200px;
+        }
+
+        .svc-card {
+            position: relative;
+            background: var(--service-card-bg);
+            border: 1.5px solid var(--service-card-border);
+            border-radius: 18px;
+            padding: 32px 26px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+            will-change: transform;
+            text-align: start;
+            overflow: hidden;
+            outline: none;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .svc-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 51, 85, 0.08), transparent 55%, rgba(57, 255, 20, 0.06));
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .svc-card:hover::before,
+        .svc-card:focus-visible::before {
+            opacity: 1;
+        }
+
+        .svc-card:hover,
+        .svc-card:focus-visible {
+            border-color: var(--service-title);
+            box-shadow:
+                0 18px 40px rgba(0, 0, 0, 0.28),
+                0 0 0 1px rgba(255, 51, 85, 0.25);
+        }
+
+        .svc-card:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 3px;
+        }
+
+        .svc-card-index {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            color: var(--text-subtle);
+            margin-bottom: 4px;
+            transform: translateZ(20px);
+        }
+
+        .svc-card-title {
+            font-family: 'Almarai', 'Tajawal', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+            color: var(--service-title);
+            line-height: 1.35;
+            transform: translateZ(28px);
+            text-shadow: 0 0 24px rgba(255, 51, 85, 0.25);
+        }
+
+        .svc-card-desc {
+            font-size: 0.88rem;
+            color: var(--service-desc);
+            line-height: 1.7;
+            opacity: 0.92;
+            transform: translateZ(18px);
+        }
+
+        .svc-card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-light);
+            opacity: 0.7;
+            transition: opacity 0.3s, gap 0.3s;
+            transform: translateZ(22px);
+        }
+
+        .svc-card:hover .svc-card-cta {
+            opacity: 1;
+            gap: 12px;
+        }
+
+        .svc-card-cta i {
+            color: var(--primary);
+            font-size: 0.75rem;
+            transition: transform 0.3s;
+        }
+
+        html[dir="rtl"] .svc-card:hover .svc-card-cta i {
+            transform: translateX(-4px);
+        }
+
+        html[dir="ltr"] .svc-card:hover .svc-card-cta i {
+            transform: translateX(4px);
+        }
+
+        /* Deep-dive layout */
+        .svc-deep {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .svc-deep-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .svc-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .svc-back-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 14px rgba(0, 245, 255, 0.15);
+        }
+
+        .svc-deep-title {
+            font-family: 'Almarai', 'Tajawal', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.45rem, 3.5vw, 2.1rem);
+            color: var(--service-title);
+            line-height: 1.3;
+            margin-bottom: 22px;
+            text-shadow: 0 0 28px rgba(255, 51, 85, 0.3);
+        }
+
+        .svc-hook {
+            font-size: 1.02rem;
+            color: var(--service-desc);
+            line-height: 1.85;
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+
+        .svc-chart-block {
+            background: var(--card-bg);
+            border: 1px solid var(--service-card-border);
+            border-radius: 18px;
+            padding: 22px 18px 14px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(14px);
+        }
+
+        .svc-chart-label {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            letter-spacing: 0.02em;
+        }
+
+        .svc-chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            max-height: 42vw;
+            min-height: 200px;
+        }
+
+        .svc-execution {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.85;
+            margin-bottom: 40px;
+            padding: 20px 22px;
+            border-inline-start: 3px solid var(--primary);
+            background: linear-gradient(90deg, rgba(0, 245, 255, 0.06), transparent);
+            border-radius: 0 12px 12px 0;
+        }
+
+        html[dir="rtl"] .svc-execution {
+            border-radius: 12px 0 0 12px;
+            background: linear-gradient(270deg, rgba(0, 245, 255, 0.06), transparent);
+        }
+
+        /* Smart order form (Stage 3) */
+        .svc-order-panel {
+            border: 1.5px solid var(--service-card-border);
+            border-radius: 20px;
+            padding: 28px 24px;
+            background: var(--service-card-bg);
+            backdrop-filter: blur(16px);
+            margin-bottom: 20px;
+        }
+
+        .svc-order-panel h3 {
+            font-family: 'Almarai', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .svc-order-panel .svc-order-sub {
+            text-align: center;
+            color: var(--text-modal-sub);
+            font-size: 0.82rem;
+            margin-bottom: 22px;
+        }
+
+        .svc-order-form .form-field {
+            margin-bottom: 14px;
+        }
+
+        .svc-locked-field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            font-family: 'Almarai', sans-serif;
+            color: var(--service-title);
+            background: linear-gradient(135deg, rgba(255, 51, 85, 0.12), rgba(0, 245, 255, 0.06));
+            border: 1px solid rgba(255, 51, 85, 0.45);
+            box-shadow: inset 0 0 12px rgba(255, 51, 85, 0.06);
+            min-height: 42px;
+            line-height: 1.35;
+            text-align: center;
+            cursor: not-allowed;
+            user-select: none;
+        }
+
+        .svc-order-form input {
+            width: 100%;
+            height: 42px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 245, 255, 0.22);
+            outline: none;
+            background: var(--input-bg-order);
+            color: var(--text-light);
+            font-size: 0.88rem;
+            font-family: 'Cairo', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .svc-order-form input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.18);
+        }
+
+        .svc-order-form input.invalid {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 8px rgba(255, 107, 107, 0.22);
+        }
+
+        .svc-order-form .btn-submit-order {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .svc-card {
+                min-height: 150px;
+                padding: 24px 20px;
+                /* Disable 3D tilt transform on touch — CSS only hover lift */
+            }
+
+            .svc-card:hover {
+                transform: translateY(-4px) !important;
+            }
+
+            .svc-chart-wrap {
+                height: 220px;
+                max-height: none;
+            }
+
+            .svc-order-panel {
+                padding: 22px 16px;
+            }
+
+            .svc-deep-title {
+                font-size: 1.35rem;
+            }
+
+            .svc-hook {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .svc-card,
+            .services-stage {
+                transition: none !important;
+                animation: none !important;
+            }
         }
 
         footer {
@@ -1234,26 +1610,133 @@
     </div>
 
     <div class="page" id="services">
-        <section>
-            <div class="section-title">
+        <!-- Stage 1: Services Overview -->
+        <section id="servicesOverview" class="services-stage is-active" aria-label="Services overview">
+            <div class="services-overview-header">
                 <h2 data-i18n="services.title">ماذا نقدم لك؟</h2>
-                <button class="btn-main" onclick="goTo('home')" style="margin-bottom: 20px;" data-i18n="services.back">العودة للرئيسية</button>
+                <p data-i18n="services.subtitle">اختر الباقة التي تناسب نمو مشروعك — اضغط لاستكشاف التفاصيل</p>
+                <button type="button" class="btn-main" onclick="goTo('home')" data-i18n="services.back">العودة للرئيسية</button>
             </div>
-            <div class="grid-container">
-                <div class="glass-card clickable order-trigger" data-service-key="ecommerce">
-                    <i class="fas fa-shopping-cart"></i>
-                    <h3 data-i18n="service.ecommerce.title">متاجر إلكترونية</h3>
-                    <p data-i18n="service.ecommerce.desc">متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.</p>
+
+            <div class="services-grid" id="servicesGrid" role="list">
+                <article
+                    class="svc-card"
+                    role="listitem"
+                    tabindex="0"
+                    data-service-key="local_visibility"
+                    aria-label="Local Visibility & Google Maps Optimization"
+                >
+                    <span class="svc-card-index">01</span>
+                    <h3 class="svc-card-title" data-i18n="service.local_visibility.title">باقة الظهور المحلي وجوجل ماب</h3>
+                    <p class="svc-card-desc" data-i18n="service.local_visibility.short">تثبيت على الخرائط، قائمة رقمية، بيانات اتصال دقيقة، ومعرض صور محسّن لجذب العملاء القريبين.</p>
+                    <span class="svc-card-cta">
+                        <span data-i18n="services.explore">استكشف الباقة</span>
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    </span>
+                </article>
+
+                <article
+                    class="svc-card"
+                    role="listitem"
+                    tabindex="0"
+                    data-service-key="branding_instagram"
+                    aria-label="Branding & Instagram Grid Optimization"
+                >
+                    <span class="svc-card-index">02</span>
+                    <h3 class="svc-card-title" data-i18n="service.branding_instagram.title">باقة الهوية البصرية وإنستغرام</h3>
+                    <p class="svc-card-desc" data-i18n="service.branding_instagram.short">شعار احترافي، بايو مميز، أغلفة Highlights، وقوالب منشورات ترويجية لهوية متماسكة.</p>
+                    <span class="svc-card-cta">
+                        <span data-i18n="services.explore">استكشف الباقة</span>
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    </span>
+                </article>
+
+                <article
+                    class="svc-card"
+                    role="listitem"
+                    tabindex="0"
+                    data-service-key="web_ecommerce"
+                    aria-label="Web & E-commerce Development"
+                >
+                    <span class="svc-card-index">03</span>
+                    <h3 class="svc-card-title" data-i18n="service.web_ecommerce.title">باقة المواقع والمتاجر الإلكترونية</h3>
+                    <p class="svc-card-desc" data-i18n="service.web_ecommerce.short">مواقع عرض مذهلة ومتاجر سريعة بسلال تسوق كاملة جاهزة للبيع والتحويل.</p>
+                    <span class="svc-card-cta">
+                        <span data-i18n="services.explore">استكشف الباقة</span>
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    </span>
+                </article>
+
+                <article
+                    class="svc-card"
+                    role="listitem"
+                    tabindex="0"
+                    data-service-key="ad_creative"
+                    aria-label="High-Converting Ad Creative Design"
+                >
+                    <span class="svc-card-index">04</span>
+                    <h3 class="svc-card-title" data-i18n="service.ad_creative.title">باقة تصميم الصور الإعلانية</h3>
+                    <p class="svc-card-desc" data-i18n="service.ad_creative.short">أصول بصرية مبنية على سيكولوجية المستهلك لرفع معدل النقر في الحملات المدفوعة.</p>
+                    <span class="svc-card-cta">
+                        <span data-i18n="services.explore">استكشف الباقة</span>
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    </span>
+                </article>
+            </div>
+        </section>
+
+        <!-- Stage 2 + 3: Deep-dive & smart order form -->
+        <section id="servicesDeepDive" class="services-stage" aria-live="polite" hidden>
+            <div class="svc-deep">
+                <div class="svc-deep-nav">
+                    <button type="button" class="svc-back-btn" id="svcBackBtn">
+                        <i class="fas fa-arrow-right" id="svcBackIcon" aria-hidden="true"></i>
+                        <span data-i18n="services.backToList">العودة للخدمات</span>
+                    </button>
                 </div>
-                <div class="glass-card clickable order-trigger" data-service-key="graphic">
-                    <i class="fas fa-paint-brush"></i>
-                    <h3 data-i18n="service.graphic.title">تصميم إبداعي</h3>
-                    <p data-i18n="service.graphic.desc">بوسترات وشعارات تخطف الأنظار.</p>
+
+                <h2 class="svc-deep-title" id="svcDeepTitle"></h2>
+                <p class="svc-hook" id="svcDeepHook"></p>
+
+                <div class="svc-chart-block">
+                    <p class="svc-chart-label" id="svcChartLabel" data-i18n="services.chartLabel">نمو الأداء: قبل وبعد الخدمة</p>
+                    <div class="svc-chart-wrap">
+                        <canvas id="serviceGrowthChart" aria-label="Before vs After performance chart"></canvas>
+                    </div>
                 </div>
-                <div class="glass-card clickable order-trigger" data-service-key="webdev">
-                    <i class="fas fa-code"></i>
-                    <h3 data-i18n="service.webdev.title">تطوير ويب</h3>
-                    <p data-i18n="service.webdev.desc">برمجة منصات خاصة تلبي احتياجات عملك.</p>
+
+                <p class="svc-execution" id="svcDeepExecution"></p>
+
+                <!-- Stage 3: Smart Dynamic Order Form -->
+                <div class="svc-order-panel">
+                    <h3 data-i18n="services.orderTitle">اطلب هذه الباقة الآن</h3>
+                    <p class="svc-order-sub" data-i18n="services.orderSubtitle">أدخل بياناتك وسنحوّلك إلى واتساب لإرسال طلبك مباشرة.</p>
+
+                    <form id="serviceOrderForm" class="svc-order-form order-form" novalidate>
+                        <div class="form-field">
+                            <label data-i18n="order.selectedService">الخدمة المختارة</label>
+                            <div class="svc-locked-field" id="svcLockedService" aria-live="polite">—</div>
+                            <input type="hidden" name="service" id="svcOrderServiceInput" readonly>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="svcFullName"><span data-i18n="order.fullName">الاسم الكامل</span> <span class="required">*</span></label>
+                            <input type="text" id="svcFullName" name="name" data-i18n-placeholder="order.fullName.placeholder" placeholder="مثال: أحمد العلوي" autocomplete="name" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="svcPhone"><span data-i18n="order.phone">رقم الهاتف / الواتساب</span> <span class="required">*</span></label>
+                            <input type="tel" id="svcPhone" name="phone" inputmode="numeric" data-i18n-placeholder="order.phone.placeholder" placeholder="مثال: 0612345678" autocomplete="tel" required>
+                            <span class="field-error" id="svcPhoneError"></span>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="svcBusiness"><span data-i18n="order.businessNameType">اسم ونوع النشاط التجاري</span> <span class="required">*</span></label>
+                            <input type="text" id="svcBusiness" name="business" data-i18n-placeholder="order.businessNameType.placeholder" placeholder="مثال: مقهى — خدمات ضيافة" autocomplete="organization" required>
+                        </div>
+
+                        <button type="submit" class="btn-main btn-submit-order" id="svcSubmitBtn" data-i18n="order.submit">تأكيد وإرسال الطلب</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -1348,6 +1831,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
@@ -1370,6 +1854,34 @@
         let selectedServiceKey = "";
         let lastBrowsingPage = "home";
         let whatsappRedirectTimer = null;
+        let activeDeepServiceKey = "";
+        let serviceGrowthChart = null;
+
+        /* Chart datasets per service (Before → After growth story) */
+        const SERVICE_CHART_DATA = {
+            local_visibility: {
+                labels: ["M1", "M2", "M3", "M4", "M5", "M6"],
+                before: [18, 20, 19, 22, 21, 23],
+                after:  [18, 32, 48, 62, 78, 94]
+            },
+            branding_instagram: {
+                labels: ["M1", "M2", "M3", "M4", "M5", "M6"],
+                before: [12, 14, 15, 13, 16, 17],
+                after:  [12, 28, 45, 61, 80, 110]
+            },
+            web_ecommerce: {
+                labels: ["M1", "M2", "M3", "M4", "M5", "M6"],
+                before: [8, 9, 10, 9, 11, 12],
+                after:  [8, 22, 38, 55, 72, 98]
+            },
+            ad_creative: {
+                labels: ["M1", "M2", "M3", "M4", "M5", "M6"],
+                before: [1.2, 1.3, 1.1, 1.4, 1.3, 1.5],
+                after:  [1.2, 2.4, 3.6, 4.8, 5.9, 7.2]
+            }
+        };
+
+        const SERVICE_KEYS = ["local_visibility", "branding_instagram", "web_ecommerce", "ad_creative"];
 
         const translations = {
             ar: {
@@ -1406,19 +1918,44 @@
                 "project3.title": "تطبيقات الويب الذكية",
                 "project3.desc": "برمجيات قوية مخصصة لتلبية احتياجاتك التقنية المعقدة بدقة عالية.",
                 "services.title": "ماذا نقدم لك؟",
+                "services.subtitle": "اختر الباقة التي تناسب نمو مشروعك — اضغط لاستكشاف التفاصيل",
                 "services.back": "العودة للرئيسية",
-                "service.ecommerce.title": "متاجر إلكترونية",
-                "service.ecommerce.desc": "متاجر سريعة ومجهزة للتحويل المباشر للزوار إلى عملاء.",
-                "service.graphic.title": "تصميم إبداعي",
-                "service.graphic.desc": "بوسترات وشعارات تخطف الأنظار.",
-                "service.webdev.title": "تطوير ويب",
-                "service.webdev.desc": "برمجة منصات خاصة تلبي احتياجات عملك.",
+                "services.backToList": "العودة للخدمات",
+                "services.explore": "استكشف الباقة",
+                "services.chartLabel": "نمو الأداء: قبل وبعد الخدمة",
+                "services.chart.before": "قبل",
+                "services.chart.after": "بعد",
+                "services.orderTitle": "اطلب هذه الباقة الآن",
+                "services.orderSubtitle": "أدخل بياناتك وسنحوّلك إلى واتساب لإرسال طلبك مباشرة.",
+                "service.local_visibility.title": "باقة الظهور المحلي وجوجل ماب",
+                "service.local_visibility.short": "تثبيت على الخرائط، قائمة رقمية، بيانات اتصال دقيقة، ومعرض صور محسّن لجذب العملاء القريبين.",
+                "service.local_visibility.hook": "عملاؤك يبحثون عنك على خرائط جوجل… لكنهم يجدون منافسيك أولاً. الظهور المحلي الضعيف يعني مكالمات ضائعة ومبيعات تتسرب يومياً. في Vortex Digital نحوّل ملفك التجاري إلى نقطة جذب قوية: تثبيت دقيق على الخريطة، قائمة رقمية جذابة، بيانات اتصال صحيحة 100٪، ومعرض صور يبيع قبل أن تطأ قدم العميل بابك.",
+                "service.local_visibility.execution": "منهجيتنا واضحة: نبدأ بتدقيق ملفك الحالي، نصحّح البيانات والتصنيفات، نصمّم القائمة الرقمية ومعرض الصور، ثم نحسّن التفاعل والمراجعات. النتيجة: ظهور محلي أقوى ومسار مباشر من البحث إلى الزيارة.",
+                "service.branding_instagram.title": "باقة الهوية البصرية وإنستغرام",
+                "service.branding_instagram.short": "شعار احترافي، بايو مميز، أغلفة Highlights، وقوالب منشورات ترويجية لهوية متماسكة.",
+                "service.branding_instagram.hook": "حساب إنستغرام عشوائي لا يبني ثقة — ويفقدك عملاء قبل أن يقرأوا كلمة واحدة. الهوية البصرية الضعيفة تجعل علامتك تبدو غير جاهزة. نحن نبني حضورك من الصفر باحتراف: شعار يُميّزك، بايو يبيع في سطرين، أغلفة Highlights مرتبة، وشبكة منشورات متناسقة تحوّل الزوار إلى متابعين ثم إلى عملاء.",
+                "service.branding_instagram.execution": "نحدد شخصية علامتك، نصمّم الشعار والهوية، نكتب البايو الاحترافي، نجهّز أغلفة الهايلايتس وقوالب المنشورات، ثم نسلّم دليلاً بصرياً جاهزاً للنشر اليومي بثقة واتساق.",
+                "service.web_ecommerce.title": "باقة المواقع والمتاجر الإلكترونية",
+                "service.web_ecommerce.short": "مواقع عرض مذهلة ومتاجر سريعة بسلال تسوق كاملة جاهزة للبيع والتحويل.",
+                "service.web_ecommerce.hook": "موقع بطيء أو غير احترافي يكلّفك ثقة ومبيعات في ثوانٍ. عملاؤك يقارنونك بالمنافسين فوراً. نصمّم مواقع عرض تخطف الأنظار ومتاجر إلكترونية سريعة بسلال تسوق كاملة، جاهزة لاستقبال الطلبات على مدار الساعة — حضور رقمي يعمل نيابةً عنك.",
+                "service.web_ecommerce.execution": "نحلل هدفك ونوع نشاطك، نصمّم الواجهة، نبرمج الوظائف وسلة التسوق، نختبر السرعة والتجربة على الجوال، ثم نسلّم موقعاً جاهزاً للإطلاق مع تدريب مختصر على الإدارة.",
+                "service.ad_creative.title": "باقة تصميم الصور الإعلانية",
+                "service.ad_creative.short": "أصول بصرية مبنية على سيكولوجية المستهلك لرفع معدل النقر في الحملات المدفوعة.",
+                "service.ad_creative.hook": "الإعلان المدفوع بدون تصميم مقنع يحرق الميزانية بصمت. الصورة هي أول قرار يتخذه العميل — بالنقر أو بالتجاهل. نصمّم أصولاً إعلانية مبنية على سيكولوجية المستهلك: تبرز العرض، تثير الفضول، وترفع CTR في حملات السوشيال المدفوعة لتحوّل كل درهم إلى فرصة حقيقية.",
+                "service.ad_creative.execution": "ندرس عرضك والجمهور المستهدف، نضع زوايا إبداعية، نصمّم مجموعة صور إعلانية متعددة الصيغ، ونسلّم ملفات جاهزة للرفع على منصات الإعلانات مع توصيات للنصوص المصاحبة.",
                 "services.visual_content": "تصميم المحتوى البصري",
                 "services.websites": "تصميم المواقع التعريفية",
                 "services.ecommerce": "متاجر إلكترونية",
                 "services.graphic": "تصميم إبداعي",
                 "services.webdev": "تطوير ويب",
+                "services.local_visibility": "باقة الظهور المحلي وجوجل ماب",
+                "services.branding_instagram": "باقة الهوية البصرية وإنستغرام",
+                "services.web_ecommerce": "باقة المواقع والمتاجر الإلكترونية",
+                "services.ad_creative": "باقة تصميم الصور الإعلانية",
                 "services.general": "طلب عام",
+                "order.businessNameType": "اسم ونوع النشاط التجاري",
+                "order.businessNameType.placeholder": "مثال: مقهى — خدمات ضيافة",
+                "whatsapp.business": "اسم ونوع النشاط:",
                 "about.eyebrow": "من نحن؟",
                 "about.title": "قصة طموح رقمي يغيّر اللعبة",
                 "about.p1": "لم تكن بداية شركتنا مجرد فكرة تجارية عابرة، بل ولدت من شغف حقيقي وسهر ليالٍ طوال، أسسها وصنعها طالب ومبرمج مغربي ذو طموح يعانق السماء. انطلقنا من غمار الدراسة والتحديات البرمجية لنبني كياناً رقمياً يهدف إلى تقديم حلول ذكية ومبتكرة بجودة عالمية.",
@@ -1493,19 +2030,44 @@
                 "project3.title": "Smart Web Applications",
                 "project3.desc": "Powerful custom software to meet your complex technical needs with high precision.",
                 "services.title": "What Do We Offer You?",
+                "services.subtitle": "Choose the package that fits your growth — tap to explore the details",
                 "services.back": "Back to Home",
-                "service.ecommerce.title": "E-commerce Stores",
-                "service.ecommerce.desc": "Fast stores equipped to convert visitors directly into customers.",
-                "service.graphic.title": "Creative Design",
-                "service.graphic.desc": "Eye-catching posters and logos.",
-                "service.webdev.title": "Web Development",
-                "service.webdev.desc": "Custom platforms tailored to your business needs.",
+                "services.backToList": "Back to Services",
+                "services.explore": "Explore Package",
+                "services.chartLabel": "Performance Growth: Before vs After",
+                "services.chart.before": "Before",
+                "services.chart.after": "After",
+                "services.orderTitle": "Order This Package Now",
+                "services.orderSubtitle": "Enter your details and we will redirect you to WhatsApp to send your request.",
+                "service.local_visibility.title": "Local Visibility & Google Maps Optimization",
+                "service.local_visibility.short": "Map pinning, digital menu design, accurate contact info, and photo gallery optimization to attract nearby customers.",
+                "service.local_visibility.hook": "Your customers are searching for you on Google Maps — but they find your competitors first. Weak local visibility means lost calls and daily revenue leaks. At Vortex Digital we turn your business profile into a magnet: precise map pinning, an attractive digital menu, 100% accurate contact details, and a photo gallery that sells before anyone walks through your door.",
+                "service.local_visibility.execution": "Our process is clear: we audit your current listing, correct data and categories, design your digital menu and photo gallery, then optimize engagement and reviews. Result: stronger local presence and a direct path from search to visit.",
+                "service.branding_instagram.title": "Branding & Instagram Grid Optimization",
+                "service.branding_instagram.short": "Logo creation, premium bio writing, Highlights covers, and promotional post templates for a cohesive brand identity.",
+                "service.branding_instagram.hook": "A messy Instagram feed does not build trust — it loses customers before they read a word. Weak visual identity makes your brand look unfinished. We build your presence from the ground up: a distinctive logo, a bio that sells in two lines, ordered Highlights covers, and a harmonious grid that turns visitors into followers, then into clients.",
+                "service.branding_instagram.execution": "We define your brand personality, design the logo and identity system, craft a premium bio, prepare Highlights covers and post templates, then deliver a ready-to-publish visual guide for consistent daily content.",
+                "service.web_ecommerce.title": "Web & E-commerce Development",
+                "service.web_ecommerce.short": "Stunning showcase websites and fast e-commerce stores with fully functional shopping carts ready to sell.",
+                "service.web_ecommerce.hook": "A slow or unprofessional website costs you trust and sales in seconds. Customers compare you to competitors instantly. We craft eye-catching showcase sites and fast e-commerce stores with full shopping carts — digital storefronts ready to take orders around the clock.",
+                "service.web_ecommerce.execution": "We analyze your goals and business type, design the interface, build functionality and the cart, test speed and mobile experience, then launch with a short management walkthrough.",
+                "service.ad_creative.title": "High-Converting Ad Creative Design",
+                "service.ad_creative.short": "Consumer-psychology backed visual ad assets for paid social campaigns that maximize CTR.",
+                "service.ad_creative.hook": "Paid ads without persuasive creative quietly burn your budget. The image is the first decision a customer makes — click or skip. We design ad assets rooted in consumer psychology: they highlight the offer, spark curiosity, and lift CTR on paid social so every dirham becomes a real opportunity.",
+                "service.ad_creative.execution": "We study your offer and audience, define creative angles, design multi-format ad visuals, and deliver platform-ready files with copy recommendations for your campaigns.",
                 "services.visual_content": "Visual Content Design",
                 "services.websites": "Corporate Website Design",
                 "services.ecommerce": "E-commerce Stores",
                 "services.graphic": "Creative Design",
                 "services.webdev": "Web Development",
+                "services.local_visibility": "Local Visibility & Google Maps Optimization",
+                "services.branding_instagram": "Branding & Instagram Grid Optimization",
+                "services.web_ecommerce": "Web & E-commerce Development",
+                "services.ad_creative": "High-Converting Ad Creative Design",
                 "services.general": "General Request",
+                "order.businessNameType": "Business Name & Type",
+                "order.businessNameType.placeholder": "e.g. Café — Hospitality",
+                "whatsapp.business": "Business name & type:",
                 "about.eyebrow": "About Us",
                 "about.title": "A Journey of Digital Ambition and Impact",
                 "about.p1": "Our agency wasn't just built as a business; it was born out of pure passion, sleepless nights, and tireless dedication, founded by an ambitious student and web developer with sky-high dreams. Emerging from the challenges of academic life and complex coding, we created a digital powerhouse aimed at delivering elite, innovative solutions.",
@@ -1580,19 +2142,44 @@
                 "project3.title": "Applications Web Intelligentes",
                 "project3.desc": "Des logiciels puissants et sur mesure pour répondre à vos besoins techniques complexes avec une grande précision.",
                 "services.title": "Que Vous Proposons-Nous ?",
+                "services.subtitle": "Choisissez le pack adapté à votre croissance — appuyez pour explorer les détails",
                 "services.back": "Retour à l'Accueil",
-                "service.ecommerce.title": "Boutiques en Ligne",
-                "service.ecommerce.desc": "Des boutiques rapides conçues pour convertir directement les visiteurs en clients.",
-                "service.graphic.title": "Design Créatif",
-                "service.graphic.desc": "Affiches et logos qui captent le regard.",
-                "service.webdev.title": "Développement Web",
-                "service.webdev.desc": "Des plateformes sur mesure adaptées aux besoins de votre entreprise.",
+                "services.backToList": "Retour aux Services",
+                "services.explore": "Explorer le Pack",
+                "services.chartLabel": "Croissance des performances : Avant vs Après",
+                "services.chart.before": "Avant",
+                "services.chart.after": "Après",
+                "services.orderTitle": "Commander ce Pack Maintenant",
+                "services.orderSubtitle": "Entrez vos informations et nous vous redirigerons vers WhatsApp pour envoyer votre demande.",
+                "service.local_visibility.title": "Visibilité Locale & Optimisation Google Maps",
+                "service.local_visibility.short": "Épinglage sur la carte, menu digital, infos de contact exactes et galerie photo optimisée pour attirer les clients proches.",
+                "service.local_visibility.hook": "Vos clients vous cherchent sur Google Maps… mais trouvent d'abord vos concurrents. Une faible visibilité locale, c'est des appels perdus et du chiffre d'affaires qui s'évapore. Chez Vortex Digital, nous transformons votre fiche en aimant à clients : épinglage précis, menu digital attractif, coordonnées 100 % exactes et une galerie qui vend avant même l'entrée en magasin.",
+                "service.local_visibility.execution": "Notre méthode est claire : audit de votre fiche, correction des données et catégories, conception du menu digital et de la galerie, puis optimisation des avis et de l'engagement. Résultat : une présence locale plus forte et un chemin direct de la recherche à la visite.",
+                "service.branding_instagram.title": "Branding & Optimisation de la Grille Instagram",
+                "service.branding_instagram.short": "Création de logo, bio premium, covers Highlights et templates de posts promotionnels pour une identité cohérente.",
+                "service.branding_instagram.hook": "Un feed Instagram désordonné ne construit pas la confiance — il fait fuir les clients avant qu'ils ne lisent. Une identité visuelle faible donne une image amateur. Nous construisons votre présence de A à Z : logo distinctif, bio qui vend en deux lignes, covers Highlights ordonnées et une grille harmonieuse qui convertit visiteurs en abonnés, puis en clients.",
+                "service.branding_instagram.execution": "Nous définissons la personnalité de votre marque, concevons le logo et l'identité, rédigeons une bio premium, préparons les covers Highlights et templates, puis livrons un guide visuel prêt à publier au quotidien.",
+                "service.web_ecommerce.title": "Sites Web & E-commerce",
+                "service.web_ecommerce.short": "Sites vitrines spectaculaires et boutiques rapides avec paniers d'achat pleinement fonctionnels.",
+                "service.web_ecommerce.hook": "Un site lent ou peu professionnel vous coûte confiance et ventes en quelques secondes. Les clients vous comparent immédiatement. Nous créons des sites vitrines saisissants et des boutiques e-commerce rapides avec paniers complets — une vitrine digitale prête à prendre des commandes 24h/24.",
+                "service.web_ecommerce.execution": "Nous analysons vos objectifs, concevons l'interface, développons les fonctionnalités et le panier, testons la vitesse et le mobile, puis livrons un site prêt au lancement avec une courte formation.",
+                "service.ad_creative.title": "Design Créatif Publicitaire Haute Conversion",
+                "service.ad_creative.short": "Visuels publicitaires basés sur la psychologie du consommateur pour maximiser le CTR des campagnes payantes.",
+                "service.ad_creative.hook": "La publicité payante sans créatif convaincant brûle le budget en silence. L'image est la première décision du client — cliquer ou ignorer. Nous concevons des assets ancrés dans la psychologie du consommateur : ils mettent l'offre en avant, suscitent la curiosité et boostent le CTR sur les réseaux payants.",
+                "service.ad_creative.execution": "Nous étudions votre offre et votre audience, définissons des angles créatifs, concevons des visuels multi-formats et livrons des fichiers prêts pour les plateformes avec des recommandations de textes.",
                 "services.visual_content": "Conception de Contenu Visuel",
                 "services.websites": "Conception de Sites Vitrines",
                 "services.ecommerce": "Boutiques en Ligne",
                 "services.graphic": "Design Créatif",
                 "services.webdev": "Développement Web",
+                "services.local_visibility": "Visibilité Locale & Optimisation Google Maps",
+                "services.branding_instagram": "Branding & Optimisation de la Grille Instagram",
+                "services.web_ecommerce": "Sites Web & E-commerce",
+                "services.ad_creative": "Design Créatif Publicitaire Haute Conversion",
                 "services.general": "Demande Générale",
+                "order.businessNameType": "Nom & Type d'Activité",
+                "order.businessNameType.placeholder": "ex. Café — Hôtellerie",
+                "whatsapp.business": "Nom & type d'activité :",
                 "about.eyebrow": "À Propos",
                 "about.title": "L'histoire d'une ambition numérique avec un cœur",
                 "about.p1": "Notre agence n'est pas simplement une entreprise; elle est née d'une véritable passion et de nuits blanches, fondée par un étudiant et développeur marocain ambitieux aux rêves infinis. Issus des défis académiques et du codage, nous avons bâti une entité numérique pour offrir des solutions innovantes de classe mondiale.",
@@ -1667,19 +2254,44 @@
                 "project3.title": "Aplicaciones Web Inteligentes",
                 "project3.desc": "Software personalizado y potente para satisfacer tus necesidades técnicas complejas con alta precisión.",
                 "services.title": "¿Qué Te Ofrecemos?",
+                "services.subtitle": "Elige el paquete que impulse tu crecimiento — toca para explorar los detalles",
                 "services.back": "Volver al Inicio",
-                "service.ecommerce.title": "Tiendas en Línea",
-                "service.ecommerce.desc": "Tiendas rápidas preparadas para convertir visitantes directamente en clientes.",
-                "service.graphic.title": "Diseño Creativo",
-                "service.graphic.desc": "Pósters y logotipos que captan la atención.",
-                "service.webdev.title": "Desarrollo Web",
-                "service.webdev.desc": "Plataformas personalizadas adaptadas a las necesidades de tu negocio.",
+                "services.backToList": "Volver a Servicios",
+                "services.explore": "Explorar Paquete",
+                "services.chartLabel": "Crecimiento del rendimiento: Antes vs Después",
+                "services.chart.before": "Antes",
+                "services.chart.after": "Después",
+                "services.orderTitle": "Solicita este Paquete Ahora",
+                "services.orderSubtitle": "Introduce tus datos y te redirigiremos a WhatsApp para enviar tu solicitud.",
+                "service.local_visibility.title": "Visibilidad Local y Optimización de Google Maps",
+                "service.local_visibility.short": "Fijación en el mapa, menú digital, datos de contacto precisos y galería de fotos optimizada para atraer clientes cercanos.",
+                "service.local_visibility.hook": "Tus clientes te buscan en Google Maps… pero encuentran primero a la competencia. Una visibilidad local débil significa llamadas perdidas e ingresos que se escapan cada día. En Vortex Digital convertimos tu ficha en un imán: pinning preciso, menú digital atractivo, contacto 100 % exacto y una galería que vende antes de que entren por la puerta.",
+                "service.local_visibility.execution": "Nuestro método es claro: auditamos tu ficha, corregimos datos y categorías, diseñamos el menú digital y la galería, y optimizamos reseñas y engagement. Resultado: más presencia local y un camino directo de la búsqueda a la visita.",
+                "service.branding_instagram.title": "Branding y Optimización de la Cuadrícula de Instagram",
+                "service.branding_instagram.short": "Creación de logo, bio premium, portadas de Highlights y plantillas de posts promocionales para una identidad cohesionada.",
+                "service.branding_instagram.hook": "Un feed de Instagram desordenado no genera confianza: pierde clientes antes de que lean. Una identidad visual débil hace que tu marca parezca incompleta. Construimos tu presencia desde cero: logo distintivo, bio que vende en dos líneas, Highlights ordenados y una cuadrícula armoniosa que convierte visitantes en seguidores y luego en clientes.",
+                "service.branding_instagram.execution": "Definimos la personalidad de tu marca, diseñamos el logo y la identidad, redactamos una bio premium, preparamos portadas de Highlights y plantillas, y entregamos una guía visual lista para publicar cada día.",
+                "service.web_ecommerce.title": "Desarrollo Web y E-commerce",
+                "service.web_ecommerce.short": "Sitios escaparate impactantes y tiendas rápidas con carritos de compra totalmente funcionales.",
+                "service.web_ecommerce.hook": "Un sitio lento o poco profesional te cuesta confianza y ventas en segundos. Los clientes te comparan al instante. Creamos escaparates digitales impactantes y tiendas e-commerce rápidas con carritos completos — listos para recibir pedidos las 24 horas.",
+                "service.web_ecommerce.execution": "Analizamos tus objetivos, diseñamos la interfaz, programamos funciones y carrito, probamos velocidad y móvil, y entregamos un sitio listo para lanzar con una breve formación.",
+                "service.ad_creative.title": "Diseño de Creatividades Publicitarias de Alta Conversión",
+                "service.ad_creative.short": "Assets visuales respaldados por psicología del consumidor para maximizar el CTR en campañas de pago.",
+                "service.ad_creative.hook": "La publicidad de pago sin creatividades convincentes quema el presupuesto en silencio. La imagen es la primera decisión del cliente: hacer clic o ignorar. Diseñamos assets basados en psicología del consumidor: destacan la oferta, despiertan curiosidad y elevan el CTR en social ads.",
+                "service.ad_creative.execution": "Estudiamos tu oferta y audiencia, definimos ángulos creativos, diseñamos visuales multi-formato y entregamos archivos listos para las plataformas con recomendaciones de copy.",
                 "services.visual_content": "Diseño de Contenido Visual",
                 "services.websites": "Diseño de Sitios Web Corporativos",
                 "services.ecommerce": "Tiendas en Línea",
                 "services.graphic": "Diseño Creativo",
                 "services.webdev": "Desarrollo Web",
+                "services.local_visibility": "Visibilidad Local y Optimización de Google Maps",
+                "services.branding_instagram": "Branding y Optimización de la Cuadrícula de Instagram",
+                "services.web_ecommerce": "Desarrollo Web y E-commerce",
+                "services.ad_creative": "Diseño de Creatividades Publicitarias de Alta Conversión",
                 "services.general": "Solicitud General",
+                "order.businessNameType": "Nombre y Tipo de Negocio",
+                "order.businessNameType.placeholder": "ej. Café — Hostelería",
+                "whatsapp.business": "Nombre y tipo de negocio:",
                 "about.eyebrow": "Sobre Nosotros",
                 "about.title": "Una historia de ambición digital e impacto social",
                 "about.p1": "Nuestra agencia no nació como un simple negocio; nació de la pura pasión y de noches de desvelo, fundada por un estudiante y desarrollador web ambicioso con sueños que tocan el cielo. Surgiendo de los desafíos académicos y de la programación, construimos una entidad digital para ofrecer soluciones innovadoras de nivel mundial.",
