@@ -38,7 +38,8 @@
             --shadow-color: rgba(0, 0, 0, 0.4);
             --toggle-bg: rgba(255, 255, 255, 0.06);
             --navbar-height: 64px;
-            --navbar-clearance: clamp(100px, 12vh, 124px);
+            --ticker-height: 42px;
+            --navbar-clearance: calc(clamp(100px, 12vh, 124px) + var(--ticker-height));
             --service-title: #ff3355;
             --service-desc: #39ff14;
             --service-card-border: rgba(255, 255, 255, 0.88);
@@ -260,6 +261,140 @@
             inset-inline-start: auto;
         }
 
+        .neon-ticker {
+            --ticker-cyan: #00f3ff;
+            --ticker-purple: #bc13fe;
+            --ticker-green: #00ff66;
+            position: fixed;
+            top: var(--navbar-height);
+            left: 0;
+            right: 0;
+            z-index: 1090;
+            height: var(--ticker-height);
+            background: #05050d;
+            border-top: 1px solid rgba(0, 243, 255, 0.5);
+            border-bottom: 1px solid rgba(188, 19, 254, 0.55);
+            box-shadow:
+                0 0 8px rgba(0, 243, 255, 0.45),
+                0 0 18px rgba(188, 19, 254, 0.32),
+                0 4px 24px rgba(0, 243, 255, 0.12),
+                inset 0 0 16px rgba(0, 243, 255, 0.07),
+                inset 0 -8px 18px rgba(188, 19, 254, 0.08);
+        }
+
+        .neon-ticker::before,
+        .neon-ticker::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 48px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .neon-ticker::before {
+            left: 0;
+            background: linear-gradient(to right, #05050d, transparent);
+        }
+
+        .neon-ticker::after {
+            right: 0;
+            background: linear-gradient(to left, #05050d, transparent);
+        }
+
+        .glowing-ticker-wrap {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            direction: ltr;
+        }
+
+        .glowing-ticker-wrap:hover .glowing-ticker,
+        .glowing-ticker-wrap:focus-within .glowing-ticker {
+            animation-play-state: paused;
+        }
+
+        .glowing-ticker {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            height: 100%;
+            white-space: nowrap;
+            animation: ticker-slide 20s linear infinite !important;
+            will-change: transform;
+        }
+
+        .ticker-seg {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0 0.85rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+            font-size: clamp(0.72rem, 1.7vw, 0.9rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: #e8e8f0;
+        }
+
+        .ticker-offer {
+            color: var(--ticker-cyan);
+            text-shadow:
+                0 0 6px rgba(0, 243, 255, 0.95),
+                0 0 16px rgba(0, 243, 255, 0.45);
+        }
+
+        .ticker-cta {
+            color: var(--ticker-green);
+            text-shadow:
+                0 0 6px rgba(0, 255, 102, 0.95),
+                0 0 16px rgba(0, 255, 102, 0.4);
+        }
+
+        .ticker-brand {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--ticker-cyan);
+            letter-spacing: 0.08em;
+            text-shadow:
+                0 0 8px rgba(0, 243, 255, 0.95),
+                0 0 18px rgba(188, 19, 254, 0.7);
+        }
+
+        .ticker-tagline {
+            color: #d4d4e8;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.18);
+        }
+
+        .ticker-sep {
+            color: var(--ticker-purple);
+            font-weight: 800;
+            text-shadow:
+                0 0 6px rgba(188, 19, 254, 1),
+                0 0 14px rgba(0, 243, 255, 0.35);
+        }
+
+        @keyframes ticker-slide {
+            from { transform: translateX(0%); }
+            to { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 768px) {
+            .ticker-seg {
+                gap: 0.65rem;
+                padding: 0 0.65rem;
+                letter-spacing: 0;
+            }
+
+            .neon-ticker::before,
+            .neon-ticker::after {
+                width: 28px;
+            }
+        }
+
         .hamburger {
             display: none;
             flex-direction: column;
@@ -279,7 +414,8 @@
         @media (max-width: 768px) {
             :root {
                 --navbar-height: 56px;
-                --navbar-clearance: clamp(92px, 14vh, 112px);
+                --ticker-height: 36px;
+                --navbar-clearance: calc(clamp(92px, 14vh, 112px) + var(--ticker-height));
             }
 
             .navbar {
@@ -1004,6 +1140,7 @@
         @media (prefers-reduced-motion: reduce) {
             .svc-card,
             .services-stage { transition: none !important; animation: none !important; }
+            .glowing-ticker { animation: none !important; transform: none !important; }
         }
 
 
@@ -1472,7 +1609,8 @@
         @media (max-width: 768px) {
             :root {
                 --navbar-height: 56px;
-                --navbar-clearance: clamp(92px, 14vh, 112px);
+                --ticker-height: 36px;
+                --navbar-clearance: calc(clamp(92px, 14vh, 112px) + var(--ticker-height));
             }
 
             .grid-container { grid-template-columns: 1fr; gap: 14px; }
@@ -1546,6 +1684,12 @@
         </ul>
         <div class="logo">VORTEX DIGITAL</div>
     </nav>
+
+    <aside class="neon-ticker" id="neonTicker" role="region" data-dir="rtl" dir="rtl">
+        <div class="glowing-ticker-wrap" id="glowingTickerWrap" role="link" tabindex="0">
+            <div class="glowing-ticker" id="glowingTicker"></div>
+        </div>
+    </aside>
 
     <div id="particles-js"></div>
 
@@ -1924,6 +2068,12 @@
                 "nav.openMenu": "فتح القائمة",
                 "theme.switchLight": "التبديل إلى الوضع الفاتح",
                 "theme.switchDark": "التبديل إلى الوضع الداكن",
+                "ticker.aria": "عرض ترويجي لفترة محدودة",
+                "ticker.offer": "🚀 خصم خاص لفترة محدودة على باقة المواقع الإلكترونية والهوية البصرية",
+                "ticker.cta": "اطلب خدمتك الآن وابدأ رحلة النجاح الرقمي",
+                "ticker.brand": "VORTEX DIGITAL",
+                "ticker.tagline": ": نبني لك المستقبل الرقمي بأحدث التقنيات",
+                "ticker.sep": "✦",
                 "hero.tagline": "نحن نبني المستقبل الرقمي. نصمم لك تجربة مستخدم تفوق التوقعات باستخدام أحدث تقنيات البرمجة الحديثة.",
                 "hero.cta": "اكتشف خدماتنا",
                 "home.services.title": "خدماتنا المتميزة",
@@ -2036,6 +2186,12 @@
                 "nav.openMenu": "Open menu",
                 "theme.switchLight": "Switch to light mode",
                 "theme.switchDark": "Switch to dark mode",
+                "ticker.aria": "Limited-time promotional offer",
+                "ticker.offer": "🚀 Limited Time Offer on Web Development & Branding Packages",
+                "ticker.cta": "Order now and start your digital success journey",
+                "ticker.brand": "VORTEX DIGITAL",
+                "ticker.tagline": ": Building the digital future with modern tech",
+                "ticker.sep": "✦",
                 "hero.tagline": "We build the digital future. We design user experiences that exceed expectations using the latest modern programming technologies.",
                 "hero.cta": "Discover Our Services",
                 "home.services.title": "Our Premium Services",
@@ -2148,6 +2304,12 @@
                 "nav.openMenu": "Ouvrir le menu",
                 "theme.switchLight": "Passer au mode clair",
                 "theme.switchDark": "Passer au mode sombre",
+                "ticker.aria": "Offre promotionnelle limitée",
+                "ticker.offer": "🚀 Offre limitée sur les packs Création Web & Identité Visuelle",
+                "ticker.cta": "Commandez maintenant et lancez votre succès numérique",
+                "ticker.brand": "VORTEX DIGITAL",
+                "ticker.tagline": ": Construisons le futur numérique",
+                "ticker.sep": "✦",
                 "hero.tagline": "Nous construisons le futur numérique. Nous concevons des expériences utilisateur qui dépassent les attentes grâce aux dernières technologies de programmation modernes.",
                 "hero.cta": "Découvrez Nos Services",
                 "home.services.title": "Nos Services Premium",
@@ -2260,6 +2422,12 @@
                 "nav.openMenu": "Abrir menú",
                 "theme.switchLight": "Cambiar a modo claro",
                 "theme.switchDark": "Cambiar a modo oscuro",
+                "ticker.aria": "Oferta promocional por tiempo limitado",
+                "ticker.offer": "🚀 Oferta por tiempo limitado en paquetes de Desarrollo Web e Identidad Visual",
+                "ticker.cta": "¡Solicita tu servicio ahora!",
+                "ticker.brand": "VORTEX DIGITAL",
+                "ticker.tagline": ": Construyendo el futuro digital",
+                "ticker.sep": "✦",
                 "hero.tagline": "Construimos el futuro digital. Diseñamos experiencias de usuario que superan las expectativas utilizando las últimas tecnologías de programación modernas.",
                 "hero.cta": "Descubre Nuestros Servicios",
                 "home.services.title": "Nuestros Servicios Premium",
@@ -2370,6 +2538,49 @@
             return translations[lang]?.[key] ?? translations.ar[key] ?? key;
         }
 
+        function renderTickerBanner(lang = currentLang) {
+            const ticker = document.getElementById('neonTicker');
+            const track = document.getElementById('glowingTicker');
+            if (!ticker || !track) return;
+
+            const isRtl = lang === 'ar';
+            const dir = isRtl ? 'rtl' : 'ltr';
+            ticker.setAttribute('dir', dir);
+            ticker.dataset.dir = dir;
+            ticker.setAttribute('aria-label', t('ticker.aria', lang));
+
+            const segmentHtml =
+                '<span class="ticker-offer">' + t('ticker.offer', lang) + '</span>' +
+                '<span class="ticker-sep" aria-hidden="true">' + t('ticker.sep', lang) + '</span>' +
+                '<span class="ticker-cta">' + t('ticker.cta', lang) + '</span>' +
+                '<span class="ticker-sep" aria-hidden="true">' + t('ticker.sep', lang) + '</span>' +
+                '<span class="ticker-brand">' + t('ticker.brand', lang) + '</span>' +
+                '<span class="ticker-tagline">' + t('ticker.tagline', lang) + '</span>' +
+                '<span class="ticker-sep" aria-hidden="true">' + t('ticker.sep', lang) + '</span>';
+
+            const firstSeg =
+                '<span class="ticker-seg" dir="' + dir + '">' + segmentHtml + '</span>';
+            const secondSeg =
+                '<span class="ticker-seg" dir="' + dir + '" aria-hidden="true">' + segmentHtml + '</span>';
+
+            track.innerHTML = firstSeg + secondSeg;
+        }
+
+        function initTickerBanner() {
+            const wrap = document.getElementById('glowingTickerWrap');
+            if (!wrap) return;
+
+            const openOffer = () => { goTo('services'); };
+
+            wrap.addEventListener('click', openOffer);
+            wrap.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openOffer();
+                }
+            });
+        }
+
         function getServiceName(serviceKey, lang = currentLang) {
             return t(`services.${serviceKey}`, lang);
         }
@@ -2407,6 +2618,8 @@
             });
 
             document.title = t('page.title', lang);
+
+            renderTickerBanner(lang);
 
             const ctaIcon = document.querySelector('.hero-cta-icon');
             if (ctaIcon) {
@@ -2735,6 +2948,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             initThemeToggle();
+            initTickerBanner();
             const savedLang = localStorage.getItem('preferredLang') || 'ar';
             changeLanguage(savedLang);
             initLangSwitcher();
